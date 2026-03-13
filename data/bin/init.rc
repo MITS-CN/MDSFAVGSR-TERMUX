@@ -1,0 +1,104 @@
+termux-setup-storage
+termux-change-repo
+# 定义路径，移除空格
+bin="/data/data/com.termux/files/usr/bin"
+init="/storage/emulated/0/MITS/data/bin"
+
+# 检查 init 目录是否存在
+if [ ! -d "${init}" ]; then
+    echo "错误：源目录 ${init} 不存在"
+    exit 1
+fi
+
+# 批量获取 init 目录下所有 .sh 脚本文件
+sh_files=("${init}"/*.sh)
+
+# 检查是否有 .sh 文件
+if [ ! -f "${sh_files[0]}" ]; then
+    echo "错误：${init} 目录下没有找到 .sh 脚本文件"
+    exit 1
+fi
+
+# 批量复制并赋予执行权限
+for file in "${sh_files[@]}"; do
+    # 获取文件名（不含路径）
+    filename=$(basename "${file}")
+    # 复制到目标目录
+    cp "${file}" "${bin}/${filename}"
+    # 赋予执行权限
+    chmod +x "${bin}/${filename}"
+    echo "已处理：${filename}"
+done
+
+echo -e "\n所有 .sh 脚本文件复制完成，已赋予执行权限！"
+echo "目标目录：${bin}"
+
+py_files=("${init}"/*.py)
+
+if [ ! -f "${py_files[0]}" ]; then
+    echo "错误：${init} 目录下没有找到 .py 脚本文件"
+    exit 1
+fi
+
+# 批量复制并赋予执行权限
+for file in "${py_files[@]}"; do
+    # 获取文件名（不含路径）
+    filename=$(basename "${file}")
+    # 复制到目标目录
+    cp "${file}" "${bin}/${filename}"
+    # 赋予执行权限
+    chmod +x "${bin}/${filename}"
+    echo "已处理：${filename}"
+done
+
+echo -e "\n所有 .py 脚本文件复制完成，已赋予执行权限！"
+echo "目标目录：${bin}"
+
+#开始运行
+cp -r /storage/emulated/0/MITS/data/bin/bak/* /data/data/com.termux/files/home/.termux
+
+temp.data.init.sh
+bash /storage/emulated/0/MITS/data/bin/order/init.rc
+rm -rf /data/data/com.termux/files/usr/bin/init.rc
+cd /data/data/com.termux/files/usr/bin
+# 修复不安全目录权限
+compaudit | xargs chmod g-w,o-w
+
+# 或者直接运行
+chmod 755 ~/.zinit
+chmod 755 ~/.zinit/plugins
+chmod 755 ~/.cache
+
+# 清理 zcompdump 文件
+rm -f ~/.zcompdump*
+# 备份当前源列表
+cp $PREFIX/etc/apt/sources.list $PREFIX/etc/apt/sources.list.bak
+
+# 更新到现代源
+echo "deb https://termux.org/packages stable main" > $PREFIX/etc/apt/sources.list
+
+# 更新包管理器
+pkg update
+pkg upgrade -y
+# 手动安装缺失的插件
+pkg install -y zsh git
+
+# 安装常用插件
+git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zinit/plugins/_local---zsh-autosuggestions
+git clone https://github.com/zdharma-continuum/fast-syntax-highlighting ~/.zinit/plugins/_local---fast-syntax-highlighting
+git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
+
+# 从 oh-my-zsh 复制插件
+cp -r ~/.oh-my-zsh/plugins/extract ~/.zinit/plugins/_local---extract
+cp -r ~/.oh-my-zsh/plugins/z ~/.zinit/plugins/_local---z
+cp -r ~/.oh-my-zsh/plugins/git ~/.zinit/plugins/_local---git
+cp -r ~/.oh-my-zsh/plugins/sudo ~/.zinit/plugins/_local---sudo
+cp -r ~/.oh-my-zsh/plugins/colored-man-pages ~/.zinit/plugins/_local---colored-man-pages
+cp -r ~/.oh-my-zsh/plugins/command-not-found ~/.zinit/plugins/_local---command-not-found
+cp -r /storage/emulated/0/MITS/data/bin/bak/* /data/data/com.termux/files/home/.termux
+clear
+echo "Microsoft Windows [Version 10.0.19044.1706]"
+echo "(c) Microsoft Corporation. All rights reserved"
+echo ""
+taskkill /f /im com.termux
+exit 0
