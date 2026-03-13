@@ -1,0 +1,29 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
+# 定义路径，移除空格
+bin="/data/data/com.termux/files/usr/bin"
+init="/storage/emulated/0/MITS/data/bin/order"
+
+# 检查 init 目录是否存在
+if [ ! -d "${init}" ]; then
+    echo "错误：源目录 ${init} 不存在"
+    exit 1
+fi
+
+# 批量获取 init 目录下所有 .sh 脚本文件
+sh_files=("${init}"/*)
+
+
+# 批量复制并赋予执行权限
+for file in "${sh_files[@]}"; do
+    # 获取文件名（不含路径）
+    filename=$(basename "${file}")
+    # 复制到目标目录
+    cp "${file}" "${bin}/${filename}"
+    # 赋予执行权限
+    chmod +x "${bin}/${filename}"
+    echo "已处理：${filename}"
+done
+rm -rf /data/data/com.termux/files/usr/bin/inir.rc
+echo -e "\n所有 命令脚本文件复制完成，已赋予执行权限！"
+echo "目标目录：${bin}"
