@@ -71,12 +71,6 @@ chmod 755 ~/.cache
 
 # 清理 zcompdump 文件
 rm -f ~/.zcompdump*
-# 备份当前源列表
-cp $PREFIX/etc/apt/sources.list $PREFIX/etc/apt/sources.list.bak
-
-# 更新到现代源
-echo "deb https://termux.org/packages stable main" > $PREFIX/etc/apt/sources.list
-
 # 更新包管理器
 pkg update
 pkg upgrade -y
