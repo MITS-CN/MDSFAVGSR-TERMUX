@@ -1,9 +1,14 @@
 #!/data/data/com.termux/files/usr/bin/bash
+CONFIG_DIR="/data/data/com.termux/files/usr/etc/MITS"
 
 rm -rf /data/data/com.termux/files/usr/etc/MITS
 
 mkdir /data/data/com.termux/files/usr/etc/MITS
 mkdir /data/data/com.termux/files/usr/etc/MITS/SL
+
+chmod 755 /data/data/com.termux/files/usr/etc/MITS
+chmod 755 /data/data/com.termux/files/usr/etc/MITS/SL
+chmod 755 /data/data/com.termux/files/usr/etc/MITS/config.json
 
 if [ -f "/data/data/com.termux/files/usr/etc/MITS/SL/config.json.example" ]; then
     cp -n "/data/data/com.termux/files/usr/etc/MITS/SL/config.json.example" "/data/data/com.termux/files/usr/etc/MITS/config.json"
@@ -12,7 +17,7 @@ elif [ ! -f "/data/data/com.termux/files/usr/etc/MITS/config.json" ]; then
     # 创建默认配置文件
     cat > "/data/data/com.termux/files/usr/etc/MITS/config.json" <<EOF
 {
-    "MITS_build_version": "0049_A",
+    "MITS_version": "Build.IS0050(main:NULL)_fix some thing",
     "MITS_build_by": "Administrator"
 }
 EOF

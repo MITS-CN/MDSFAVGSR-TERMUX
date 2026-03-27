@@ -218,11 +218,7 @@ bool killProcess(int pid, bool force) {
     return kill(pid, sig) == 0;
 }
 
-void printHelp() {
-    std::cout << "Microsoft Windows [Version 10.0.19044.1706]" << std::endl;
-    std::cout << "(c) Microsoft Corporation. All rights reserved." << std::endl;
-    std::cout << std::endl;
-    std::cout << "C:\\Users\\Termux>taskkill /?" << std::endl;
+void printHelp() {;
     std::cout << std::endl;
     std::cout << "TASKKILL [/S system [/U username [/P [password]]]]" << std::endl;
     std::cout << "         { [/FI filter] [/PID processid | /IM imagename] } [/T] [/F]" << std::endl;
