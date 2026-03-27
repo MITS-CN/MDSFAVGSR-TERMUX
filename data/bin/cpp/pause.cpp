@@ -19,6 +19,7 @@ int main() {
 
     // 恢复原始终端设置
     tcsetattr(STDIN_FILENO, TCSANOW, &old_tio);
+    std::cout << "" << std::flush;
 
     return 0;
 }
