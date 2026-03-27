@@ -19,6 +19,29 @@ pkg install tree -y
 pkg install rsync -y
 pkg install neofetch -y
 pkg install -y eza 
+
+# pkg install exa
+# Checking availability of current mirror:
+# [*] https://mirrors.cqupt.edu.cn/termux/termux-main: ok
+# Hit:1 https://mirrors.cqupt.edu.cn/termux/termux-main stable InRelease
+# Hit:2 https://mirrors.cqupt.edu.cn/termux/termux-root root InRelease
+# Hit:3 https://mirrors.cqupt.edu.cn/termux/termux-x11 x11 InRelease
+# Reading package lists... Done
+# Building dependency tree... Done
+# Reading state information... Done
+# 30 packages can be upgraded. Run 'apt list --upgradable' to see them.
+# Reading package lists... Done
+# Building dependency tree... Done
+# Reading state information... Done
+# Package exa is not available, but is referred to by another package.
+# This may mean that the package is missing, has been obsoleted, or
+# is only available from another source
+# However the following packages replace it:
+  # eza
+
+# E: Package 'exa' has no installation candidate
+
+#综上所述，exa直接安装已被删除，接下来是eza的天下
 pkg install traceroute -y
 pkg install dnsutils -y
 
