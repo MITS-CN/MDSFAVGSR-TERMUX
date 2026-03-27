@@ -336,10 +336,6 @@ void printCsvRow(const ProcessInfo& proc, bool verbose, bool showSvc, bool showM
 
 // 打印帮助信息
 void printHelp() {
-    std::cout << "Microsoft Windows [Version 10.0.19044.1706]" << std::endl;
-    std::cout << "(c) Microsoft Corporation. All rights reserved." << std::endl;
-    std::cout << std::endl;
-    std::cout << "C:\\Users\\Termux>tasklist /?" << std::endl;
     std::cout << std::endl;
     std::cout << "TASKLIST [/S system [/U username [/P [password]]]] [/M [module] | /SVC | /V]" << std::endl;
     std::cout << "         [/FI filter] [/FO format] [/NH]" << std::endl;

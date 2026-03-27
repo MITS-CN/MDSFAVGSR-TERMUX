@@ -347,7 +347,7 @@ int main() {
                     quick = true;
                 }
             }
-            // 假设用户知道分区名，我们硬编码一个例子？不好。
+            // 假设用户知道分区名
             // 这里仅输出提示
             std::cout << "要格式化，请使用类似命令：mkfs." << fs_type << " /dev/block/" << current_disk << "p1\n";
         } else {

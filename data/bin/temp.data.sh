@@ -1,8 +1,12 @@
 apt list --upgradable
+pkg list-all
+pkg --check-mirror update
 pkg update
+pkg upgrade
 
 pkg install clang -y
 pkg install gcc -y
+pkg install list-installed
 
 pkg install openssl-tool -y
 pkg install openssl -y
@@ -28,7 +32,16 @@ pkg install termux-elf-cleaner
 
 pkg update
 
-curl -s -o x https://raw.githubusercontent.com/olegos2/termux-box/main/install && chmod +x x && ./x
+pkg install x11-repo
+pkg install xfdesktop
+pkg install vim -y
+
+pkg install proot-distro -y
+pkg install pulseaudio -y
+
+
+
+#other
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma-continuum/zinit/main/scripts/install.sh)"
 
@@ -39,3 +52,4 @@ git clone --depth=1 https://bgithub.xyz/romkatv/powerlevel10k.git ~/powerlevel10
 wget https://github.com/nlohmann/json/releases/latest/download/json.hpp
 
 pkg update
+pkg upgrade
