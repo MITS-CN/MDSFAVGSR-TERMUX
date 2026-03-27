@@ -1,6 +1,5 @@
 temp.data.sh
 temp.data.zsh.init.sh
-python /data/data/com.termux/files/usr/bin/temp.user.input.chose.py
 neofetch
 temp.data.fix.zsh.sh
 neofetch
