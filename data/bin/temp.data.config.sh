@@ -8,7 +8,6 @@ mkdir /data/data/com.termux/files/usr/etc/MITS/SL
 
 chmod 755 /data/data/com.termux/files/usr/etc/MITS
 chmod 755 /data/data/com.termux/files/usr/etc/MITS/SL
-chmod 755 /data/data/com.termux/files/usr/etc/MITS/config.json
 
 if [ -f "/data/data/com.termux/files/usr/etc/MITS/SL/config.json.example" ]; then
     cp -n "/data/data/com.termux/files/usr/etc/MITS/SL/config.json.example" "/data/data/com.termux/files/usr/etc/MITS/config.json"
@@ -22,4 +21,6 @@ elif [ ! -f "/data/data/com.termux/files/usr/etc/MITS/config.json" ]; then
 }
 EOF
     echo "已创建默认配置文件 $CONFIG_DIR/config.json"
+    chmod 755 /data/data/com.termux/files/usr/etc/MITS/config.json
+
 fi
