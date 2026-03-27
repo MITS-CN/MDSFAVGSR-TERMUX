@@ -18,13 +18,13 @@ int main() {
     file.close();
 
     // 获取配置项（如果键不存在，则使用提供的默认值）
-    std::string version = data.value("MITS_build_version", "0000");
-    std::string builder = data.value("MITS_build_by", "NULL");
+    std::string version = data.value("MITS_version", "Build.IS0000(main:ERROR)_ERORR");
+    std::string builder = data.value("MITS_build_by", "ERROR");
 
     // 输出
     std::cout << "" << std::endl;
     std::cout << "这是一个基于termux的定制界面（还在内测中）" << std::endl;
-    std::cout << "MITS_build_version " << version << std::endl;
+    std::cout << "MITS_version " << version << std::endl;
     std::cout << "MITS_build_by " << builder << std::endl;
     std::cout << "" << std::endl;
     std::cout << "正文：" << std::endl;

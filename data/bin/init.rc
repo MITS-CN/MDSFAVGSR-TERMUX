@@ -1,4 +1,3 @@
-termux-setup-storage
 termux-change-repo
 # 定义路径，移除空格
 bin="/data/data/com.termux/files/usr/bin"
@@ -34,6 +33,8 @@ echo -e "\n所有 .sh 脚本文件复制完成，已赋予执行权限！"
 echo "目标目录：${bin}"
 
 py_files=("${init}"/*.py)
+
+echo "phantom-process = true" >> ~/.termux/termux.properties
 
 if [ ! -f "${py_files[0]}" ]; then
     echo "错误：${init} 目录下没有找到 .py 脚本文件"
@@ -90,9 +91,13 @@ cp -r ~/.oh-my-zsh/plugins/sudo ~/.zinit/plugins/_local---sudo
 cp -r ~/.oh-my-zsh/plugins/colored-man-pages ~/.zinit/plugins/_local---colored-man-pages
 cp -r ~/.oh-my-zsh/plugins/command-not-found ~/.zinit/plugins/_local---command-not-found
 cp -r /storage/emulated/0/MITS/data/bin/bak/* /data/data/com.termux/files/home/.termux
+
+termux-reload-settings
+
 clear
 echo "Microsoft Windows [Version 10.0.19044.1706]"
 echo "(c) Microsoft Corporation. All rights reserved"
 echo ""
+
 taskkill /f /im com.termux
 exit 0
