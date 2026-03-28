@@ -36,11 +36,7 @@ int main() {
     std::cout << "在构造此项目时" << std::endl;
     std::cout << "我们使用了ai辅助开发" << std::endl;
     std::cout << "" << std::endl;
-    std::cout << "目前我们添加了以下功能：" << std::endl;
-    std::cout << "taskkill移植" << std::endl;
-    std::cout << "tasklist移植" << std::endl;
-    std::cout << "del命令移植" << std::endl;
-    std::cout << "diskpart命令移植" << std::endl;
-    std::cout << "具体请体验我们的项目" << std::endl;
+    std::cout << "下面是原版help 信息" << std::endl;
+    system("help");
     return 0;
 }

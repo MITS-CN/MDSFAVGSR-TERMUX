@@ -156,6 +156,7 @@ zinit ice lucid wait=1 ascompletion && zinit snippet /data/data/com.termux/files
 alias zshcolor='bash /data/data/com.termux/files/home/.config/tmoe-zsh/git/share/colors.sh'
 alias zshfont='bash /data/data/com.termux/files/home/.config/tmoe-zsh/git/share/fonts.sh'
 
+#接下来是自定义，如果不喜欢，可以删除
 #=========== Windows启动信息 ======
 # 在主题初始化后添加
 if [[ -z "$TMUX" ]] && [[ "$TERM_PROGRAM" != "vscode" ]]; then

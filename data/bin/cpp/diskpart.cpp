@@ -11,6 +11,8 @@
 #include <fcntl.h>
 #include <dirent.h>
 #include <libgen.h>
+#include </storage/emulated/0/MITS/TEMP/json.hpp>  // 如果头文件在子目录中，可能需要 "nlohmann/json.hpp" 或直接 "json.hpp"
+
 
 // 简单去除字符串首尾空白
 std::string trim(const std::string& s) {
@@ -255,10 +257,27 @@ bool format_partition(const std::string& part_name, const std::string& fs_type, 
     }
 }
 
+using json = nlohmann::json;
+
 int main() {
-    std::cout << "Microsoft DiskPart 版本 10.0 (简化版移植)\n"
-              << "版权所有 (C) Microsoft Corporation.\n"
-              << "在计算机上: ANDROID\n\n";
+    
+    std::ifstream file("/data/data/com.termux/files/usr/etc/MITS/config.json");
+    if (!file.is_open()) {
+        std::cerr << "无法打开 config.json" << std::endl;
+    }
+    
+    json data;
+    file >> data;  // 从文件流解析 JSON
+    file.close();
+    
+    std::string host_temp = data.value("MITS_Diskpart_host", "ERROR");
+    std::string copyright_temp = data.value("MITS_Diskpart_copyright", "ERROR");
+    std::string version_temp = data.value("MITS_Diskpart_version", "ERROR");
+
+    // 输出
+    std::cout << version_temp << ".\n"
+          << copyright_temp << ".\n"
+          << host_temp << "\n\n";
 
     std::string current_disk; // 当前选中的磁盘名，如 mmcblk0
     std::string current_part; // 当前选中的分区名（可选）
