@@ -2,8 +2,6 @@
 
 temp.data.sh #安装基础
 
-temp.data.zsh.init.sh
-
 temp.data.fix.zsh.sh
 
 temp.data.make.c.sh

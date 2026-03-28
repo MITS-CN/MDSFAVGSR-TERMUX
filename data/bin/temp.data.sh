@@ -1,5 +1,3 @@
-apt list --upgradable
-pkg list-all
 pkg --check-mirror update
 pkg update
 pkg upgrade
@@ -48,15 +46,10 @@ pkg install dnsutils -y
 pkg install nano
 pkg install rush
 pkg install jq
-pkg install x11-repo
 pkg install sqlite
 pkg install -y zsh git bat fzf net-tools traceroute dnsutils ack termux-api
 pkg install termux-elf-cleaner
 
-pkg update
-
-pkg install x11-repo
-pkg install xfdesktop
 pkg install vim -y
 
 pkg install proot-distro -y
@@ -72,7 +65,8 @@ bash -c "$(curl -L gitee.com/mo2/zsh/raw/2/2)"
 
 git clone --depth=1 https://bgithub.xyz/romkatv/powerlevel10k.git ~/powerlevel10k
 
-wget -O /storage/emulated/0/MITS/TEMP/json.hpp "https://github.com/nlohmann/json/releases/latest/download/json.hpp"
+#后面c++程序使用
+wget -O /storage/emulated/0/MITS/TEMP/json.hpp "https://github.com/nlohmann/json/releases/latest/download/json.hpp" 
 
 pkg update
 pkg upgrade
