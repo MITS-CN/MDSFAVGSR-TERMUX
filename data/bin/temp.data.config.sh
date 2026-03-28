@@ -14,6 +14,7 @@ if [ -f "/data/data/com.termux/files/usr/etc/MITS/SL/config.json.example" ]; the
     echo "已安装示例配置文件到 /data/data/com.termux/files/usr/etc/MITS/config.json"
 elif [ ! -f "/data/data/com.termux/files/usr/etc/MITS/config.json" ]; then
     # 创建默认配置文件
+    # 其实应该分开来的这里
     cat > "/data/data/com.termux/files/usr/etc/MITS/config.json" <<EOF
 {
     "MITS_version": "Build.IS0052(main:NULL)_fix BUG",

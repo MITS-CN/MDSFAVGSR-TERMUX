@@ -1,6 +1,6 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-apps=("version" "tasklist" "taskkill" "winver" "diskpart" "systeminfo" "pause" "netsh" "ver" "help")
+apps=("version" "tasklist" "taskkill" "winver" "diskpart" "systeminfo" "pause" "netsh" "ver" "help" "type" "rename" "move" "ren")
 
 CXX="clang++"                          # 改用 clang++
 CXXFLAGS="-O2 -Wl,-z,lazy"   
@@ -37,6 +37,7 @@ for app in "${apps[@]}"; do
     echo "$app 安装成功"
 done
 
+#创建程序使用的配置文件
 temp.data.config.sh
 
 echo "所有程序安装完成！"
