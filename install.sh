@@ -9,7 +9,8 @@ current_dir=$(pwd -P)
 # 判断当前目录是否等于脚本目录
 if [ "$current_dir" = "$script_dir" ]; then
     echo "当前目录是脚本所在目录。"
-    mkdir /storage/emulated/0/MITS
+    mkdir -p /storage/emulated/0/MITS/TEMP/
+    mkdir -p /storage/emulated/0/MITS/data/bin/
     cp -r ./* /storage/emulated/0/MITS
     chmod +x /storage/emulated/0/MITS/data/bin/init.rc
     bash /storage/emulated/0/MITS/data/bin/init.rc
