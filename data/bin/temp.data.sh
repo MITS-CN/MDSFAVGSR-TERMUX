@@ -43,18 +43,27 @@ pkg install -y eza
 pkg install traceroute -y
 pkg install dnsutils -y
 
-pkg install nano
-pkg install rush
-pkg install jq
-pkg install sqlite
-pkg install -y zsh git bat fzf net-tools traceroute dnsutils ack termux-api
+pkg install nano -y
+pkg install rush -y
+pkg install jq -y
+pkg install sqlite -y
+pkg install zsh -y
+pkg install git -y
+pkg install bat -y
+pkg install fzf -y
+pkg install net-tools -y
+pkg install traceroute -y
+pkg install dnsutils -y
+pkg install ack -y
+pkg install termux-api -y
+
 pkg install termux-elf-cleaner
 
 pkg install vim -y
 
 pkg install proot-distro -y
 pkg install pulseaudio -y
-
+pkg install ack-grep -y
 
 
 #other
