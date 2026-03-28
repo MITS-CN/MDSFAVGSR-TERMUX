@@ -66,6 +66,10 @@ bash -c "$(curl -L gitee.com/mo2/zsh/raw/2/2)"
 git clone --depth=1 https://bgithub.xyz/romkatv/powerlevel10k.git ~/powerlevel10k
 
 #后面c++程序使用
+termux-setup-storage
+
+mkdir -p /storage/emulated/0/MITS/TEMP/
+
 wget -O /storage/emulated/0/MITS/TEMP/json.hpp "https://github.com/nlohmann/json/releases/latest/download/json.hpp" 
 
 pkg update
