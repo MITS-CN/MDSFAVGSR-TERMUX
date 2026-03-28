@@ -18,6 +18,9 @@ elif [ ! -f "/data/data/com.termux/files/usr/etc/MITS/config.json" ]; then
 {
     "MITS_version": "Build.IS0050(main:NULL)_fix some thing",
     "MITS_build_by": "Administrator"
+    "MITS_Diskpart_copyright": "(c) Microsoft Corporation"
+    "MITS_Diskpart_version": "Microsoft DiskPart 版本 10.0.17763.1"
+    "MITS_Diskpart_host": "在计算机上: ANDROID"
 }
 EOF
     echo "已创建默认配置文件 $CONFIG_DIR/config.json"

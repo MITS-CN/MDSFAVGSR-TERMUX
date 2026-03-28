@@ -94,10 +94,13 @@ cp -r /storage/emulated/0/MITS/data/bin/bak/* /data/data/com.termux/files/home/.
 
 termux-reload-settings
 
-clear
-echo "Microsoft Windows [Version 10.0.19044.1706]"
-echo "(c) Microsoft Corporation. All rights reserved"
-echo ""
+
+echo "接下来程序会自动关闭"
+echo "重新打开代表已经安装完成"
+echo "若出现错误"
+echo "请到GitHub 反映"
+
+pause
 
 taskkill /f /im com.termux
 exit 0
