@@ -133,7 +133,7 @@ fix_windows_config() {
         chsh -s zsh 2>/dev/null || true
     fi
     
-    print_msg "✓ Windows 配置已优化" "$GREEN"
+    print_msg "⚠ Windows 配置错误" "$GREEN"
 }
 
 # 函数：清理缓存和临时文件
