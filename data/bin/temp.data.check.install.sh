@@ -67,7 +67,7 @@ check_cmd pulseaudio
 check_cmd proot
 check_cmd zstd
 check_cmd bat
-check_cmd termux-api
+check_cmd termux-dialog    #termux-api 提供
 check_cmd aria2c           # aria2 提供的命令
 check_cmd eza
 check_cmd fzf
