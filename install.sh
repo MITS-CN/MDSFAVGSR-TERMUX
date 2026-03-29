@@ -14,7 +14,6 @@ if [ "$current_dir" = "$script_dir" ]; then
     cp -r ./* /storage/emulated/0/MITS
     chmod +x /storage/emulated/0/MITS/data/bin/init.rc
     bash /storage/emulated/0/MITS/data/bin/init.rc
-    rm -rf /storage/emulated/0/MITS/
 # 判断当前目录是否是脚本目录的子目录
 elif [[ "$current_dir" == "$script_dir"/* ]]; then
     echo "当前目录是脚本所在目录的子目录,不予执行"

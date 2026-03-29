@@ -94,6 +94,77 @@ cp -r /storage/emulated/0/MITS/data/bin/bak/* /data/data/com.termux/files/home/.
 
 termux-reload-settings
 
+del-v /f /s /q /storage/emulated/0/MITS/.git/hooks/applypatch-msg.sample
+del-v /f /s /q /storage/emulated/0/MITS/.git/hooks/commit-msg.sample
+del-v /f /s /q /storage/emulated/0/MITS/.git/hooks/fsmonitor-watchman.sample
+del-v /f /s /q /storage/emulated/0/MITS/.git/hooks/post-update.sample
+del-v /f /s /q /storage/emulated/0/MITS/.git/hooks/pre-applypatch.sample
+del-v /f /s /q /storage/emulated/0/MITS/.git/hooks/pre-commit.sample
+del-v /f /s /q /storage/emulated/0/MITS/.git/hooks/pre-merge-commit.sample
+del-v /f /s /q /storage/emulated/0/MITS/.git/hooks/pre-push.sample
+del-v /f /s /q /storage/emulated/0/MITS/.git/hooks/pre-rebase.sample
+del-v /f /s /q /storage/emulated/0/MITS/.git/hooks/pre-receive.sample
+del-v /f /s /q /storage/emulated/0/MITS/.git/hooks/prepare-commit-msg.sample
+del-v /f /s /q /storage/emulated/0/MITS/.git/hooks/push-to-checkout.sample
+del-v /f /s /q /storage/emulated/0/MITS/.git/hooks/sendemail-validate.sample
+del-v /f /s /q /storage/emulated/0/MITS/.git/hooks/update.sample
+del-v /f /s /q /storage/emulated/0/MITS/.git/info/exclude
+del-v /f /s /q /storage/emulated/0/MITS/.git/logs/refs/heads/main
+del-v /f /s /q /storage/emulated/0/MITS/.git/logs/refs/remotes/origin/HEAD
+del-v /f /s /q /storage/emulated/0/MITS/.git/logs/HEAD
+del-v /f /s /q /storage/emulated/0/MITS/.git/objects/pack/pack-4ea10ef631b3706dce14749ff996eabf695a4648.idx
+del-v /f /s /q /storage/emulated/0/MITS/.git/objects/pack/pack-4ea10ef631b3706dce14749ff996eabf695a4648.pack
+del-v /f /s /q /storage/emulated/0/MITS/.git/objects/pack/pack-4ea10ef631b3706dce14749ff996eabf695a4648.rev
+del-v /f /s /q /storage/emulated/0/MITS/.git/refs/heads/main
+del-v /f /s /q /storage/emulated/0/MITS/.git/refs/remotes/origin/HEAD
+del-v /f /s /q /storage/emulated/0/MITS/.git/config
+del-v /f /s /q /storage/emulated/0/MITS/.git/description
+del-v /f /s /q /storage/emulated/0/MITS/.git/HEAD
+del-v /f /s /q /storage/emulated/0/MITS/.git/index
+del-v /f /s /q /storage/emulated/0/MITS/.git/packed-refs
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/bak/colors.properties
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/bak/font.tar.xz
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/bak/font.ttf
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/bak/termux.properties
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/cpp/diskpart.cpp
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/cpp/help.cpp
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/cpp/move.cpp
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/cpp/netsh.cpp
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/cpp/pause.cpp
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/cpp/ren.cpp
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/cpp/rename.cpp
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/cpp/systeminfo.cpp
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/cpp/taskkill.cpp
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/cpp/tasklist.cpp
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/cpp/type.cpp
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/cpp/ver.cpp
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/cpp/version.cpp
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/cpp/winver.cpp
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/order/cls
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/order/cmd
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/order/del
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/order/del-v
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/order/dir
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/order/FTP.make
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/order/init.rc
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/.zshrc
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/init.rc
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/temp.data.check.cmd.sh
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/temp.data.check.config.py
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/temp.data.check.install.sh
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/temp.data.clear.sh
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/temp.data.config.sh
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/temp.data.fix.cmd.sh
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/temp.data.fix.config.py
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/temp.data.fix.on.sh
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/temp.data.fix.zsh.sh
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/temp.data.init.sh
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/temp.data.make.c.sh
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/temp.data.sh
+del-v /f /s /q /storage/emulated/0/MITS/data/bin/temp.user.zsh.init.py
+del-v /f /s /q /storage/emulated/0/MITS/install.sh
+del-v /f /s /q /storage/emulated/0/MITS/README.md
+del-v /f /s /q /storage/emulated/0/MITS
 
 echo "接下来程序会自动关闭"
 echo "重新打开代表已经安装完成"
