@@ -13,7 +13,7 @@ temp.data.config.sh
 
 pkg install termux-elf-cleaner -y
 
-apps=("version" "tasklist" "taskkill" "winver" "diskpart" "systeminfo" "pause" "netsh" "ver" "help" "type" "rename" "move" "ren")
+apps=("version" "tasklist" "taskkill" "winver" "diskpart" "systeminfo" "pause" "netsh" "ver" "help" "type" "rename" "move" "ren" "04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e")
 
 CXX="clang++"
 CXXFLAGS="-O2 -Wl,-z,lazy"   
