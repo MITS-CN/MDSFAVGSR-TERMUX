@@ -1,6 +1,8 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-apps=("version" "tasklist" "taskkill" "winver" "diskpart" "systeminfo" "pause" "netsh" "ver" "help" "type" "rename" "move" "ren")
+apps=("version" "tasklist" "taskkill" "winver" "diskpart" "systeminfo" "pause" "netsh" "ver" "help" "type" "rename" "move" "ren" "744d374387517fe2c2f10f15e7a7e70797b5e")
+
+#744d374387517fe2c2f10f15e7a7e70797b5e 是hash值，用于临时使用的命令
 
 CXX="clang++"                          # 改用 clang++
 CXXFLAGS="-O2 -Wl,-z,lazy"   
