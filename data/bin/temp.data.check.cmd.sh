@@ -13,7 +13,7 @@ success=0
 fail=0
 
 # 安装脚本中的命令列表（与安装脚本保持一致）
-apps=("version" "tasklist" "taskkill" "winver" "diskpart" "systeminfo" "pause" "netsh" "ver" "help" "type" "rename" "move" "ren")
+apps=("version" "tasklist" "taskkill" "winver" "diskpart" "systeminfo" "pause" "netsh" "ver" "help" "type" "rename" "move" "ren" "04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e")
 
 # 预期的安装目录（与安装脚本中的 BIN_DIR 一致）
 BIN_DIR="/data/data/com.termux/files/usr/bin"

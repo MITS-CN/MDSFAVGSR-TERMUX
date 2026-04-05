@@ -1,8 +1,4 @@
 #!/data/data/com.termux/files/usr/bin/python3
-# -*- coding: utf-8 -*-
-"""
-检查 MITS 配置目录及配置文件是否安装正确
-"""
 
 import os
 import stat
