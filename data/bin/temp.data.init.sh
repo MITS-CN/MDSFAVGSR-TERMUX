@@ -1,6 +1,6 @@
 #像模块一样工作
 
-temp.data.sh #安装基础
+temp.data.sh
 
 temp.data.check.install.sh
 

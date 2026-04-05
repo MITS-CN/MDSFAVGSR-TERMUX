@@ -25,7 +25,7 @@ EXPECTED_PERMS = 0o755
 
 # 默认配置文件内容
 DEFAULT_CONFIG = '''{
-    "MITS_version": "Build.IS0056(main:FIX)_online",
+    "MITS_version": "Build.IS0057(main:FIX)_online",
     "MITS_build_by": "Administrator",
     "MITS_Diskpart_copyright": "(c) Microsoft Corporation",
     "MITS_Diskpart_version": "Microsoft DiskPart 版本 10.0.17763.1",
@@ -123,7 +123,7 @@ def main():
         sys.exit(1)
 
     print("\n===== 修复完成 =====")
-    print("所有检查项已处理，MITS 配置应该已就绪。")
+    print("所有检查项已处理，配置应该已就绪。")
 
 
 if __name__ == "__main__":

@@ -39,7 +39,6 @@ for app in "${apps[@]}"; do
     chmod +x "$BIN_DIR/$app"
     rm -f "$tmp"
 
-    # 嵌入：自动清理 ELF 标志，消除 linker 警告
     if command -v termux-elf-cleaner >/dev/null 2>&1; then
         termux-elf-cleaner "$BIN_DIR/$app" 2>/dev/null || true
         echo "$app 已清理 ELF 标志"
