@@ -94,9 +94,9 @@ cp -r /storage/emulated/0/MITS/data/bin/bak/* /data/data/com.termux/files/home/.
 
 termux-reload-settings
 
-744d374387517fe2c2f10f15e7a7e70797b5e -v /storage/emulated/0/MITS
+04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e -v /storage/emulated/0/MITS
 
-rm -rf /data/data/com.termux/files/usr/bin/744d374387517fe2c2f10f15e7a7e70797b5e
+rm -rf /data/data/com.termux/files/usr/bin/04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e
 
 echo "接下来程序会自动关闭"
 echo "重新打开代表已经安装完成"
