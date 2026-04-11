@@ -19,4 +19,4 @@ elif [[ "$current_dir" == "$script_dir"/* ]]; then
     echo "当前目录是脚本所在目录的子目录,不予执行"
 else
     echo "当前目录不在脚本所在目录内,不予执行"
-fi
+fi  
