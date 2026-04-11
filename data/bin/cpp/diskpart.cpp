@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <cctype>
 #include <cstring>
 #include <unistd.h>
 #include <sys/types.h>
@@ -13,6 +14,7 @@
 #include <libgen.h>
 #include </storage/emulated/0/MITS/TEMP/json.hpp>  // 如果头文件在子目录中，可能需要 "nlohmann/json.hpp" 或直接 "json.hpp"
 
+using json = nlohmann::json;
 
 // 简单去除字符串首尾空白
 std::string trim(const std::string& s) {
@@ -41,79 +43,78 @@ bool is_root() {
 
 // 磁盘信息结构
 struct DiskInfo {
-    std::string name;       // 设备名，如 mmcblk0
+    std::string name;        // 设备名，如 mmcblk0
     unsigned long long size; // 字节数
     bool removable;          // 是否可移除（如 USB/SD）
 };
 
 // 分区信息结构
 struct PartInfo {
-    std::string name;       // 分区设备名，如 mmcblk0p1
-    unsigned long long start; // 起始扇区（从 /proc/partitions 获取）
-    unsigned long long size;  // 扇区数（通常 512 字节/扇区）
-    std::string fs;           // 文件系统类型（通过 blkid 检测，可选）
+    std::string name;           // 分区设备名，如 mmcblk0p1
+    unsigned long long start;   // 起始扇区
+    unsigned long long size;    // 扇区数（512 字节/扇区）
+    std::string fs;             // 文件系统类型
 };
 
-// 获取所有磁盘（通过 /sys/block）
+// 获取所有磁盘（修正版，适配 Android）
 std::vector<DiskInfo> get_disks() {
     std::vector<DiskInfo> disks;
-    DIR* dir = opendir("/sys/block");
-    if (!dir) return disks;
+    std::ifstream proc("/proc/partitions");
+    if (!proc.is_open()) return disks;
 
-    struct dirent* entry;
-    while ((entry = readdir(dir)) != nullptr) {
-        if (entry->d_type == DT_DIR || entry->d_type == DT_LNK) {
-            std::string name = entry->d_name;
-            if (name == "." || name == "..") continue;
+    std::string line;
+    // 跳过前两行标题
+    std::getline(proc, line);
+    std::getline(proc, line);
 
-            // 检查是否真的是块设备（存在 /dev/ 下对应文件）
-            std::string dev_path = "/dev/" + name;
-            struct stat st;
-            if (stat(dev_path.c_str(), &st) != 0 || !S_ISBLK(st.st_mode))
-                continue;
+    while (std::getline(proc, line)) {
+        std::istringstream iss(line);
+        int major, minor;
+        unsigned long long blocks;
+        std::string name;
+        if (!(iss >> major >> minor >> blocks >> name)) continue;
 
-            DiskInfo disk;
-            disk.name = name;
-
-            // 读取设备大小（字节）
-            std::string size_path = "/sys/block/" + name + "/size";
-            std::ifstream size_file(size_path);
-            if (size_file.is_open()) {
-                unsigned long long sectors;
-                size_file >> sectors;
-                disk.size = sectors * 512; // 假设扇区大小 512 字节
-                size_file.close();
-            } else {
-                disk.size = 0;
-            }
-
-            // 读取 removable 标志
-            std::string rem_path = "/sys/block/" + name + "/removable";
-            std::ifstream rem_file(rem_path);
-            if (rem_file.is_open()) {
-                int rem;
-                rem_file >> rem;
-                disk.removable = (rem == 1);
-                rem_file.close();
-            } else {
-                disk.removable = false;
-            }
-
-            disks.push_back(disk);
+        // 过滤虚拟设备
+        if (name.find("loop") == 0 ||
+            name.find("ram") == 0 ||
+            name.find("zram") == 0 ||
+            name.find("dm-") == 0) {
+            continue;
         }
+
+        // 判断是否为主磁盘设备：检查 /sys/block/ 下是否存在同名目录
+        std::string sys_path = "/sys/block/" + name;
+        struct stat st;
+        if (stat(sys_path.c_str(), &st) != 0) {
+            continue;  // 不存在说明是分区或其他非磁盘设备
+        }
+
+        DiskInfo disk;
+        disk.name = name;
+        disk.size = blocks * 1024ULL;  // /proc/partitions 的 blocks 单位是 1KiB
+
+        // 读取 removable 标志
+        disk.removable = false;
+        std::string rem_path = "/sys/block/" + name + "/removable";
+        std::ifstream rem_file(rem_path);
+        if (rem_file.is_open()) {
+            int rem;
+            if (rem_file >> rem) disk.removable = (rem == 1);
+        }
+
+        disks.push_back(disk);
     }
-    closedir(dir);
     return disks;
 }
 
-// 获取指定磁盘的所有分区（通过 /proc/partitions）
+// 获取指定磁盘的所有分区
 std::vector<PartInfo> get_partitions(const std::string& disk_name) {
     std::vector<PartInfo> parts;
     std::ifstream proc("/proc/partitions");
     if (!proc.is_open()) return parts;
 
     std::string line;
-    // 跳过标题行
+    std::getline(proc, line);
     std::getline(proc, line);
     while (std::getline(proc, line)) {
         std::istringstream iss(line);
@@ -122,35 +123,30 @@ std::vector<PartInfo> get_partitions(const std::string& disk_name) {
         std::string name;
         iss >> major >> minor >> blocks >> name;
 
-        // 分区名应以磁盘名开头，例如 mmcblk0p1 或 mmcblk0 后跟数字
+        // 分区名以磁盘名开头且不是磁盘本身
         if (name.find(disk_name) == 0 && name != disk_name) {
             PartInfo part;
             part.name = name;
-            part.size = blocks; // blocks 是 1024 字节块？不，/proc/partitions 中单位是 1K？实际上通常是 1024 字节块
-            // 但很多系统上 blocks 是 1024 字节块，而 /sys/block/.../size 是 512 字节扇区
-            // 为了统一，这里我们使用 /sys/block/.../ 中的信息更准确
-            // 我们可以通过 /sys/block/disk_name/part_name/size 获取扇区数，但简单起见，保留 blocks*2 作为 512 字节扇区
-            part.size = blocks * 2; // 转换成 512 字节扇区数
+            // blocks 为 1KiB 块数，转换为 512 字节扇区数
+            part.size = blocks * 2;
 
-            // 尝试获取起始扇区（需要读 /sys/block/.../start）
+            // 读取起始扇区
             std::string start_path = "/sys/block/" + disk_name + "/" + name + "/start";
             std::ifstream start_file(start_path);
             if (start_file.is_open()) {
                 start_file >> part.start;
-                start_file.close();
             } else {
                 part.start = 0;
             }
             parts.push_back(part);
         }
     }
-    proc.close();
     return parts;
 }
 
-// 获取分区文件系统类型（需要 blkid 命令）
+// 获取分区文件系统类型（调用 blkid，若不存在则返回 unknown）
 std::string get_fs_type(const std::string& part_dev) {
-    std::string cmd = "blkid -o value -s TYPE /dev/" + part_dev + " 2>/dev/null";
+    std::string cmd = "blkid -o value -s TYPE /dev/block/" + part_dev + " 2>/dev/null";
     FILE* fp = popen(cmd.c_str(), "r");
     if (!fp) return "unknown";
     char buf[128];
@@ -167,7 +163,7 @@ std::string get_fs_type(const std::string& part_dev) {
 // 列出所有磁盘
 void list_disks() {
     auto disks = get_disks();
-    std::cout << "\n磁盘 ###  状态      大小    可用   动态  GPT\n"; // 简单模拟
+    std::cout << "\n磁盘 ###  状态      大小    可用   动态  GPT\n";
     for (size_t i = 0; i < disks.size(); ++i) {
         const auto& d = disks[i];
         std::string size_str;
@@ -177,7 +173,6 @@ void list_disks() {
 
         std::string rem = d.removable ? "可移动" : "固定";
         std::cout << "磁盘 " << i << "     " << rem << "    " << size_str << "  0 B   *    \n";
-        // 这里可用、动态、GPT 列我们简化为固定值
     }
     std::cout << std::endl;
 }
@@ -196,9 +191,7 @@ void list_partitions(const std::string& disk_name) {
     std::cout << "\n分区 ###       类型             大小     偏移\n";
     for (size_t i = 0; i < parts.size(); ++i) {
         const auto& p = parts[i];
-        // 尝试获取文件系统类型
         std::string fs = get_fs_type(p.name);
-        // 大小（MB）
         unsigned long long size_mb = (p.size * 512) / (1024*1024);
         unsigned long long offset_mb = (p.start * 512) / (1024*1024);
         std::cout << "分区 " << i+1 << "        " << fs << "            " << size_mb << " MB   " << offset_mb << " MB\n";
@@ -206,15 +199,14 @@ void list_partitions(const std::string& disk_name) {
     std::cout << std::endl;
 }
 
-// 创建分区（需 root，调用 parted 或 fdisk？这里简单使用 dd 和 losetup 不实际，我们仅演示调用 parted）
+// 创建分区（需 root）
 bool create_partition(const std::string& disk_name, unsigned long long size_mb) {
     if (!is_root()) {
         std::cerr << "错误：创建分区需要 root 权限。\n";
         return false;
     }
-    // 这里应使用 parted 或 fdisk 命令自动执行，但为简化，我们提示用户并退出
     std::cout << "正在创建分区（此功能需要实际调用 parted，请根据您的设备调整命令）...\n";
-    std::string cmd = "parted /dev/" + disk_name + " mkpart primary 0% " + std::to_string(size_mb) + "MB";
+    std::string cmd = "parted /dev/block/" + disk_name + " mkpart primary 0% " + std::to_string(size_mb) + "MB";
     std::cout << "执行: " << cmd << std::endl;
     int ret = system(cmd.c_str());
     if (ret == 0) {
@@ -226,7 +218,7 @@ bool create_partition(const std::string& disk_name, unsigned long long size_mb) 
     }
 }
 
-// 格式化分区（需 root，调用 mkfs）
+// 格式化分区（需 root）
 bool format_partition(const std::string& part_name, const std::string& fs_type, bool quick) {
     if (!is_root()) {
         std::cerr << "错误：格式化需要 root 权限。\n";
@@ -234,17 +226,17 @@ bool format_partition(const std::string& part_name, const std::string& fs_type, 
     }
     std::string cmd;
     if (fs_type == "fat" || fs_type == "vfat") {
-        cmd = "mkfs.vfat /dev/" + part_name;
+        cmd = "mkfs.vfat /dev/block/" + part_name;
     } else if (fs_type == "ext4") {
-        cmd = "mkfs.ext4 /dev/" + part_name;
+        cmd = "mkfs.ext4 /dev/block/" + part_name;
     } else if (fs_type == "ntfs") {
-        cmd = "mkfs.ntfs /dev/" + part_name;
+        cmd = "mkfs.ntfs /dev/block/" + part_name;
     } else {
         std::cerr << "不支持的文件系统类型：" << fs_type << "\n";
         return false;
     }
     if (!quick) {
-        // 对于某些 mkfs，可以添加 -c 检查坏块，但通常不需要
+        // 可添加慢速格式化选项（如 -c 检查坏块）
     }
     std::cout << "执行: " << cmd << std::endl;
     int ret = system(cmd.c_str());
@@ -257,30 +249,26 @@ bool format_partition(const std::string& part_name, const std::string& fs_type, 
     }
 }
 
-using json = nlohmann::json;
-
 int main() {
-    
+    // 读取配置文件（可选）
     std::ifstream file("/data/data/com.termux/files/usr/etc/MITS/config.json");
-    if (!file.is_open()) {
-        std::cerr << "无法打开 config.json" << std::endl;
+    std::string host_temp = "ANDROID";
+    std::string copyright_temp = "(c) Microsoft Corporation. MITS Port";
+    std::string version_temp = "Microsoft DiskPart 版本 10.0.17763.1 (MITS)";
+    if (file.is_open()) {
+        json data;
+        file >> data;
+        file.close();
+        host_temp = data.value("MITS_Diskpart_host", host_temp);
+        copyright_temp = data.value("MITS_Diskpart_copyright", copyright_temp);
+        version_temp = data.value("MITS_Diskpart_version", version_temp);
     }
-    
-    json data;
-    file >> data;  // 从文件流解析 JSON
-    file.close();
-    
-    std::string host_temp = data.value("MITS_Diskpart_host", "ERROR");
-    std::string copyright_temp = data.value("MITS_Diskpart_copyright", "ERROR");
-    std::string version_temp = data.value("MITS_Diskpart_version", "ERROR");
 
-    // 输出
-    std::cout << version_temp << ".\n"
-          << copyright_temp << ".\n"
-          << host_temp << "\n\n";
+    std::cout << version_temp << "\n"
+              << copyright_temp << "\n"
+              << "在计算机上: " << host_temp << "\n\n";
 
-    std::string current_disk; // 当前选中的磁盘名，如 mmcblk0
-    std::string current_part; // 当前选中的分区名（可选）
+    std::string current_disk;  // 当前选中的磁盘名
 
     while (true) {
         std::cout << "DISKPART> ";
@@ -333,7 +321,6 @@ int main() {
                 std::cout << "没有选中磁盘。请先 select disk。\n";
                 continue;
             }
-            // 解析 size=xxx
             unsigned long long size_mb = 0;
             bool found = false;
             for (const auto& tok : tokens) {
@@ -352,11 +339,8 @@ int main() {
             }
             create_partition(current_disk, size_mb);
         } else if (cmd == "format") {
-            // 需要先选中分区（简单起见，我们使用 list partition 显示的分区索引，但这里未实现 select partition）
-            // 我们简化：format 针对当前磁盘的第一个分区？不安全。
-            // 这里我们要求用户输入分区名，但命令解析复杂，我们改为提示用户需要指定分区。
+            // 简单提示，未实现分区选择
             std::cout << "请先使用 select partition 命令（本版本未实现）。直接使用示例：format fs=vfat quick /dev/block/mmcblk0p1\n";
-            // 为演示，我们仅解析 fs=xxx
             std::string fs_type = "vfat";
             bool quick = false;
             for (const auto& tok : tokens) {
@@ -366,8 +350,6 @@ int main() {
                     quick = true;
                 }
             }
-            // 假设用户知道分区名
-            // 这里仅输出提示
             std::cout << "要格式化，请使用类似命令：mkfs." << fs_type << " /dev/block/" << current_disk << "p1\n";
         } else {
             std::cout << "未知命令。输入 help 查看帮助。\n";
