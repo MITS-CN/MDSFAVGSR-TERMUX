@@ -56,7 +56,35 @@ is_termux() {
     return 1
 }
 
-#!/bin/sh
+# 网络检测主函数
+# 返回: 0 表示有可用网络连接，1 表示无连接
+network_connected() {
+    # 优先使用 curl（HTTP 检测最可靠）
+    if command -v curl >/dev/null 2>&1; then
+        if curl -s --max-time 3 -o /dev/null "http://connectivitycheck.gstatic.com/generate_204"; then
+            return 0
+        fi
+    fi
+
+    # 其次使用 ping
+    if command -v ping >/dev/null 2>&1; then
+        if ping -c 1 -W 2 8.8.8.8 >/dev/null 2>&1; then
+            return 0
+        fi
+        if ping -c 1 -W 2 114.114.114.114 >/dev/null 2>&1; then
+            return 0
+        fi
+    fi
+
+    # 最后尝试 Termux Wi‑Fi API（仅检查 Wi‑Fi 状态，不保证互联网连通）
+    if command -v termux-wifi-connectioninfo >/dev/null 2>&1; then
+        if termux-wifi-connectioninfo 2>/dev/null | grep -q '"supplicant_state": "COMPLETED"'; then
+            return 0
+        fi
+    fi
+
+    return 1
+}
 
 # 仅检查Termux是否拥有共享存储权限
 check_storage_permission() {
@@ -115,6 +143,18 @@ else
     echo "当前 Android 版本过低或无法获取，需要 Android 7.0 及以上系统"
     exit 1
 fi
+
+# --- 你的原有代码 ---
+echo "开始执行任务..."
+echo "正在检查网络连接..."
+
+# --- 调用网络检测 ---
+if ! network_connected; then
+    echo "错误：网络未连接，请检查网络后重试。" >&2
+    exit 1
+fi
+
+echo "网络正常，继续执行..."
 
 # 判断当前目录是否等于脚本目录
 if [ "$current_dir" = "$script_dir" ]; then
