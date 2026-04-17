@@ -87,16 +87,6 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    // 危险操作确认
-    std::cout << "警告: 即将删除目录及其所有内容: " << target << std::endl;
-    std::cout << "输入 'yes' 确认删除: ";
-    std::string confirm;
-    std::getline(std::cin, confirm);
-    if (confirm != "yes") {
-        std::cout << "取消删除操作。" << std::endl;
-        return 0;
-    }
-
     if (remove_recursive(target, verbose)) {
         // 最后删除顶层目录本身
         try {
