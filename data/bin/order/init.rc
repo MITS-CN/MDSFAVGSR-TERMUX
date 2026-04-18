@@ -24,6 +24,6 @@ for file in "${sh_files[@]}"; do
     chmod +x "${bin}/${filename}"
     echo "已处理：${filename}"
 done
-rm -rf /data/data/com.termux/files/usr/bin/inir.rc
+rm -rf /data/data/com.termux/files/usr/bin/init.rc
 echo -e "\n所有 命令脚本文件复制完成，已赋予执行权限！"
 echo "目标目录：${bin}"
