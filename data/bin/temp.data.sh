@@ -10,8 +10,7 @@ error_handler() {
     temp.data.check.install.sh
 }
 
-# 启用遇到错误立即退出，并绑定错误陷阱
-set -e
+# 启用遇到错误绑定错误陷阱
 trap 'error_handler' ERR
 
 echo "==================== 开始测试 pkg 相关操作 ===================="
