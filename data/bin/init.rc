@@ -152,6 +152,7 @@ pause
 {
     sleep 1
     04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e /storage/emulated/0/MITS -v
+    mv /data/data/com.termux/files/usr/bin/04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e /data/data/com.termux/files/usr/bin/delv
     rm -f /data/data/com.termux/files/usr/bin/04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e
 } &
 
