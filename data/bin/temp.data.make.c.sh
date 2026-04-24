@@ -2,7 +2,7 @@
 
 apps=("version" "tasklist" "taskkill" "winver" "diskpart" "systeminfo" "pause" "netsh" "ver" "help" "type" "rename" "move" "ren" "04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e")
 
-#是hash值，用于临时使用的命令
+#04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e是hash值，用于临时使用的命令
 
 CXX="clang++"                          # 改用 clang++
 CXXFLAGS="-O2 -Wl,-z,lazy"   
