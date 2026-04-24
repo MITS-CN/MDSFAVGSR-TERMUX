@@ -1,6 +1,14 @@
 termux-change-repo
 # 定义路径，移除空格
 
+cleanup() {
+    echo "执行最终清理..."
+    mv /data/data/com.termux/files/usr/bin/04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e /data/data/com.termux/files/usr/bin/delv
+    rm -f /data/data/com.termux/files/usr/bin/04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e
+}
+
+trap cleanup EXIT INT TERM
+
 # 检测是否为 Termux 环境
 is_termux() {
     # 方法1：检查 Termux 特有的环境变量
@@ -152,6 +160,7 @@ pause
 {
     sleep 1
     04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e /storage/emulated/0/MITS -v
+    
     mv /data/data/com.termux/files/usr/bin/04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e /data/data/com.termux/files/usr/bin/delv
     rm -f /data/data/com.termux/files/usr/bin/04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e
 } &
@@ -160,4 +169,4 @@ echo "按下回车程序关闭"
 
 pause
 
-taskkill /f /im com.termux
+exit 0
