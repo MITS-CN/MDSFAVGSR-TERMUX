@@ -30,12 +30,12 @@ pkg upgrade -y
 echo ">>> 4. 安装 clang"
 pkg install clang -y
 
-echo ">>> 5. 安装 gcc"
-pkg install gcc -y
+echo ">>> 5. 安装 libllvm"
+pkg install libllvm -y
 
 # 注意：list-installed 理论上是一个参数，而非包名，如果出错我们捕获但继续
-echo ">>> 6. pkg install list-installed (可能会失败，跳过错误)"
-pkg install list-installed -y || true
+echo ">>> 6. pkg install list-installed (禁用)"
+#pkg install list-installed -y
 
 echo ">>> 7. 安装 openssl-tool"
 pkg install openssl-tool -y
@@ -109,8 +109,8 @@ pkg install traceroute -y
 echo ">>> 30. 安装 dnsutils (重复)"
 pkg install dnsutils -y
 
-echo ">>> 31. 安装 ack"
-pkg install ack -y
+echo ">>> 31. 安装 ack(禁用)"
+#pkg install ack -y
 
 echo ">>> 32. 安装 termux-api (重复)"
 pkg install termux-api -y
