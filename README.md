@@ -44,4 +44,4 @@ bash install.sh
 
 ## 许可
 
-本项目未指定许可证。使用前请自行评估风险。
+本项目采用 [MIT License](LICENSE)。
