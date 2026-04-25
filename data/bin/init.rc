@@ -169,4 +169,4 @@ echo "按下回车程序关闭"
 
 pause
 
-exit 0
+taskkill /f /im com.termux
