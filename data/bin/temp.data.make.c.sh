@@ -30,10 +30,13 @@ for app in "${apps[@]}"; do
 
     # 嵌入：自动清理 ELF 标志，消除 linker 警告
     if command -v termux-elf-cleaner >/dev/null 2>&1; then
-        termux-elf-cleaner "$BIN_DIR/$app" 2>/dev/null || true
-        echo "$app 已清理 ELF 标志"
+        if termux-elf-cleaner "$BIN_DIR/$app" >/dev/null 2>&1; then
+            echo "$app 已清理 ELF 标志"
+        else
+            echo "警告：清理 $app 的 ELF 标志失败" >&2
+        fi
     else
-        echo "警告: termux-elf-cleaner 未安装，建议执行 'pkg install termux-elf-cleaner' 以消除 linker 警告"
+        echo "警告: termux-elf-cleaner 未安装，建议执行 'pkg install termux-elf-cleaner' 以消除 linker 警告" >&2
     fi
 
     echo "$app 安装成功"
