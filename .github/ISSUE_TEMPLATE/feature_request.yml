@@ -1,0 +1,14 @@
+name: Feature Request
+description: 建议一个新功能
+title: "[Feature]: "
+labels: ["enhancement"]
+assignees:
+  - MITS-CN
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: 你想实现什么功能？
+      description: 描述你希望增加的功能，以及它能解决什么问题
+    validations:
+      required: true
