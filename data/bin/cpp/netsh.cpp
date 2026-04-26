@@ -6,6 +6,9 @@
 #include <map>
 #include <algorithm>
 #include <cstring>
+#include <cstdio>
+#include <cstdlib>
+#include <cctype>
 #include <unistd.h>
 #include <sys/socket.h>
 #include <sys/ioctl.h>
@@ -50,7 +53,7 @@ std::string exec_cmd(const char* cmd) {
     return result;
 }
 
-// 读取文件第一行
+// 读取文件第一行（保留备用）
 std::string read_file(const std::string& path) {
     std::ifstream f(path);
     if (!f.is_open()) return "";
@@ -117,7 +120,8 @@ std::vector<InterfaceInfo> get_interfaces() {
     if (sock >= 0) {
         struct ifreq ifr;
         for (auto& pair : if_map) {
-            std::strncpy(ifr.ifr_name, pair.first.c_str(), IFNAMSIZ-1);
+            std::strncpy(ifr.ifr_name, pair.first.c_str(), IFNAMSIZ - 1);
+            ifr.ifr_name[IFNAMSIZ - 1] = '\0'; // 确保字符串终止
             if (ioctl(sock, SIOCGIFHWADDR, &ifr) == 0) {
                 unsigned char* mac = (unsigned char*)ifr.ifr_hwaddr.sa_data;
                 char mac_str[18];
@@ -199,7 +203,7 @@ bool set_static_ip(const std::string& iface, const std::string& ip, const std::s
         std::cerr << "错误：设置静态IP需要 root 权限。\n";
         return false;
     }
-    // 使用 ip 命令配置
+    // 使用 ip 命令配置（mask 需为CIDR前缀长度，例如 24）
     std::string cmd = "ip addr add " + ip + "/" + mask + " dev " + iface + " 2>/dev/null";
     if (system(cmd.c_str()) != 0) {
         std::cerr << "添加IP地址失败。\n";
@@ -241,7 +245,7 @@ void show_dns() {
     }
 }
 
-// 设置静态DNS（通过setprop，需要root？实测非root也可设置net.dns1，但可能被系统覆盖）
+// 设置静态DNS（通过setprop，部分系统可能需root）
 bool set_static_dns(const std::string& dns) {
     std::string cmd = "setprop net.dns1 " + dns;
     int ret = system(cmd.c_str());
@@ -254,9 +258,8 @@ bool set_static_dns(const std::string& dns) {
     }
 }
 
-// 恢复DHCP DNS（删除自定义DNS）
+// 恢复DHCP DNS
 bool set_dhcp_dns() {
-    // 清空自定义DNS，让系统从DHCP获取
     system("setprop net.dns1 ''");
     system("setprop net.dns2 ''");
     std::cout << "已恢复 DHCP DNS。\n";
@@ -268,11 +271,9 @@ bool set_dhcp_dns() {
 // 扫描WiFi网络
 void scan_wifi() {
     std::cout << "正在扫描 WiFi 网络...\n";
-    // 触发扫描（可能需要权限）
     system("cmd wifi start-scan >/dev/null 2>&1");
     sleep(2);  // 等待扫描完成
 
-    // 获取扫描结果
     std::string result = exec_cmd("cmd wifi list-scan-results");
     if (result.empty()) {
         std::cout << "未找到 WiFi 网络或扫描失败。\n";
@@ -282,14 +283,12 @@ void scan_wifi() {
     std::cout << result << std::endl;
 }
 
-// 连接WiFi（使用Android的cmd wifi命令）
+// 连接WiFi
 bool connect_wifi(const std::string& ssid, const std::string& password) {
     std::string cmd;
     if (password.empty()) {
-        // 开放网络
         cmd = "cmd wifi connect-network \"" + ssid + "\" open";
     } else {
-        // WPA2网络
         cmd = "cmd wifi connect-network \"" + ssid + "\" wpa2 \"" + password + "\"";
     }
     std::cout << "正在连接 " << ssid << "...\n";
@@ -311,8 +310,7 @@ void disconnect_wifi() {
 
 // ========== 主程序与命令分发 ==========
 
-// 当前上下文
-std::string current_context = ">";  // 例如 "interface ip>", "wlan>"
+std::string current_context = ">";
 
 void print_prompt() {
     std::cout << "netsh" << current_context << " ";
@@ -324,7 +322,6 @@ bool handle_command(const std::vector<std::string>& tokens) {
     std::string cmd = tokens[0];
     std::transform(cmd.begin(), cmd.end(), cmd.begin(), ::tolower);
 
-    // 全局命令：exit, help
     if (cmd == "exit" || cmd == "quit") {
         return false;
     }
@@ -344,7 +341,7 @@ bool handle_command(const std::vector<std::string>& tokens) {
         return true;
     }
 
-    // 处理上下文切换
+    // 上下文切换
     if (cmd == "interface" && tokens.size() >= 2 && tokens[1] == "ip") {
         current_context = " interface ip>";
         std::cout << "当前上下文: interface ip\n";
@@ -361,15 +358,14 @@ bool handle_command(const std::vector<std::string>& tokens) {
         return true;
     }
 
-    // 根上下文命令（如果当前不在根，尝试解析）
+    // 根上下文未识别命令
     if (current_context == ">") {
         std::cerr << "未知命令。输入 help 查看帮助。\n";
         return true;
     }
 
-    // 根据当前上下文处理命令
+    // 分发到对应上下文
     if (current_context == " interface ip>") {
-        // 解析 interface ip 子命令
         if (tokens.size() >= 2 && tokens[0] == "show" && tokens[1] == "config") {
             show_interface_config();
         } else if (tokens.size() >= 2 && tokens[0] == "show" && tokens[1] == "dns") {
@@ -385,7 +381,6 @@ bool handle_command(const std::vector<std::string>& tokens) {
             std::string name = tokens[2];
             set_dhcp(name);
         } else if (tokens.size() >= 6 && tokens[0] == "set" && tokens[1] == "dns" && tokens[3] == "static") {
-            // interface ip set dns <name> static <dns>
             std::string dns = tokens[4];
             set_static_dns(dns);
         } else if (tokens.size() >= 5 && tokens[0] == "set" && tokens[1] == "dns" && tokens[3] == "dhcp") {
@@ -394,7 +389,6 @@ bool handle_command(const std::vector<std::string>& tokens) {
             std::cerr << "未知的 interface ip 命令。输入 help 查看帮助。\n";
         }
     } else if (current_context == " wlan>") {
-        // 解析 wlan 子命令
         if (tokens.size() >= 2 && tokens[0] == "show" && tokens[1] == "networks") {
             scan_wifi();
         } else if (tokens.size() >= 2 && tokens[0] == "connect") {
