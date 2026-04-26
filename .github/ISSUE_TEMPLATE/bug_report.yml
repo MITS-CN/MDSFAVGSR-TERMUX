@@ -1,0 +1,59 @@
+name: Bug Report
+description: 报告一个 bug，帮助项目变得更好
+title: "[Bug]: "
+labels: ["bug"]
+assignees:
+  - MITS-CN
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢花时间报告 bug！请尽量提供以下信息，帮助我复现和修复问题。
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 发生了什么？
+      description: 描述你遇到的问题，以及你期望的正常行为是什么
+      placeholder: 例如：运行 tasklist 后输出为空，预期显示进程列表
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      description: 请说明如何复现这个问题
+      placeholder: |
+        1. 执行了...
+        2. 输入了...
+        3. 看到了错误...
+    validations:
+      required: false
+
+  - type: input
+    id: termux-version
+    attributes:
+      label: Termux 版本
+      description: 在 Termux 里运行 `termux-info` 获取
+      placeholder: 例如：0.118.0
+    validations:
+      required: false
+
+  - type: input
+    id: android-version
+    attributes:
+      label: Android 版本
+      description: 在 Termux 里运行 `getprop ro.build.version.release` 获取
+      placeholder: 例如：12
+    validations:
+      required: false
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 相关日志/输出
+      description: 粘贴你看到的完整错误信息或终端输出
+      render: shell
+    validations:
+      required: false
