@@ -41,7 +41,7 @@ elif [ ! -f "/data/data/com.termux/files/usr/etc/MITS/config.json" ]; then
     # 其实应该分开来的这里
     cat > "/data/data/com.termux/files/usr/etc/MITS/config.json" <<EOF
 {
-    "MITS_version": "Build.IS0057(main:NULL)_fix",
+    "MITS_version": "Build.IS0060(main:NULL)_fix",
     "MITS_build_by": "Administrator",
     "MITS_Diskpart_copyright": "(c) Microsoft Corporation",
     "MITS_Diskpart_version": "Microsoft DiskPart 版本 10.0.17763.1",
