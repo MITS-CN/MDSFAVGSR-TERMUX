@@ -11,6 +11,45 @@ import stat
 import time
 from pathlib import Path
 
+def is_termux():
+    #"""综合多种特征判断当前环境是否为 Termux"""
+    
+    # 1. 环境变量 TERMUX_VERSION（Termux 特有，最权威）
+    if os.environ.get("TERMUX_VERSION"):
+        return True
+    
+    # 2. PREFIX 路径特征
+    prefix = os.environ.get("PREFIX", "")
+    if prefix.startswith("/data/data/com.termux/files"):
+        return True
+    
+    # 3. HOME 路径特征
+    home = os.environ.get("HOME", "")
+    if home.startswith("/data/data/com.termux/files/home"):
+        return True
+    
+    # 4. 典型目录是否存在
+    #    Termux 的数据目录，在 Android 中非常特定
+    if os.path.isdir("/data/data/com.termux"):
+        return True
+    
+    # 5. 典型可执行文件是否存在
+    #    termux-info 是 Termux 专有命令
+    for cmd_path in [
+        "/data/data/com.termux/files/usr/bin/termux-info",
+        "/data/data/com.termux/files/usr/bin/bash"
+    ]:
+        if os.path.isfile(cmd_path):
+            return True
+    
+    
+    # 6. 环境变量 LD_PRELOAD 经常使用 Termux 的 libtermux-exec.so
+    ld_preload = os.environ.get("LD_PRELOAD", "")
+    if "libtermux-exec.so" in ld_preload:
+        return True
+    
+    return False
+
 def print_color(text, color_code):
     """打印彩色文本"""
     colors = {
@@ -342,4 +381,8 @@ def main():
         print_color("❌ 操作失败，请检查错误信息", "red")
 
 if __name__ == "__main__":
-    main()
+    if is_termux():
+        print("Running inside Termux")
+        main()
+    else:
+        print("Not a Termux environment")
