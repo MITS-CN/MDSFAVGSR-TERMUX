@@ -29,7 +29,9 @@ temp.data.check.install.sh
 
 temp.data.fix.zsh.sh
 
-temp.data.make.c.sh
+temp.data.make.cpp.sh
+
+temp.data.make.rust.sh
 
 temp.data.check.config.py
 
