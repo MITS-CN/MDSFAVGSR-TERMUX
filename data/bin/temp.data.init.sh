@@ -41,4 +41,6 @@ compaudit
 
 temp.user.zsh.init.py
 
+temp.data.install.app.sh
+
 temp.data.clear.sh
