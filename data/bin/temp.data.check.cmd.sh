@@ -36,7 +36,7 @@ success=0
 fail=0
 
 # 安装脚本中的命令列表（与安装脚本保持一致）
-apps=("version" "tasklist" "taskkill" "winver" "diskpart" "systeminfo" "pause" "netsh" "ver" "help" "type" "rename" "move" "ren" "04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e")
+apps=("version" "tasklist" "taskkill" "winver" "diskpart" "timeout" "systeminfo" "pause" "netsh" "ver" "help" "type" "rename" "del" "comp" "replace" "move" "ren" "04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e")
 
 # 预期的安装目录（与安装脚本中的 BIN_DIR 一致）
 BIN_DIR="/data/data/com.termux/files/usr/bin"
@@ -70,14 +70,6 @@ else
 fi
 
 echo
-
-# 3. 可选：检查源文件目录是否存在（仅作参考）
-SRC_DIR="/storage/emulated/0/MITS/data/bin/cpp"
-if [ -d "$SRC_DIR" ]; then
-    echo -e "${GREEN}[✓]${NC} 源文件目录存在: $SRC_DIR"
-else
-    echo -e "${YELLOW}[!]${NC} 源文件目录不存在: $SRC_DIR (如果已编译安装可忽略)"
-fi
 
 echo
 echo "===== 检查完成 ====="
