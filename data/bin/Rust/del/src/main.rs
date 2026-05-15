@@ -78,25 +78,29 @@ fn parse_args() -> Result<Config, String> {
 
     let mut args = env::args().skip(1); // 跳过程序名
 
-    // 如果没有参数或者第一个参数是 /?，显示帮助
-    match args.next() {
-        None | Some(ref s) if s == "/?" => {
+    // 处理第一个参数：无参数或 /? 直接显示帮助并退出
+    let first = match args.next() {
+        None => {
             show_help();
             process::exit(0);
         }
-        Some(first) => {
-            // 将第一个参数放回，统一处理
-            let all_args: Vec<String> = std::iter::once(first).chain(args).collect();
-            for arg in all_args {
-                match arg.to_uppercase().as_str() {
-                    "/P" => config.prompt = true,
-                    "/F" => config.force = true,
-                    "/S" => config.recursive = true,
-                    "/Q" => config.quiet = true,
-                    // 忽略不支持的 /A 选项，或可以提示错误
-                    _ => config.targets.push(arg),
-                }
-            }
+        Some(ref s) if s == "/?" => {
+            show_help();
+            process::exit(0);
+        }
+        Some(first) => first,
+    };
+
+    // 将所有参数（包括 first）统一处理
+    let all_args: Vec<String> = std::iter::once(first).chain(args).collect();
+    for arg in all_args {
+        match arg.to_uppercase().as_str() {
+            "/P" => config.prompt = true,
+            "/F" => config.force = true,
+            "/S" => config.recursive = true,
+            "/Q" => config.quiet = true,
+            // 忽略不支持的 /A 选项，或可以提示错误
+            _ => config.targets.push(arg),
         }
     }
 
