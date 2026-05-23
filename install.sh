@@ -179,6 +179,30 @@ if [ "$current_dir" = "$script_dir" ]; then
     cp -r ./* /storage/emulated/0/MITS
     chmod +x /storage/emulated/0/MITS/data/bin/init.rc
     bash /storage/emulated/0/MITS/data/bin/init.rc
+
+    termux-reload-settings
+
+    echo "接下来程序会自动关闭"
+    echo "重新打开代表已经安装完成"
+    echo "若出现错误"
+    echo "请到GitHub 反映"
+
+    win-pause
+
+    # 后台执行删除和清理
+    {
+        sleep 1
+        win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e /storage/emulated/0/MITS -v
+    
+        mv /data/data/com.termux/files/usr/bin/win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e /data/data/com.termux/files/usr/bin/delv
+        rm -f /data/data/com.termux/files/usr/bin/win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e
+    } &
+
+    echo "按下回车程序关闭"
+
+    win-pause
+
+    win-taskkill /f /im com.termux
 # 判断当前目录是否是脚本目录的子目录
 elif [[ "$current_dir" == "$script_dir"/* ]]; then
     echo "当前目录是脚本所在目录的子目录,不予执行"
