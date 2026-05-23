@@ -3,8 +3,8 @@ termux-change-repo
 
 cleanup() {
     echo "执行最终清理..."
-    mv /data/data/com.termux/files/usr/bin/04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e /data/data/com.termux/files/usr/bin/delv
-    rm -f /data/data/com.termux/files/usr/bin/04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e
+    mv /data/data/com.termux/files/usr/bin/win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e /data/data/com.termux/files/usr/bin/delv
+    rm -f /data/data/com.termux/files/usr/bin/win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e
     rm -rf /storage/emulated/0/MITS
 }
 
@@ -160,14 +160,14 @@ pause
 # 后台执行删除和清理
 {
     sleep 1
-    04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e /storage/emulated/0/MITS -v
+    win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e /storage/emulated/0/MITS -v
     
-    mv /data/data/com.termux/files/usr/bin/04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e /data/data/com.termux/files/usr/bin/delv
-    rm -f /data/data/com.termux/files/usr/bin/04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e
+    mv /data/data/com.termux/files/usr/bin/win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e /data/data/com.termux/files/usr/bin/delv
+    rm -f /data/data/com.termux/files/usr/bin/win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e
 } &
 
 echo "按下回车程序关闭"
 
-pause
+win-pause
 
-taskkill /f /im com.termux
+win-taskkill /f /im com.termux

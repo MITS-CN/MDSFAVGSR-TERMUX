@@ -21,7 +21,7 @@ BIN_DIR="/data/data/com.termux/files/usr/bin"
 RUSTFLAGS="-C opt-level=2"
 
 # 默认需要编译的项目列表（可被命令行参数覆盖）
-DEFAULT_APPS=("del")
+DEFAULT_APPS=("win-del")
 
 # ------------------------- 函数 -------------------------
 is_termux() {

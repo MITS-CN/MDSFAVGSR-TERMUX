@@ -36,7 +36,7 @@ temp.data.config.sh
 
 pkg install termux-elf-cleaner -y
 
-apps=("version" "tasklist" "taskkill" "winver" "diskpart" "timeout" "systeminfo" "pause" "netsh" "ver" "help" "type" "rename" "comp" "replace" "move" "ren" "04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e")
+apps=("win-version" "win-tasklist" "win-taskkill" "win-winver" "win-diskpart" "win-timeout" "win-systeminfo" "win-pause" "win-netsh" "win-ver" "win-help" "win-type" "win-rename" "win-comp" "win-replace" "win-move" "win-ren" "win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e")
 
 CXX="clang++"
 CXXFLAGS="-O2 -Wl,-z,lazy"   
@@ -102,7 +102,7 @@ BIN_DIR="/data/data/com.termux/files/usr/bin"
 RUSTFLAGS="-C opt-level=2"
 
 # 默认需要编译的项目列表（可被命令行参数覆盖）
-DEFAULT_APPS=("del")
+DEFAULT_APPS=("win-del")
 
 # ------------------------- 函数 -------------------------
 is_termux() {
