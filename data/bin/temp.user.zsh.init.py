@@ -94,7 +94,7 @@ def copy_zshrc_with_permissions():
     print("=" * 60)
     
     # 定义路径
-    source_zshrc = "/storage/emulated/0/MITS/data/bin/.zshrc"
+    source_zshrc = "/storage/emulated/0/MITS/data/something/!data!data!com.termux!files!home/.zshrc"
     target_zshrc = "/data/data/com.termux/files/home/.zshrc"
     
     # 检查源文件

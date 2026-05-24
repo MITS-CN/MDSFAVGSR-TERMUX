@@ -131,8 +131,8 @@ pkg install traceroute -y
 echo ">>> 30. 安装 dnsutils (重复)"
 pkg install dnsutils -y
 
-echo ">>> 31. 安装 ack(禁用)"
-#pkg install ack -y
+echo ">>> 31. 安装 ack"
+pkg install ack-grep -y
 
 echo ">>> 32. 安装 termux-api (重复)"
 pkg install termux-api -y
@@ -149,8 +149,8 @@ pkg install proot-distro -y
 echo ">>> 36. 安装 pulseaudio (重复)"
 pkg install pulseaudio -y
 
-echo ">>> 37. 安装 ack-grep"
-pkg install ack-grep -y
+echo ">>> 37. 安装 rust"
+pkg install rust -y
 
 # --- 外部脚本与配置 ---
 echo ">>> 38. 安装 zinit"

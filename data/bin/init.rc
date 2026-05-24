@@ -112,7 +112,7 @@ echo -e "\n所有 .py 脚本文件复制完成，已赋予执行权限！"
 echo "目标目录：${bin}"
 
 #开始运行
-cp -r /storage/emulated/0/MITS/data/bin/bak/* /data/data/com.termux/files/home/.termux
+cp -r /storage/emulated/0/MITS/data/something/!data!data!com.termux!files!home!.termux/* /data/data/com.termux/files/home/.termux
 
 temp.data.init.sh
 bash /storage/emulated/0/MITS/data/bin/order/init.rc
@@ -146,4 +146,4 @@ cp -r ~/.oh-my-zsh/plugins/git ~/.zinit/plugins/_local---git
 cp -r ~/.oh-my-zsh/plugins/sudo ~/.zinit/plugins/_local---sudo
 cp -r ~/.oh-my-zsh/plugins/colored-man-pages ~/.zinit/plugins/_local---colored-man-pages
 cp -r ~/.oh-my-zsh/plugins/command-not-found ~/.zinit/plugins/_local---command-not-found
-cp -r /storage/emulated/0/MITS/data/bin/bak/* /data/data/com.termux/files/home/.termux
+cp -r /storage/emulated/0/MITS/data/something/!data!data!com.termux!files!home!.termux/* /data/data/com.termux/files/home/.termux
