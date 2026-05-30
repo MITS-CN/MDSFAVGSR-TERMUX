@@ -1,6 +1,7 @@
 use std::env;
 use std::fs;
-use std::io::{self, BufRead, Write};
+use std::io::{self, Write};
+use std::os::unix::fs::PermissionsExt;
 use std::path::{Path, PathBuf};
 use std::process;
 
@@ -268,7 +269,7 @@ fn run(source: String, destination: Option<String>, params: &Params) -> io::Resu
     }
 
     // Apply filters: exclude, date, update-only
-    all_files.retain(|(src_path, _)| {
+    all_files.retain(|(src_path, rel)| {
         // Exclude
         let abs = src_path.canonicalize().unwrap_or_else(|_| src_path.clone());
         let abs_str = abs.to_string_lossy();
@@ -308,7 +309,7 @@ fn run(source: String, destination: Option<String>, params: &Params) -> io::Resu
         }
         // Update-only: keep only if dest exists
         if params.update_only {
-            let dest_path = target_dir.join(&all_files.iter().find(|(s,_)| s == src_path).unwrap().1);
+            let dest_path = target_dir.join(rel);
             if !dest_path.exists() {
                 return false;
             }
@@ -476,7 +477,7 @@ fn copy_file(src: &Path, dest: &Path, params: &Params) -> io::Result<()> {
     }
 
     // Copy content
-    let bytes = fs::copy(src, dest)?;
+    let _bytes = fs::copy(src, dest)?;
     if !params.quiet {
         if params.full_display {
             println!("{} -> {}", src.display(), dest.display());
