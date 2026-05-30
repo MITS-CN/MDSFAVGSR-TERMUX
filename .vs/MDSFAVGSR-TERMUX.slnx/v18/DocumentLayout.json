@@ -1,7 +1,40 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\Rust\\win-xcopy\\src\\main.rs||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\bin\\Rust\\win-xcopy\\src\\main.rs||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\something\\!data!data!com.termux!files!home!.termux\\colors.properties||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\something\\!data!data!com.termux!files!home!.termux\\colors.properties||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\Rust\\win-del\\src\\main.rs||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\bin\\Rust\\win-del\\src\\main.rs||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\cpp\\win-cmd.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\bin\\cpp\\win-cmd.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\cpp\\win-pause.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\bin\\cpp\\win-pause.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\cpp\\win-help.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\bin\\cpp\\win-help.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\Rust\\win-xcopy\\Cargo.toml||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\bin\\Rust\\win-xcopy\\Cargo.toml||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\order\\cls||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\bin\\order\\cls||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +42,116 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "cls",
+              "DocumentMoniker": "C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\order\\cls",
+              "RelativeDocumentMoniker": "data\\bin\\order\\cls",
+              "ToolTip": "C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\order\\cls",
+              "RelativeToolTip": "data\\bin\\order\\cls",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-05-30T05:56:07.063Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "main.rs",
+              "DocumentMoniker": "C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\Rust\\win-xcopy\\src\\main.rs",
+              "RelativeDocumentMoniker": "data\\bin\\Rust\\win-xcopy\\src\\main.rs",
+              "ToolTip": "C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\Rust\\win-xcopy\\src\\main.rs",
+              "RelativeToolTip": "data\\bin\\Rust\\win-xcopy\\src\\main.rs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAACAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-05-30T06:10:50.578Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Cargo.toml",
+              "DocumentMoniker": "C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\Rust\\win-xcopy\\Cargo.toml",
+              "RelativeDocumentMoniker": "data\\bin\\Rust\\win-xcopy\\Cargo.toml",
+              "ToolTip": "C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\Rust\\win-xcopy\\Cargo.toml",
+              "RelativeToolTip": "data\\bin\\Rust\\win-xcopy\\Cargo.toml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-05-30T06:09:58.675Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "win-help.cpp",
+              "DocumentMoniker": "C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\cpp\\win-help.cpp",
+              "RelativeDocumentMoniker": "data\\bin\\cpp\\win-help.cpp",
+              "ToolTip": "C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\cpp\\win-help.cpp",
+              "RelativeToolTip": "data\\bin\\cpp\\win-help.cpp",
+              "ViewState": "AgIAADUAAAAAAAAAAAAAAAQAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-05-30T06:04:28.313Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "win-pause.cpp",
+              "DocumentMoniker": "C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\cpp\\win-pause.cpp",
+              "RelativeDocumentMoniker": "data\\bin\\cpp\\win-pause.cpp",
+              "ToolTip": "C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\cpp\\win-pause.cpp",
+              "RelativeToolTip": "data\\bin\\cpp\\win-pause.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-05-30T06:00:54.826Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "win-cmd.cpp",
+              "DocumentMoniker": "C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\cpp\\win-cmd.cpp",
+              "RelativeDocumentMoniker": "data\\bin\\cpp\\win-cmd.cpp",
+              "ToolTip": "C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\cpp\\win-cmd.cpp",
+              "RelativeToolTip": "data\\bin\\cpp\\win-cmd.cpp",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAALMAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2026-05-30T06:00:50.236Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "main.rs",
+              "DocumentMoniker": "C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\Rust\\win-del\\src\\main.rs",
+              "RelativeDocumentMoniker": "data\\bin\\Rust\\win-del\\src\\main.rs",
+              "ToolTip": "C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\bin\\Rust\\win-del\\src\\main.rs",
+              "RelativeToolTip": "data\\bin\\Rust\\win-del\\src\\main.rs",
+              "ViewState": "AgIAAOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-05-30T05:55:54.933Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "colors.properties",
+              "DocumentMoniker": "C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\something\\!data!data!com.termux!files!home!.termux\\colors.properties",
+              "RelativeDocumentMoniker": "data\\something\\!data!data!com.termux!files!home!.termux\\colors.properties",
+              "ToolTip": "C:\\Users\\MITS\\Desktop\\project\\MDSFAVGSR-TERMUX\\data\\something\\!data!data!com.termux!files!home!.termux\\colors.properties",
+              "RelativeToolTip": "data\\something\\!data!data!com.termux!files!home!.termux\\colors.properties",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-05-30T05:55:46.49Z",
+              "EditorCaption": ""
             }
           ]
         }

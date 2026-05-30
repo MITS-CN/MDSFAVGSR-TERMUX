@@ -2,8 +2,15 @@
   "ExpandedNodes": [
     "",
     "\\data",
-    "\\data\\bin"
+    "\\data\\bin",
+    "\\data\\bin\\cpp",
+    "\\data\\bin\\order",
+    "\\data\\bin\\Rust",
+    "\\data\\bin\\Rust\\win-del",
+    "\\data\\bin\\Rust\\win-del\\src",
+    "\\data\\bin\\Rust\\win-xcopy",
+    "\\data\\bin\\Rust\\win-xcopy\\src"
   ],
-  "SelectedNode": "\\data\\bin\\init.rc",
+  "SelectedNode": "\\data\\bin\\Rust\\win-xcopy\\src\\main.rs",
   "PreviewInSolutionExplorer": false
 }
