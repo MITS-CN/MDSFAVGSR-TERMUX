@@ -334,11 +334,11 @@ int main(int argc, char* argv[]) {
             // 重新组合：
             final_cmd = command + "; exec bash --norc --noprofile -i";
             // 加上前面的前缀 (颜色、环境) 需要放在 command 前面
-            final_cmd = (ansi_mode ? "export LANG=C; " : "")
-                + (unicode_mode ? "export LANG=en_US.UTF-8; " : "")
-                + (!color_escape.empty() ? "printf '%s' \"" + color_escape + "\"; " : "")
-                + command
-                + "; exec bash --norc --noprofile -i";
+            final_cmd = std::string(ansi_mode ? "export LANG=C; " : "")
+              + (unicode_mode ? "export LANG=en_US.UTF-8; " : "")
+              + (!color_escape.empty() ? "printf '%s' \"" + color_escape + "\"; " : "")
+              + command
+              + "; exec bash --norc --noprofile -i";
         }
     }
 

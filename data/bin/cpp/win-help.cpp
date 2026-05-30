@@ -1,8 +1,7 @@
 #include <iostream>
-#include <iostream>
-#include <fstream>
 
-std::cout << R"(有关某个命令的详细信息，请键入 HELP 命令名(未实现)
+int main() {
+    std::cout << R"(有关某个命令的详细信息，请键入 HELP 命令名(未实现)
 ASSOC          显示或修改文件扩展名关联。
 ATTRIB         显示或更改文件属性。
 BREAK          设置或清除扩展式 CTRL+C 检查。
@@ -100,6 +99,5 @@ WMIC           在交互式命令 shell 中显示 WMI 信息。
 有关工具的详细信息，请参阅联机帮助中的命令行参考。
 
 )";
-
     return 0;
 }
