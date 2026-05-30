@@ -3,6 +3,38 @@
   "WorkspaceRootPath": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\init.rc||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\bin\\init.rc||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\install.sh||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:install.sh||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.make.rust.sh||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\bin\\temp.data.make.rust.sh||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.user.zsh.init.py||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\bin\\temp.user.zsh.init.py||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\something\\!data!data!com.termux!files!home!.termux\\colors.properties||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\something\\!data!data!com.termux!files!home!.termux\\colors.properties||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\something\\!data!data!com.termux!files!home!.termux\\termux.properties||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\something\\!data!data!com.termux!files!home!.termux\\termux.properties||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.sh||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\bin\\temp.data.sh||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.fix.on.sh||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\bin\\temp.data.fix.on.sh||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.fix.cmd.sh||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\bin\\temp.data.fix.cmd.sh||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
@@ -23,16 +55,8 @@
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\bin\\temp.data.config.sh||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.make.rust.sh||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\bin\\temp.data.make.rust.sh||{3B902123-F8A7-4915-9F01-361F908088D0}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\Rust\\win-xcopy\\src\\main.rs||{3B902123-F8A7-4915-9F01-361F908088D0}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\bin\\Rust\\win-xcopy\\src\\main.rs||{3B902123-F8A7-4915-9F01-361F908088D0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\something\\!data!data!com.termux!files!home!.termux\\colors.properties||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:data\\something\\!data!data!com.termux!files!home!.termux\\colors.properties||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\Rust\\win-del\\src\\main.rs||{3B902123-F8A7-4915-9F01-361F908088D0}",
@@ -66,11 +90,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 19,
               "Title": "cls",
               "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\order\\cls",
               "RelativeDocumentMoniker": "data\\bin\\order\\cls",
@@ -82,37 +106,90 @@
               "IsPinned": true
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "install.sh",
+              "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\install.sh",
+              "RelativeDocumentMoniker": "install.sh",
+              "ToolTip": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\install.sh",
+              "RelativeToolTip": "install.sh",
+              "ViewState": "AgIAALUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|",
+              "WhenOpened": "2026-05-30T07:12:43.479Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "temp.data.clear.sh",
-              "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.clear.sh",
-              "RelativeDocumentMoniker": "data\\bin\\temp.data.clear.sh",
-              "ToolTip": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.clear.sh",
-              "RelativeToolTip": "data\\bin\\temp.data.clear.sh",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "init.rc",
+              "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\init.rc",
+              "RelativeDocumentMoniker": "data\\bin\\init.rc",
+              "ToolTip": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\init.rc",
+              "RelativeToolTip": "data\\bin\\init.rc",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
+              "WhenOpened": "2026-05-30T07:12:08.224Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "termux.properties",
+              "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\something\\!data!data!com.termux!files!home!.termux\\termux.properties",
+              "RelativeDocumentMoniker": "data\\something\\!data!data!com.termux!files!home!.termux\\termux.properties",
+              "ToolTip": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\something\\!data!data!com.termux!files!home!.termux\\termux.properties",
+              "RelativeToolTip": "data\\something\\!data!data!com.termux!files!home!.termux\\termux.properties",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-05-30T07:11:43.869Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "temp.data.sh",
+              "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.sh",
+              "RelativeDocumentMoniker": "data\\bin\\temp.data.sh",
+              "ToolTip": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.sh",
+              "RelativeToolTip": "data\\bin\\temp.data.sh",
+              "ViewState": "AgIAAGYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "00000000-0000-0000-0000-000000000000.000000|",
-              "WhenOpened": "2026-05-30T06:44:28.115Z",
+              "WhenOpened": "2026-05-30T07:11:30.478Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "temp.data.fix.config.py",
-              "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.fix.config.py",
-              "RelativeDocumentMoniker": "data\\bin\\temp.data.fix.config.py",
-              "ToolTip": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.fix.config.py",
-              "RelativeToolTip": "data\\bin\\temp.data.fix.config.py",
-              "ViewState": "AgIAADwAAAAAAAAAAAAAAEcAAAABAAAAAAAAAA==",
+              "Title": "temp.user.zsh.init.py",
+              "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.user.zsh.init.py",
+              "RelativeDocumentMoniker": "data\\bin\\temp.user.zsh.init.py",
+              "ToolTip": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.user.zsh.init.py",
+              "RelativeToolTip": "data\\bin\\temp.user.zsh.init.py",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-05-30T06:44:17.488Z"
+              "WhenOpened": "2026-05-30T07:11:05.335Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
+              "Title": "temp.data.fix.on.sh",
+              "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.fix.on.sh",
+              "RelativeDocumentMoniker": "data\\bin\\temp.data.fix.on.sh",
+              "ToolTip": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.fix.on.sh",
+              "RelativeToolTip": "data\\bin\\temp.data.fix.on.sh",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|",
+              "WhenOpened": "2026-05-30T07:10:58.535Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "temp.data.config.sh",
               "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.config.sh",
               "RelativeDocumentMoniker": "data\\bin\\temp.data.config.sh",
@@ -124,7 +201,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
+              "Title": "colors.properties",
+              "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\something\\!data!data!com.termux!files!home!.termux\\colors.properties",
+              "RelativeDocumentMoniker": "data\\something\\!data!data!com.termux!files!home!.termux\\colors.properties",
+              "ToolTip": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\something\\!data!data!com.termux!files!home!.termux\\colors.properties",
+              "RelativeToolTip": "data\\something\\!data!data!com.termux!files!home!.termux\\colors.properties",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-05-30T05:55:46.49Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "temp.data.make.rust.sh",
               "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.make.rust.sh",
               "RelativeDocumentMoniker": "data\\bin\\temp.data.make.rust.sh",
@@ -132,11 +222,36 @@
               "RelativeToolTip": "data\\bin\\temp.data.make.rust.sh",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAiAAAAAAAAAA==",
               "Icon": "00000000-0000-0000-0000-000000000000.000000|",
-              "WhenOpened": "2026-05-30T06:43:31.035Z"
+              "WhenOpened": "2026-05-30T06:43:31.035Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 11,
+              "Title": "temp.data.fix.config.py",
+              "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.fix.config.py",
+              "RelativeDocumentMoniker": "data\\bin\\temp.data.fix.config.py",
+              "ToolTip": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.fix.config.py",
+              "RelativeToolTip": "data\\bin\\temp.data.fix.config.py",
+              "ViewState": "AgIAADwAAAAAAAAAAAAAAEcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-05-30T06:44:17.488Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "temp.data.clear.sh",
+              "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.clear.sh",
+              "RelativeDocumentMoniker": "data\\bin\\temp.data.clear.sh",
+              "ToolTip": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.clear.sh",
+              "RelativeToolTip": "data\\bin\\temp.data.clear.sh",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|",
+              "WhenOpened": "2026-05-30T06:44:28.115Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
               "Title": "temp.data.make.cpp.sh",
               "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.make.cpp.sh",
               "RelativeDocumentMoniker": "data\\bin\\temp.data.make.cpp.sh",
@@ -144,12 +259,11 @@
               "RelativeToolTip": "data\\bin\\temp.data.make.cpp.sh",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAACAAAAAAAAAA==",
               "Icon": "00000000-0000-0000-0000-000000000000.000000|",
-              "WhenOpened": "2026-05-30T06:43:12.123Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-30T06:43:12.123Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 8,
               "Title": "temp.data.fix.cmd.sh",
               "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\temp.data.fix.cmd.sh",
               "RelativeDocumentMoniker": "data\\bin\\temp.data.fix.cmd.sh",
@@ -162,7 +276,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 13,
               "Title": "main.rs",
               "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\Rust\\win-xcopy\\src\\main.rs",
               "RelativeDocumentMoniker": "data\\bin\\Rust\\win-xcopy\\src\\main.rs",
@@ -174,7 +288,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 18,
               "Title": "Cargo.toml",
               "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\Rust\\win-xcopy\\Cargo.toml",
               "RelativeDocumentMoniker": "data\\bin\\Rust\\win-xcopy\\Cargo.toml",
@@ -186,7 +300,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 17,
               "Title": "win-help.cpp",
               "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\cpp\\win-help.cpp",
               "RelativeDocumentMoniker": "data\\bin\\cpp\\win-help.cpp",
@@ -198,7 +312,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 16,
               "Title": "win-pause.cpp",
               "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\cpp\\win-pause.cpp",
               "RelativeDocumentMoniker": "data\\bin\\cpp\\win-pause.cpp",
@@ -210,7 +324,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 15,
               "Title": "win-cmd.cpp",
               "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\cpp\\win-cmd.cpp",
               "RelativeDocumentMoniker": "data\\bin\\cpp\\win-cmd.cpp",
@@ -222,7 +336,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 14,
               "Title": "main.rs",
               "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\bin\\Rust\\win-del\\src\\main.rs",
               "RelativeDocumentMoniker": "data\\bin\\Rust\\win-del\\src\\main.rs",
@@ -231,18 +345,6 @@
               "ViewState": "AgIAAOQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2026-05-30T05:55:54.933Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "colors.properties",
-              "DocumentMoniker": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\something\\!data!data!com.termux!files!home!.termux\\colors.properties",
-              "RelativeDocumentMoniker": "data\\something\\!data!data!com.termux!files!home!.termux\\colors.properties",
-              "ToolTip": "C:\\Users\\MITS\\Documents\\GitHub\\MDSFAVGSR-TERMUX\\data\\something\\!data!data!com.termux!files!home!.termux\\colors.properties",
-              "RelativeToolTip": "data\\something\\!data!data!com.termux!files!home!.termux\\colors.properties",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-05-30T05:55:46.49Z"
             }
           ]
         }

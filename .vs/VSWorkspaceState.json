@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
-    "\\.github",
-    "\\.github\\ISSUE_TEMPLATE",
     "\\data",
     "\\data\\bin",
     "\\data\\bin\\Rust",
     "\\data\\bin\\Rust\\win-del",
     "\\data\\bin\\Rust\\win-del\\src",
     "\\data\\bin\\Rust\\win-xcopy",
-    "\\data\\bin\\Rust\\win-xcopy\\src"
+    "\\data\\bin\\Rust\\win-xcopy\\src",
+    "\\data\\something",
+    "\\data\\something\\!data!data!com.termux!files!home",
+    "\\data\\something\\!data!data!com.termux!files!home!.termux"
   ],
-  "SelectedNode": "\\data\\bin\\temp.data.fix.cmd.sh",
   "PreviewInSolutionExplorer": false
 }
