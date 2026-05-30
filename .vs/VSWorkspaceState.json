@@ -1,16 +1,16 @@
 {
   "ExpandedNodes": [
     "",
+    "\\.github",
+    "\\.github\\ISSUE_TEMPLATE",
     "\\data",
     "\\data\\bin",
-    "\\data\\bin\\cpp",
-    "\\data\\bin\\order",
     "\\data\\bin\\Rust",
     "\\data\\bin\\Rust\\win-del",
     "\\data\\bin\\Rust\\win-del\\src",
     "\\data\\bin\\Rust\\win-xcopy",
     "\\data\\bin\\Rust\\win-xcopy\\src"
   ],
-  "SelectedNode": "\\data\\bin\\Rust\\win-xcopy\\src\\main.rs",
+  "SelectedNode": "\\data\\bin\\temp.data.clear.sh",
   "PreviewInSolutionExplorer": false
 }
