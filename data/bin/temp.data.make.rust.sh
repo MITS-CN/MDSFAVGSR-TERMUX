@@ -150,12 +150,14 @@ for app in "${apps[@]}"; do
         if ! RUSTFLAGS="$RUSTFLAGS" cargo build --release; then
             echo "    编译 $app 失败！"
             failed_apps+=("$app")
+            rm -rf "$build_dir"
             continue
         fi
         release_bin="$build_dir/target/release/$app"
         if [ ! -f "$release_bin" ]; then
             echo "    错误：找不到编译产物 $release_bin"
             failed_apps+=("$app")
+            rm -rf "$build_dir"
             continue
         fi
         echo "    安装 $app 到 $BIN_DIR ..."
@@ -165,6 +167,7 @@ for app in "${apps[@]}"; do
             termux-elf-cleaner "$BIN_DIR/$app" >/dev/null 2>&1 || echo "    警告：清理 ELF 标志失败" >&2
         fi
         echo "    $app 安装成功！"
+        rm -rf "$build_dir"
     fi
 done
 
@@ -177,5 +180,8 @@ else
     for f in "${failed_apps[@]}"; do
         echo "  - $f"
     done
+    rm -rf "$BUILD_BASE"
     exit 1
 fi
+
+rm -rf "$BUILD_BASE"
