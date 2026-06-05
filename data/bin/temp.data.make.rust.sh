@@ -180,7 +180,6 @@ else
     for f in "${failed_apps[@]}"; do
         echo "  - $f"
     done
-    rm -rf "$BUILD_BASE"
     exit 1
 fi
 
