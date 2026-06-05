@@ -33,6 +33,20 @@ error_handler() {
     temp.data.check.install.sh
 }
 
+#修复部分设备无法正常安装导致误触发修复
+
+cp -r /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst.bak
+
+cat > /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst << 'EOF'
+#!/bin/sh
+exit 0
+EOF
+
+#赋予可执行权限
+chmod 755 /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst
+
+dpkg --configure proot-distro
+
 # 启用遇到错误绑定错误陷阱
 trap 'error_handler' ERR
 
@@ -185,3 +199,9 @@ echo "==================== 所有操作成功完成 ===================="
 # 取消错误陷阱
 trap - ERR
 set +e
+
+cp -r /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst.bak /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst
+
+chmod 755 /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst
+
+dpkg --configure proot-distro
