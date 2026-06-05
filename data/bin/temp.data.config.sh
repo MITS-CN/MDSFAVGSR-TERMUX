@@ -29,9 +29,11 @@ rm -rf /data/data/com.termux/files/usr/etc/MITS
 
 mkdir /data/data/com.termux/files/usr/etc/MITS
 mkdir /data/data/com.termux/files/usr/etc/MITS/SL
+mkdir /data/data/com.termux/files/usr/etc/MITS/diskpart
 
 chmod 755 /data/data/com.termux/files/usr/etc/MITS
 chmod 755 /data/data/com.termux/files/usr/etc/MITS/SL
+chmod 755 /data/data/com.termux/files/usr/etc/diskpart
 
 if [ -f "/data/data/com.termux/files/usr/etc/MITS/SL/config.json.example" ]; then
     cp -n "/data/data/com.termux/files/usr/etc/MITS/SL/config.json.example" "/data/data/com.termux/files/usr/etc/MITS/config.json"
@@ -41,8 +43,12 @@ elif [ ! -f "/data/data/com.termux/files/usr/etc/MITS/config.json" ]; then
     # 其实应该分开来的这里
     cat > "/data/data/com.termux/files/usr/etc/MITS/config.json" <<EOF
 {
-    "MITS_version": "Build.IS0063(main:NULL)",
+    "MITS_version": "Build.IS0064(main:NULL)",
     "MITS_build_by": "Administrator",
+}
+EOF
+    cat > "/data/data/com.termux/files/usr/etc/MITS/diskpart/config.json" <<EOF
+{
     "MITS_Diskpart_copyright": "(c) Microsoft Corporation",
     "MITS_Diskpart_version": "Microsoft DiskPart 版本 10.0.17763.1",
     "MITS_Diskpart_host": "在计算机上: ANDROID"
@@ -50,5 +56,6 @@ elif [ ! -f "/data/data/com.termux/files/usr/etc/MITS/config.json" ]; then
 EOF
     echo "已创建默认配置文件 $CONFIG_DIR/config.json"
     chmod 755 /data/data/com.termux/files/usr/etc/MITS/config.json
+    chmod 755 /data/data/com.termux/files/usr/etc/MITS/diskpart/config.json
 
 fi
