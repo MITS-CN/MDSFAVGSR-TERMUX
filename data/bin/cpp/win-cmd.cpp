@@ -235,7 +235,7 @@ int main(int argc, char* argv[]) {
     std::string cmd_flag;  // "/C" 或 "/K"
     std::string command;
 
-    // 解析参数，简单扫描，直到遇见 /C 或 /K
+    // 解析参数，直到遇见 /C 或 /K
     int i = 1;
     for (; i < argc; ++i) {
         std::string arg = argv[i];
@@ -244,33 +244,18 @@ int main(int argc, char* argv[]) {
             ++i;
             break;
         }
-        else if (arg == "/Q") {
-            quiet = true;
-        }
-        else if (arg == "/D") {
-            no_rc = true;
-        }
-        else if (arg == "/A") {
-            ansi_mode = true;
-        }
-        else if (arg == "/U") {
-            unicode_mode = true;
-        }
-        else if (arg.rfind("/T:", 0) == 0) {
-            color_escape = color_from_t(arg);
-        }
-        else if (arg == "/E:ON" || arg == "/E:OFF") {
+        else if (arg == "/Q") quiet = true;
+        else if (arg == "/D") no_rc = true;
+        else if (arg == "/A") ansi_mode = true;
+        else if (arg == "/U") unicode_mode = true;
+        else if (arg.rfind("/T:", 0) == 0) color_escape = color_from_t(arg);
+        else if (arg == "/E:ON" || arg == "/E:OFF") 
             std::cerr << "警告: /E 开关被忽略 (bash 扩展始终启用)\n";
-        }
-        else if (arg == "/V:ON" || arg == "/V:OFF") {
+        else if (arg == "/V:ON" || arg == "/V:OFF")
             std::cerr << "警告: /V 开关被忽略 (无延迟扩展)\n";
-        }
-        else if (arg == "/F:ON" || arg == "/F:OFF") {
+        else if (arg == "/F:ON" || arg == "/F:OFF")
             std::cerr << "警告: /F 开关被忽略 (readline 补全不可控)\n";
-        }
-        else if (arg == "/S") {
-            // 忽略
-        }
+        else if (arg == "/S") { /* 忽略 */ }
         else if (arg == "/?" || arg == "-h" || arg == "--help") {
             print_usage(argv[0]);
             return 0;
@@ -294,74 +279,66 @@ int main(int argc, char* argv[]) {
         command += argv[i];
     }
 
-    // 确定使用的 shell
-    const char* shell = "/data/data/com.termux/files/usr/bin/bash";
-    if (access(shell, X_OK) != 0) {
-        shell = "/bin/bash";   // 其他 Linux
-    }
-    if (access(shell, X_OK) != 0) {
-        shell = "/bin/sh";
-    }
-
-    // 构建最终执行的命令字符串
-    std::string final_cmd;
-
-    // 如果需要 /A 或 /U 设置环境
-    if (ansi_mode) final_cmd += "export LANG=C; ";
-    else if (unicode_mode) final_cmd += "export LANG=en_US.UTF-8; ";
-
-    // 如果需要 /Q 关闭回显: 用 set +v 避免打印，或直接把命令包在 { } 中
-    if (quiet) {
-        // 让整个执行过程不显示命令本身（bash 的 -c 默认不打印，但 /Q 指关闭命令行的回显）
-        // 可以强制 set +v，但其实 bash -c 不打印，只有交互时才有 echo。这里忽略细节。
+    // ---------- 1. 确定要使用的 Shell（优先 $SHELL）----------
+    const char* shell = getenv("SHELL");
+    if (!shell || access(shell, X_OK) != 0) {
+        // 回退方案
+        shell = "/data/data/com.termux/files/usr/bin/bash";
+        if (access(shell, X_OK) != 0) shell = "/bin/bash";
+        if (access(shell, X_OK) != 0) shell = "/bin/sh";
     }
 
-    // 如果要设置颜色，先输出 ANSI 转义，然后在执行完命令后恢复（或者让它持续）
+    // ---------- 2. 构建命令前缀（环境变量、颜色）----------
+    std::string prefix;
+    if (ansi_mode) prefix += "export LANG=C; ";
+    else if (unicode_mode) prefix += "export LANG=en_US.UTF-8; ";
     if (!color_escape.empty()) {
-        // 先输出转义序列，但 execl 会替换进程，我们可以在 bash 命令前加 echo
-        final_cmd += "printf '%s' \"" + color_escape + "\"; ";
+        // 注意：转义双引号，避免 shell 解析错误
+        prefix += "printf '%s' \"" + color_escape + "\"; ";
     }
 
-    // 添加用户命令
-    final_cmd += command;
-
-    if (cmd_flag == "/K") {
-        // 执行完命令后进入交互式 shell
-        final_cmd += "; exec bash -i";
+    // ---------- 3. 根据 /C 或 /K 构建完整命令 ----------
+    std::string final_cmd;
+    if (cmd_flag == "/C") {
+        // /C: 执行命令后退出
+        final_cmd = prefix + command;
+    } 
+    else { // /K: 执行命令后进入交互式 shell
+        std::string interactive_cmd = "; exec " + std::string(shell) + " -i";
         if (no_rc) {
-            // 需要重新指定 --norc --noprofile，但 exec 直接切换，我们可以用 exec bash --norc --noprofile -i
-            // 修改最终命令为: 执行完命令后，exec bash --norc --noprofile -i
-            // 重新组合：
-            final_cmd = command + "; exec bash --norc --noprofile -i";
-            // 加上前面的前缀 (颜色、环境) 需要放在 command 前面
-            final_cmd = std::string(ansi_mode ? "export LANG=C; " : "")
-              + (unicode_mode ? "export LANG=en_US.UTF-8; " : "")
-              + (!color_escape.empty() ? "printf '%s' \"" + color_escape + "\"; " : "")
-              + command
-              + "; exec bash --norc --noprofile -i";
+            // 对 bash/zsh 添加 --norc --noprofile
+            std::string base = std::string(shell);
+            if (base.find("bash") != std::string::npos || 
+                base.find("zsh") != std::string::npos) {
+                interactive_cmd = "; exec " + base + " --norc --noprofile -i";
+            }
         }
+        final_cmd = prefix + command + interactive_cmd;
     }
 
-    // 构建参数给 /bin/bash
+    // ---------- 4. 准备 exec 参数 ----------
     std::vector<const char*> args;
     args.push_back(shell);
 
+    // 对于 /C 且 no_rc：让初始 shell 也不加载 rc 文件
     if (no_rc && cmd_flag == "/C") {
-        // 对于 /C，禁止 rc 文件
-        args.push_back("--norc");
-        args.push_back("--noprofile");
+        // 仅对 bash/zsh 有效；其他 shell 忽略
+        std::string base = std::string(shell);
+        if (base.find("bash") != std::string::npos) {
+            args.push_back("--norc");
+            args.push_back("--noprofile");
+        } else if (base.find("zsh") != std::string::npos) {
+            args.push_back("--norc");
+            args.push_back("--noprofile");
+        }
     }
-    // 注意：如果是 /K 且 no_rc，我们已经在 final_cmd 的 exec bash 部分添加了 --norc --noprofile
-    // 对于 /C 且 no_rc，直接传给初始 bash
 
     args.push_back("-c");
     args.push_back(final_cmd.c_str());
     args.push_back(nullptr);
 
-    // 用 execvp 替换当前进程
+    // 执行
     execvp(shell, const_cast<char* const*>(args.data()));
-
-    // 如果 exec 失败
     std::perror("exec 失败");
     return 1;
 }

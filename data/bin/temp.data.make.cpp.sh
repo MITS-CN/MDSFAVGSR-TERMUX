@@ -23,7 +23,13 @@ else
     exit 1
 fi
 
-apps=("win-version" "win-tasklist" "win-cmd" "win-taskkill" "win-winver" "win-diskpart" "win-timeout" "win-systeminfo" "win-pause" "win-netsh" "win-ver" "win-help" "win-type" "win-rename" "win-comp" "win-replace" "win-move" "win-ren" "win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e")
+# 从文件读取每一行，存为数组（替代 mapfile）
+
+apps=()
+
+while IFS= read -r line || [ -n "$line" ]; do
+    apps+=("$line")
+done < "/storage/emulated/0/MITS/data/config/c++/apps.config"
 
 #04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e是hash值，用于临时使用的命令
 

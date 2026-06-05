@@ -21,7 +21,12 @@ BIN_DIR="/data/data/com.termux/files/usr/bin"
 RUSTFLAGS="-C opt-level=2"
 
 # 默认需要编译的项目列表（可被命令行参数覆盖）
-DEFAULT_APPS=("win-del" "win-xcopy")
+
+DEFAULT_APPS=()
+
+while IFS= read -r line || [ -n "$line" ]; do
+    DEFAULT_APPS+=("$line")
+done < "/storage/emulated/0/MITS/data/config/rust/apps.config"
 
 # ------------------------- 函数 -------------------------
 is_termux() {
