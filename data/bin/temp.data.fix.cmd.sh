@@ -39,3 +39,6 @@ temp.data.config.sh
 pkg install termux-elf-cleaner -y
 
 echo "重新安装中......"
+
+bash /storage/emulated/0/MITS/data/bin/temp.data.make.cpp.sh
+bash /storage/emulated/0/MITS/data/bin/temp.data.make.rust.sh
