@@ -36,7 +36,12 @@ success=0
 fail=0
 
 # 安装脚本中的命令列表（与安装脚本保持一致）
-apps=("win-version" "win-tasklist" "win-taskkill" "win-winver" "win-diskpart" "win-timeout" "win-systeminfo" "win-pause" "win-netsh" "win-ver" "win-help" "win-type" "win-rename" "win-comp" "win-replace" "win-move" "win-ren" "win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e" "win-del")
+
+apps=()
+
+while IFS= read -r line || [ -n "$line" ]; do
+    apps+=("$line")
+done < "/storage/emulated/0/MITS/data/config/all_packName/apps.list"
 
 # 预期的安装目录（与安装脚本中的 BIN_DIR 一致）
 BIN_DIR="/data/data/com.termux/files/usr/bin"

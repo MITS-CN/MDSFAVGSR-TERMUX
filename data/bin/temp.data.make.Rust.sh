@@ -26,7 +26,7 @@ DEFAULT_APPS=()
 
 while IFS= read -r line || [ -n "$line" ]; do
     DEFAULT_APPS+=("$line")
-done < "/storage/emulated/0/MITS/data/config/rust/apps.config"
+done < "/storage/emulated/0/MITS/data/config/Rust/apps.config"
 
 # ------------------------- 函数 -------------------------
 is_termux() {

@@ -47,10 +47,13 @@ echo "正在修改zsh中...."
 temp.data.fix.zsh.sh
 
 echo "正在安装c++应用中...."
-temp.data.make.cpp.sh
+temp.data.make.C++.sh
 
 echo "正在安装rust应用中...."
-temp.data.make.rust.sh
+temp.data.make.Rust.sh
+
+echo "正在安装C应用中......"
+temp.data.make.C.sh
 
 echo "正在检查配置文件中...."
 temp.data.check.config.py
