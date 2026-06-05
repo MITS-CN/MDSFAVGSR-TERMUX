@@ -251,7 +251,7 @@ bool format_partition(const std::string& part_name, const std::string& fs_type, 
 
 int main() {
     // 读取配置文件（可选）
-    std::ifstream file("/data/data/com.termux/files/usr/etc/MITS/config.json");
+    std::ifstream file("/data/data/com.termux/files/usr/etc/MITS/diskpart/config.json");
     std::string host_temp = "ANDROID";
     std::string copyright_temp = "(c) Microsoft Corporation. MITS Port";
     std::string version_temp = "Microsoft DiskPart 版本 10.0.17763.1 (MITS)";
