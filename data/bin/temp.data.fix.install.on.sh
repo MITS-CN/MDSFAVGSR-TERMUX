@@ -203,6 +203,6 @@ if [ $fail_actions -gt 0 ]; then
     echo -e "${YELLOW}部分操作失败，请根据提示手动处理。${NC}"
     exit 1
 else
-    echo -e "${GREEN}所有修复操作成功完成！建议重启 Termux 或执行 'exec zsh' 进入新环境。${NC}"
+    echo -e "${GREEN}所有修复操作成功完成！${NC}"
     exit 0
 fi

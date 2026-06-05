@@ -155,8 +155,9 @@ echo -e "总计: $total   ${GREEN}成功: $success${NC}   ${RED}失败: $fail${N
 
 # 返回非零如果有失败
 if [ $fail -gt 0 ]; then
-    echo "出来一点小错误"
+    echo "出现一点小错误"
+    echo "正在调用修复脚本......"
     temp.data.fix.install.on.sh
 else
-    echo "一切正常，请继续"
+    echo "一切正常"
 fi

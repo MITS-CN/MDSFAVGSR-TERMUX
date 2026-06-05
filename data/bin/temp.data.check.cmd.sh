@@ -77,6 +77,7 @@ echo -e "总计: $total   ${GREEN}成功: $success${NC}   ${RED}失败: $fail${N
 
 if [ $fail -gt 0 ]; then
     echo "部分命令缺失，请检查编译安装脚本是否成功执行。"
+    echo "正在调用修复脚本......"
     temp.data.fix.cmd.sh
 else
     echo "所有命令均已正确安装。"

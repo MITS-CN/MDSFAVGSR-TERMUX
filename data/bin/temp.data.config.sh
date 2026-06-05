@@ -27,6 +27,8 @@ CONFIG_DIR="/data/data/com.termux/files/usr/etc/MITS"
 
 rm -rf /data/data/com.termux/files/usr/etc/MITS
 
+echo "创建默认配置文件 $CONFIG_DIR/config.json中......"
+
 mkdir /data/data/com.termux/files/usr/etc/MITS
 mkdir /data/data/com.termux/files/usr/etc/MITS/SL
 mkdir /data/data/com.termux/files/usr/etc/MITS/diskpart

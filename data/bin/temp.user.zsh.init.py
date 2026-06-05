@@ -375,10 +375,6 @@ def main():
         
         print("\n" + "=" * 60)
         print_color("✅ 所有操作完成!", "green")
-        print("\n建议:")
-        print("1. 重启Termux应用所有更改")
-        print("2. 或输入 'zsh' 启动新配置")
-        print("3. 检查Windows风格界面是否正常显示")
     else:
         print_color("❌ 操作失败，请检查错误信息", "red")
 

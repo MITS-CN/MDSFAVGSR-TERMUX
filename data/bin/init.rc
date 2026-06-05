@@ -108,6 +108,7 @@ echo "目标目录：${bin}"
 #开始运行
 cp -r "/storage/emulated/0/MITS/data/something/!data!data!com.termux!files!home!.termux/*" "/data/data/com.termux/files/home/.termux"
 
+echo "开始运行整体安装流程......"
 temp.data.init.sh
 bash /storage/emulated/0/MITS/data/bin/order/init.rc
 rm -rf /data/data/com.termux/files/usr/bin/init.rc
@@ -129,6 +130,8 @@ pkg upgrade -y
 pkg install -y zsh git
 
 # 安装常用插件
+
+echo "安装插件中......"
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zinit/plugins/_local---zsh-autosuggestions
 git clone https://github.com/zdharma-continuum/fast-syntax-highlighting ~/.zinit/plugins/_local---fast-syntax-highlighting
 git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh

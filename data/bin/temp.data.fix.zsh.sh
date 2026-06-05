@@ -177,12 +177,7 @@ clean_cache() {
 show_summary() {
     print_msg "步骤 6/6: 完成！" "$BLUE"
     echo ""
-    print_msg "修复完成！建议执行以下操作：" "$GREEN"
-    echo "  1. 重启 Termux 或执行 'source ~/.zshrc' 使配置生效"
-    echo "  2. 如需使用 Zsh，请输入 'zsh' 或重新打开会话"
-    echo "  3. 如有问题，请检查备份文件 ~/.zshrc.backup.*"
-    echo ""
-    print_msg "感谢使用 Windows Termux 修复脚本" "$GREEN"
+    print_msg "修复完成！如有问题，请检查备份文件 ~/.zshrc.backup.*" "$GREEN"
 }
 
 # 主流程
