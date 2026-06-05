@@ -133,7 +133,7 @@ def copy_zshrc_with_permissions():
                                 break
                     if source_zshrc != "/storage/emulated/0/MITS/data/something/!data!data!com.termux!files!home/.zshrc":
                         break
-                if source_zshrc != "/storage/emulated/0/MITS/data/something/!data!data!com.termux!files!home/.zshrc"":
+                if source_zshrc != "/storage/emulated/0/MITS/data/something/!data!data!com.termux!files!home/.zshrc":
                     break
     
     # 如果还是没找到，提示用户手动输入
