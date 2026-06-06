@@ -1,0 +1,11 @@
+[package]
+name = "win-fc"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[dependencies]
+
+[[bin]]
+name = "win-fc"
+path = "src/main.rs"

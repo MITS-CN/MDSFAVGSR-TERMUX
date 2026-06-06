@@ -43,6 +43,9 @@ temp.data.sh
 echo "正在检查依赖环境中...."
 temp.data.check.install.sh
 
+echo "正在升级中...."
+temp.data.up.py
+
 echo "正在修改zsh中...."
 temp.data.fix.zsh.sh
 
