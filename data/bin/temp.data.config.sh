@@ -46,7 +46,7 @@ elif [ ! -f "/data/data/com.termux/files/usr/etc/MITS/config.json" ]; then
     cat > "/data/data/com.termux/files/usr/etc/MITS/config.json" <<EOF
 {
     "MITS_version": "Build.IS0064(main:NULL)",
-    "MITS_build_by": "Administrator",
+    "MITS_build_by": "Administrator"
 }
 EOF
     cat > "/data/data/com.termux/files/usr/etc/MITS/diskpart/config.json" <<EOF
