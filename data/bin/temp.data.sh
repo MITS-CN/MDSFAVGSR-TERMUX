@@ -33,7 +33,8 @@ error_handler() {
     temp.data.check.install.sh
 }
 
-#修复部分设备无法正常安装导致误触发修复
+# 修复部分设备无法正常安装导致误触发修复
+
 chmod 777 /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst
 cp -r /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst.bak
 
@@ -42,9 +43,7 @@ cat > /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst <<
 exit 0
 EOF
 
-#赋予可执行权限
 chmod 755 /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst
-
 dpkg --configure proot-distro
 
 # 启用遇到错误绑定错误陷阱
@@ -62,136 +61,61 @@ pkg update
 echo ">>> 3. pkg upgrade"
 pkg upgrade -y
 
-# --- 安装开发工具 ---
-echo ">>> 4. 安装 clang"
-pkg install clang -y
+# ------------------------------------------------------------------
+# 从配置文件读取所有需要安装的软件包（一行一个包名）
+# ------------------------------------------------------------------
+PACKAGE_LIST_FILE="$HOME/storage/shared/MITS/data/config/install/pkg/all.list"
+if [ ! -f "$PACKAGE_LIST_FILE" ]; then
+    echo "错误: 包列表文件不存在: $PACKAGE_LIST_FILE"
+    exit 1
+fi
 
-echo ">>> 5. 安装 libllvm"
-pkg install libllvm -y
+# 读取非空、非注释行，存入数组
+packages=()
+while IFS= read -r line || [ -n "$line" ]; do
+    # 去除首尾空白
+    line="${line#"${line%%[![:space:]]*}"}"
+    line="${line%"${line##*[![:space:]]}"}"
+    # 跳过空行和注释
+    [[ -z "$line" || "$line" =~ ^# ]] && continue
+    packages+=("$line")
+done < "$PACKAGE_LIST_FILE"
 
-# 注意：list-installed 理论上是一个参数，而非包名，如果出错我们捕获但继续
-echo ">>> 6. pkg install list-installed (禁用)"
-#pkg install list-installed -y
+if [ ${#packages[@]} -eq 0 ]; then
+    echo "警告: 包列表为空，跳过安装"
+else
+    echo ">>> 批量安装所有必需的软件包 (共 ${#packages[@]} 个)"
+    pkg install -y "${packages[@]}"
+fi
 
-echo ">>> 7. 安装 openssl-tool"
-pkg install openssl-tool -y
-
-echo ">>> 8. 安装 openssl"
-pkg install openssl -y
-
-echo ">>> 9. 安装 python"
-pkg install python -y
-
-echo ">>> 10. 安装 zsh"
-pkg install zsh -y
-
-echo ">>> 11. 批量安装: git pv pulseaudio proot zstd bat termux-api aria2"
-pkg install -y git pv pulseaudio proot zstd bat termux-api aria2
-
-echo ">>> 12. 安装 eza fzf wget"
-pkg install -y eza fzf wget
-
-echo ">>> 13. 安装 pv (重复)"
-pkg install pv -y
-
-echo ">>> 14. 安装 tree"
-pkg install tree -y
-
-echo ">>> 15. 安装 rsync"
-pkg install rsync -y
-
-echo ">>> 16. 安装 neofetch"
-pkg install neofetch -y
-
-echo ">>> 17. 安装 eza (重复)"
-pkg install -y eza
-
-echo ">>> 18. 安装 traceroute"
-pkg install traceroute -y
-
-echo ">>> 19. 安装 dnsutils"
-pkg install dnsutils -y
-
-echo ">>> 20. 安装 nano"
-pkg install nano -y
-
-echo ">>> 21. 安装 rush"
-pkg install rush -y
-
-echo ">>> 22. 安装 jq"
-pkg install jq -y
-
-echo ">>> 23. 安装 sqlite"
-pkg install sqlite -y
-
-echo ">>> 24. 安装 zsh (重复)"
-pkg install zsh -y
-
-echo ">>> 25. 安装 git (重复)"
-pkg install git -y
-
-echo ">>> 26. 安装 bat (重复)"
-pkg install bat -y
-
-echo ">>> 27. 安装 fzf (重复)"
-pkg install fzf -y
-
-echo ">>> 28. 安装 net-tools"
-pkg install net-tools -y
-
-echo ">>> 29. 安装 traceroute (重复)"
-pkg install traceroute -y
-
-echo ">>> 30. 安装 dnsutils (重复)"
-pkg install dnsutils -y
-
-echo ">>> 31. 安装 ack"
-pkg install ack-grep -y
-
-echo ">>> 32. 安装 termux-api (重复)"
-pkg install termux-api -y
-
-echo ">>> 33. 安装 termux-elf-cleaner"
-pkg install termux-elf-cleaner -y
-
-echo ">>> 34. 安装 vim"
-pkg install vim -y
-
-echo ">>> 35. 安装 proot-distro"
-pkg install proot-distro -y
-
-echo ">>> 36. 安装 pulseaudio (重复)"
-pkg install pulseaudio -y
-
-echo ">>> 37. 安装 rust"
-pkg install rust -y
+# 注意：list-installed 理论上是一个参数，而非包名，已从列表中移除（若需要可手动执行）
 
 # --- 外部脚本与配置 ---
-echo ">>> 38. 安装 zinit"
+echo ">>> 安装 zinit"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/zdharma-continuum/zinit/main/scripts/install.sh)"
 
-echo ">>> 39. 运行 zsh 配置脚本"
+echo ">>> 运行 zsh 配置脚本"
 bash -c "$(curl -L gitee.com/mo2/zsh/raw/2/2)"
 
-echo ">>> 40. 克隆 powerlevel10k"
+echo ">>> 克隆 powerlevel10k"
 git clone --depth=1 https://bgithub.xyz/romkatv/powerlevel10k.git ~/powerlevel10k
 
 # --- 存储与文件准备 ---
-echo ">>> 41. 设置存储权限"
+echo ">>> 设置存储权限"
 termux-setup-storage
 
-echo ">>> 42. 创建目录 $HOME/storage/shared/MITS/TEMP/"
-mkdir -p $HOME/storage/shared/MITS/TEMP/
+echo ">>> 创建目录 $HOME/storage/shared/MITS/TEMP/"
+mkdir -p "$HOME/storage/shared/MITS/TEMP/"
 
-echo ">>> 43. 下载 json.hpp"
-wget -O $HOME/storage/shared/MITS/TEMP/json.hpp \
+echo ">>> 下载 json.hpp"
+wget -O "$HOME/storage/shared/MITS/TEMP/json.hpp" \
     "https://github.com/nlohmann/json/releases/latest/download/json.hpp"
 
 # --- 最终更新 ---
-echo ">>> 44. 再次 pkg update"
+echo ">>> 再次 pkg update"
 pkg update
 
-echo ">>> 45. 再次 pkg upgrade"
+echo ">>> 再次 pkg upgrade"
 pkg upgrade -y
 
 echo "==================== 所有操作成功完成 ===================="
@@ -200,8 +124,9 @@ echo "==================== 所有操作成功完成 ===================="
 trap - ERR
 set +e
 
-cp -r /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst.bak /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst
+# 恢复 proot-distro 原始 postinst 脚本
 
+cp -r /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst.bak /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst
 chmod 755 /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst
 
 dpkg --configure proot-distro
