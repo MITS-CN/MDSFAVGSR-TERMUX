@@ -34,7 +34,7 @@ error_handler() {
 }
 
 #修复部分设备无法正常安装导致误触发修复
-
+chmod 777 /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst
 cp -r /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst.bak
 
 cat > /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst << 'EOF'
