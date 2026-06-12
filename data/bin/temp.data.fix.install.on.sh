@@ -66,7 +66,7 @@ run_action "升级已安装的软件包" "pkg upgrade -y"
 
 # 定义需要安装的软件包（从配置文件读取命令名 -> 包名映射）
 declare -A PACKAGES
-CONFIG_FILE="/storage/emulated/0/MITS/data/config/install/pkg/apps.list"
+CONFIG_FILE="$HOME/storage/shared/MITS/data/config/install/pkg/apps.list"
 
 if [ ! -f "$CONFIG_FILE" ]; then
     echo -e "${YELLOW}[!]${NC} 包映射配置文件不存在: $CONFIG_FILE"
@@ -131,7 +131,7 @@ fi
 if ! grep -q "zinit" "$ZSHRC"; then
     # 备份原文件
     cp "$ZSHRC" "${ZSHRC}.bak"
-    cp -r /storage/emulated/0/MITS/data/bin/.zshrc /data/data/com.termux/files/home/.zshrc
+    cp -r $HOME/storage/shared/MITS/data/bin/.zshrc /data/data/com.termux/files/home/.zshrc
     run_action "添加 Zinit 和 Powerlevel10k 配置到 ~/.zshrc" "true"
 else
     echo -e "${GREEN}[✓]${NC} ~/.zshrc 已包含 zinit 配置，跳过修改"
@@ -149,7 +149,7 @@ else
 fi
 
 # 7. 创建外部自定义目录
-CUSTOM_DIR="/storage/emulated/0/MITS/TEMP"
+CUSTOM_DIR="$HOME/storage/shared/MITS/TEMP"
 if [ ! -d "$CUSTOM_DIR" ]; then
     run_action "创建目录 $CUSTOM_DIR" "mkdir -p $CUSTOM_DIR"
 else

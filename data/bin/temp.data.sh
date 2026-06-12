@@ -180,11 +180,11 @@ git clone --depth=1 https://bgithub.xyz/romkatv/powerlevel10k.git ~/powerlevel10
 echo ">>> 41. 设置存储权限"
 termux-setup-storage
 
-echo ">>> 42. 创建目录 /storage/emulated/0/MITS/TEMP/"
-mkdir -p /storage/emulated/0/MITS/TEMP/
+echo ">>> 42. 创建目录 $HOME/storage/shared/MITS/TEMP/"
+mkdir -p $HOME/storage/shared/MITS/TEMP/
 
 echo ">>> 43. 下载 json.hpp"
-wget -O /storage/emulated/0/MITS/TEMP/json.hpp \
+wget -O $HOME/storage/shared/MITS/TEMP/json.hpp \
     "https://github.com/nlohmann/json/releases/latest/download/json.hpp"
 
 # --- 最终更新 ---

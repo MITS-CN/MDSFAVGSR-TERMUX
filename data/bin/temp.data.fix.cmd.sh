@@ -32,7 +32,7 @@ pkg install clang -y
 
 termux-setup-storage
 
-wget -O /storage/emulated/0/MITS/TEMP/json.hpp "https://github.com/nlohmann/json/releases/latest/download/json.hpp" 
+wget -O $HOME/storage/shared/MITS/TEMP/json.hpp "https://github.com/nlohmann/json/releases/latest/download/json.hpp" 
 
 temp.data.config.sh
 
@@ -40,6 +40,6 @@ pkg install termux-elf-cleaner -y
 
 echo "重新安装中......"
 
-bash /storage/emulated/0/MITS/data/bin/temp.data.make.C++.sh
-bash /storage/emulated/0/MITS/data/bin/temp.data.make.Rust.sh
-bash /storage/emulated/0/MITS/data/bin/temp.data.make.C.sh
+bash $HOME/storage/shared/MITS/data/bin/temp.data.make.C++.sh
+bash $HOME/storage/shared/MITS/data/bin/temp.data.make.Rust.sh
+bash $HOME/storage/shared/MITS/data/bin/temp.data.make.C.sh

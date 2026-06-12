@@ -41,7 +41,7 @@ apps=()
 
 while IFS= read -r line || [ -n "$line" ]; do
     apps+=("$line")
-done < "/storage/emulated/0/MITS/data/config/all_packName/apps.list"
+done < "$HOME/storage/shared/MITS/data/config/all_packName/apps.list"
 
 # 预期的安装目录（与安装脚本中的 BIN_DIR 一致）
 BIN_DIR="/data/data/com.termux/files/usr/bin"

@@ -29,13 +29,13 @@ apps=()
 
 while IFS= read -r line || [ -n "$line" ]; do
     apps+=("$line")
-done < "/storage/emulated/0/MITS/data/config/C++/apps.config"
+done < "$HOME/storage/shared/MITS/data/config/C++/apps.config"
 
 #04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e是hash值，用于临时使用的命令
 
 CXX="clang++"                          # 改用 clang++
-CXXFLAGS="-O2 -Wl,-z,lazy"   
-SRC_DIR="/storage/emulated/0/MITS/data/bin/C++"
+CXXFLAGS="-O2 -Wl,-z,lazy -I$HOME/storage/shared/MITS/TEMP"
+SRC_DIR="$HOME/storage/shared/MITS/data/bin/C++"
 BIN_DIR="/data/data/com.termux/files/usr/bin"
 
 for app in "${apps[@]}"; do

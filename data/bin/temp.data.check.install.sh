@@ -81,7 +81,7 @@ echo
 echo ">>> 基础工具"
 
 # 配置文件路径
-CMD_CONFIG_FILE="/storage/emulated/0/MITS/data/config/install/pkg/apps.config"
+CMD_CONFIG_FILE="$HOME/storage/shared/MITS/data/config/install/pkg/apps.config"
 
 if [ ! -f "$CMD_CONFIG_FILE" ]; then
     echo -e "${YELLOW}[!]${NC} 命令配置文件不存在: $CMD_CONFIG_FILE"
@@ -121,7 +121,7 @@ check_dir "$HOME/powerlevel10k"
 # 存储目录
 check_dir "$HOME/storage"  # termux-setup-storage 创建
 # 用户自定义目录
-CUSTOM_DIR="/storage/emulated/0/MITS/TEMP"
+CUSTOM_DIR="$HOME/storage/shared/MITS/TEMP"
 if [ -d "$CUSTOM_DIR" ]; then
     echo -e "${GREEN}[✓]${NC} 目录 $CUSTOM_DIR"
     success=$((success+1))
@@ -131,7 +131,7 @@ else
 fi
 total=$((total+1))
 # json.hpp 文件
-JSON_FILE="/storage/emulated/0/MITS/TEMP/json.hpp"
+JSON_FILE="$HOME/storage/shared/MITS/TEMP/json.hpp"
 if [ -f "$JSON_FILE" ]; then
     echo -e "${GREEN}[✓]${NC} 文件 $JSON_FILE"
     success=$((success+1))

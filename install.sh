@@ -172,11 +172,11 @@ if [ "$current_dir" = "$script_dir" ]; then
     
     echo "存储权限就绪，开始执行任务..."
     echo "当前目录是脚本所在目录。"
-    mkdir -p /storage/emulated/0/MITS/TEMP/
-    mkdir -p /storage/emulated/0/MITS/data/bin/
-    cp -r ./* /storage/emulated/0/MITS
-    chmod +x /storage/emulated/0/MITS/data/bin/init.rc
-    bash /storage/emulated/0/MITS/data/bin/init.rc
+    mkdir -p $HOME/storage/shared/MITS/TEMP/
+    mkdir -p $HOME/storage/shared/MITS/data/bin/
+    cp -r ./* $HOME/storage/shared/MITS
+    chmod +x $HOME/storage/shared/MITS/data/bin/init.rc
+    bash $HOME/storage/shared/MITS/data/bin/init.rc
 
     termux-reload-settings
 
@@ -190,7 +190,7 @@ if [ "$current_dir" = "$script_dir" ]; then
     # 后台执行删除和清理
     {
         sleep 1
-        win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e /storage/emulated/0/MITS -v
+        win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e $HOME/storage/shared/MITS -v
     
         mv /data/data/com.termux/files/usr/bin/win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e /data/data/com.termux/files/usr/bin/delv
         rm -f /data/data/com.termux/files/usr/bin/win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e

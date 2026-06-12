@@ -17,12 +17,12 @@ fi
 apps=()
 while IFS= read -r line || [ -n "$line" ]; do
     apps+=("$line")
-done < "/storage/emulated/0/MITS/data/config/C/apps.config"
+done < "$HOME/storage/shared/MITS/data/config/C/apps.config"
 
 # 使用 C 编译器（clang 或 gcc）
 CC="clang"                    # 或者 "gcc"
 CFLAGS="-O2 -Wall -Wextra"    # 优化 + 常见警告
-SRC_DIR="/storage/emulated/0/MITS/data/bin/C"
+SRC_DIR="$HOME/storage/shared/MITS/data/bin/C"
 BIN_DIR="/data/data/com.termux/files/usr/bin"
 
 for app in "${apps[@]}"; do

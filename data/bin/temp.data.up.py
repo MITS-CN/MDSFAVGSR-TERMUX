@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 全局检查工具：
-1. 检查 /storage/emulated/0/MITS/TEMP/json.hpp 是否存在且为空
+1. 检查 $HOME/storage/shared/MITS/TEMP/json.hpp 是否存在且为空
 2. 若为空（或用户强制），则升级所有可升级的 pip 包
 """
 
@@ -10,7 +10,7 @@ import sys
 import subprocess
 import argparse
 
-TARGET_FILE = "/storage/emulated/0/MITS/TEMP/json.hpp"
+TARGET_FILE = "$HOME/storage/shared/MITS/TEMP/json.hpp"
 
 def is_file_empty(path: str) -> bool:
     """检查文件是否存在且大小为 0"""

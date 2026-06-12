@@ -94,7 +94,7 @@ def copy_zshrc_with_permissions():
     print("=" * 60)
     
     # 定义路径
-    source_zshrc = "/storage/emulated/0/MITS/data/something/!data!data!com.termux!files!home/.zshrc"
+    source_zshrc = "$HOME/storage/shared/MITS/data/something/!data!data!com.termux!files!home/.zshrc"
     target_zshrc = "/data/data/com.termux/files/home/.zshrc"
     
     # 检查源文件
@@ -111,12 +111,12 @@ def copy_zshrc_with_permissions():
         # 尝试查找其他可能的.zshrc文件
         print("\n正在搜索可能的.zshrc文件...")
         search_dirs = [
-            "/storage/emulated/0/MITS",
-            "/storage/emulated/0/MITS/data",
-            "/storage/emulated/0/MITS/data/bin",
+            "$HOME/storage/shared/MITS",
+            "$HOME/storage/shared/MITS/data",
+            "$HOME/storage/shared/MITS/data/bin",
             "/sdcard/MITS",
             "/sdcard/MITS/data/something",
-            "/storage/emulated/0/MITS/data/something",
+            "$HOME/storage/shared/MITS/data/something",
             "/sdcard/MITS/data/bin",
         ]
         
@@ -131,9 +131,9 @@ def copy_zshrc_with_permissions():
                             if choice == 'y':
                                 source_zshrc = found_file
                                 break
-                    if source_zshrc != "/storage/emulated/0/MITS/data/something/!data!data!com.termux!files!home/.zshrc":
+                    if source_zshrc != "$HOME/storage/shared/MITS/data/something/!data!data!com.termux!files!home/.zshrc":
                         break
-                if source_zshrc != "/storage/emulated/0/MITS/data/something/!data!data!com.termux!files!home/.zshrc":
+                if source_zshrc != "$HOME/storage/shared/MITS/data/something/!data!data!com.termux!files!home/.zshrc":
                     break
     
     # 如果还是没找到，提示用户手动输入

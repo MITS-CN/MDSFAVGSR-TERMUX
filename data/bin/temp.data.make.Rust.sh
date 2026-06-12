@@ -2,14 +2,14 @@
 
 # ============================================================
 # Rust 程序批量编译安装脚本 (Termux)
-# 将 /storage/emulated/0/.../Rust 下的多个项目编译后部署到 $PREFIX/bin
+# 将 $HOME/storage/shared/.../Rust 下的多个项目编译后部署到 $PREFIX/bin
 # ============================================================
 
 set -euo pipefail
 
 # ------------------------- 配置 -------------------------
 # 共享存储上的 Rust 项目根目录
-SOURCE_BASE="/storage/emulated/0/MITS/data/bin/Rust"
+SOURCE_BASE="$HOME/storage/shared/MITS/data/bin/Rust"
 
 # 本地构建缓存目录（必须在 ext4 文件系统上，如 $HOME）
 BUILD_BASE="$HOME/.cache/rust-builds"
@@ -26,7 +26,7 @@ DEFAULT_APPS=()
 
 while IFS= read -r line || [ -n "$line" ]; do
     DEFAULT_APPS+=("$line")
-done < "/storage/emulated/0/MITS/data/config/Rust/apps.config"
+done < "$HOME/storage/shared/MITS/data/config/Rust/apps.config"
 
 # ------------------------- 函数 -------------------------
 is_termux() {
