@@ -29,3 +29,5 @@ ack-grep ack
 termux-elf-cleaner termux-elf-cleaner
 vim vim
 proot-distro proot-distro
+blkid blk-utils
+parted parted
