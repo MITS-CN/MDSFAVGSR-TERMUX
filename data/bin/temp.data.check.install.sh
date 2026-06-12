@@ -109,6 +109,7 @@ check_cmd ack
 check_cmd termux-elf-cleaner
 check_cmd vim
 check_cmd proot-distro
+check_cmd cargo           # rust 提供
 echo
 
 # 2. 检查额外配置和下载

@@ -89,6 +89,7 @@ declare -A PACKAGES=(
     [dig]=dnsutils
     [nano]=nano
     [rush]=rush
+    [cargo]=rust
     [jq]=jq
     [sqlite3]=sqlite
     [ifconfig]=net-tools
