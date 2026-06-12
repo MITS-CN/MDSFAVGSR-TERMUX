@@ -21,3 +21,5 @@ win-where
 win-winver
 win-xcopy
 win-del
+win-symlink
+win-driverquery
