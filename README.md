@@ -29,7 +29,7 @@ bash install.sh
 - `help` — 帮助信息
 - `cls`、`dir`、`del` 等基础命令的 Shell 封装
 
-更多细节见 `data/bin/cpp/` 和 `data/bin/order/` 目录。
+更多细节见 `data/bin/`  目录。
 
 ## 环境要求
 
