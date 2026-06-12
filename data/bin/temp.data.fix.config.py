@@ -66,7 +66,7 @@ FILE_PERMS = 0o755
 
 # 默认配置文件内容
 DEFAULT_MAIN_CONFIG = '''{
-    "MITS_version": "Build.IS0064(main:NULL)",
+    "MITS_version": "Build.IS0065(main:NULL)",
     "MITS_build_by": "Administrator"
 }
 '''
