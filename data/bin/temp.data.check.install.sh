@@ -77,42 +77,33 @@ check_file() {
 echo "===== 开始检查 Termux 安装环境 ====="
 echo
 
-# 1. 检查基础软件包（通过命令名）
+# 1. 检查基础软件包（从配置文件读取命令列表）
 echo ">>> 基础工具"
-check_cmd clang
-check_cmd gcc
-check_cmd openssl          # openssl-tool 提供
-check_cmd python
-check_cmd zsh
-check_cmd git
-check_cmd pv
-check_cmd pulseaudio
-check_cmd proot
-check_cmd zstd
-check_cmd bat
-check_cmd termux-dialog    #termux-api 提供
-check_cmd aria2c           # aria2 提供的命令
-check_cmd eza
-check_cmd fzf
-check_cmd wget
-check_cmd tree
-check_cmd rsync
-check_cmd neofetch
-check_cmd traceroute
-check_cmd dig              # dnsutils 提供
-check_cmd nano
-check_cmd rush
-check_cmd jq
-check_cmd sqlite3          # sqlite 提供
-check_cmd ifconfig         # net-tools 提供
-check_cmd ack
-check_cmd termux-elf-cleaner
-check_cmd vim
-check_cmd proot-distro
-check_cmd cargo           # rust 提供
+
+# 配置文件路径
+CMD_CONFIG_FILE="/storage/emulated/0/MITS/data/config/install/pkg/apps.config"
+
+if [ ! -f "$CMD_CONFIG_FILE" ]; then
+    echo -e "${YELLOW}[!]${NC} 命令配置文件不存在: $CMD_CONFIG_FILE"
+    echo -e "${YELLOW}    跳过命令检查，请确保配置文件存在并包含每行一个的命令名。${NC}"
+else
+    # 读取命令列表到数组
+    cmds=()
+    while IFS= read -r line || [ -n "$line" ]; do
+        # 跳过空行和注释行（以 # 开头）
+        [[ -z "$line" || "$line" =~ ^[[:space:]]*# ]] && continue
+        cmds+=("$line")
+    done < "$CMD_CONFIG_FILE"
+
+    # 循环检查每个命令
+    for cmd in "${cmds[@]}"; do
+        check_cmd "$cmd"
+    done
+fi
+
 echo
 
-# 2. 检查额外配置和下载
+# 2. 检查额外配置和资源
 echo ">>> 额外配置和资源"
 # zinit 安装
 check_dir "$HOME/.zinit"

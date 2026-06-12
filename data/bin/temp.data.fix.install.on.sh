@@ -64,43 +64,39 @@ echo -e "${GREEN}===== Termux 环境修复开始 =====${NC}\n"
 run_action "更新软件包列表" "pkg update -y"
 run_action "升级已安装的软件包" "pkg upgrade -y"
 
-# 2. 定义需要安装的软件包列表（命令名 -> 包名映射）
-declare -A PACKAGES=(
-    [clang]=clang
-    [gcc]=gcc-11              # Termux 中 gcc 命令由 gcc-11 包提供
-    [openssl]=openssl-tool
-    [python]=python
-    [zsh]=zsh
-    [git]=git
-    [pv]=pv
-    [pulseaudio]=pulseaudio
-    [proot]=proot
-    [zstd]=zstd
-    [bat]=bat
-    [termux-dialog]=termux-api
-    [aria2c]=aria2
-    [eza]=eza
-    [fzf]=fzf
-    [wget]=wget
-    [tree]=tree
-    [rsync]=rsync
-    [neofetch]=neofetch
-    [traceroute]=traceroute
-    [dig]=dnsutils
-    [nano]=nano
-    [rush]=rush
-    [cargo]=rust
-    [jq]=jq
-    [sqlite3]=sqlite
-    [ifconfig]=net-tools
-    [ack-grep]=ack
-    [termux-elf-cleaner]=termux-elf-cleaner
-    [vim]=vim
-    [proot-distro]=proot-distro
-)
+# 定义需要安装的软件包（从配置文件读取命令名 -> 包名映射）
+declare -A PACKAGES
+CONFIG_FILE="/storage/emulated/0/MITS/data/config/install/pkg/apps.list"
 
-# 安装缺失的软件包（直接批量安装，pkg install 会自动跳过已安装的）
-run_action "安装所有必需的软件包" "pkg install -y ${PACKAGES[@]}"
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo -e "${YELLOW}[!]${NC} 包映射配置文件不存在: $CONFIG_FILE"
+    echo -e "${YELLOW}    跳过软件包安装，请确保文件存在且格式为：命令名 包名${NC}"
+else
+    # 读取配置文件，构建关联数组
+    while IFS= read -r line || [ -n "$line" ]; do
+        # 去除行首行尾空白
+        line="${line#"${line%%[![:space:]]*}"}"
+        line="${line%"${line##*[![:space:]]}"}"
+        # 跳过空行和注释行
+        [[ -z "$line" || "$line" =~ ^# ]] && continue
+        # 读取命令名和包名（以空白分隔）
+        read -r cmd pkg <<< "$line"
+        if [ -n "$cmd" ] && [ -n "$pkg" ]; then
+            PACKAGES["$cmd"]="$pkg"
+        else
+            echo -e "${YELLOW}[!]${NC} 配置行格式错误，跳过: $line"
+        fi
+    done < "$CONFIG_FILE"
+fi
+
+# 2. 如果有任何包定义，则执行安装
+if [ ${#PACKAGES[@]} -gt 0 ]; then
+    # 获取所有包名（无序）
+    all_packages="${PACKAGES[@]}"
+    run_action "安装所有必需的软件包" "pkg install -y $all_packages"
+else
+    echo -e "${YELLOW}[!]${NC} 没有从配置文件中读取到任何软件包，跳过安装"
+fi
 
 # 处理 gcc 符号链接（如果 gcc-11 已安装但命令名是 gcc-11）
 if command -v gcc-11 >/dev/null 2>&1 && ! command -v gcc >/dev/null 2>&1; then
