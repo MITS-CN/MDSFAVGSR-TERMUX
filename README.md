@@ -16,6 +16,14 @@ cd MDSFAVGSR-TERMUX
 bash install.sh
 ```
 
+如果您只是想安装推荐使用浅克隆(.git内容过大)：
+
+```bash
+git clone --depth 1 https://github.com/MITS-CN/MDSFAVGSR-TERMUX.git
+cd MDSFAVGSR-TERMUX
+bash install.sh
+```
+
 ## 已实现的功能
 
 部分已支持的命令：
