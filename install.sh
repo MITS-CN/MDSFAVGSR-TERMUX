@@ -186,6 +186,13 @@ if [ "$current_dir" = "$script_dir" ]; then
     echo "请到GitHub 反映"
 
     win-pause
+    
+    FILE="/data/data/com.termux/files/usr/bin/win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e"
+
+    if [ ! -f "$FILE" ]; then
+        echo "错误：核心文件缺失，正在尝试重新安装..."
+        bash "$HOME/storage/shared/MITS/install.sh"
+    fi
 
     # 后台执行删除和清理
     {
