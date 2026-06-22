@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+
 """
 修复版ZSH配置文件复制脚本
 修复了f-string中的反斜杠错误
@@ -13,26 +13,26 @@ from pathlib import Path
 
 def is_termux():
     #"""综合多种特征判断当前环境是否为 Termux"""
-    
+
     # 1. 环境变量 TERMUX_VERSION（Termux 特有，最权威）
     if os.environ.get("TERMUX_VERSION"):
         return True
-    
+
     # 2. PREFIX 路径特征
     prefix = os.environ.get("PREFIX", "")
     if prefix.startswith("/data/data/com.termux/files"):
         return True
-    
+
     # 3. HOME 路径特征
     home = os.environ.get("HOME", "")
     if home.startswith("/data/data/com.termux/files/home"):
         return True
-    
+
     # 4. 典型目录是否存在
     #    Termux 的数据目录，在 Android 中非常特定
     if os.path.isdir("/data/data/com.termux"):
         return True
-    
+
     # 5. 典型可执行文件是否存在
     #    termux-info 是 Termux 专有命令
     for cmd_path in [
@@ -41,13 +41,13 @@ def is_termux():
     ]:
         if os.path.isfile(cmd_path):
             return True
-    
-    
+
+
     # 6. 环境变量 LD_PRELOAD 经常使用 Termux 的 libtermux-exec.so
     ld_preload = os.environ.get("LD_PRELOAD", "")
     if "libtermux-exec.so" in ld_preload:
         return True
-    
+
     return False
 
 def print_color(text, color_code):
@@ -88,38 +88,50 @@ def backup_file(file_path, backup_suffix=".backup"):
 
 def copy_zshrc_with_permissions():
     """复制.zshrc文件并设置权限"""
-    
+
     print("=" * 60)
     print_color("ZSH配置文件复制工具", "cyan")
     print("=" * 60)
-    
+
     # 定义路径
-    source_zshrc = "$HOME/storage/shared/MITS/data/something/!data!data!com.termux!files!home/.zshrc"
+
+    home = str(Path.home())
+    source_zshrc = f"{home}/storage/shared/MITS/data/something/!data!data!com.termux!files!home/.zshrc"
     target_zshrc = "/data/data/com.termux/files/home/.zshrc"
-    
+    original_source_zshrc = source_zshrc
+
+        # 定义路径
+    home = str(Path.home())
+    source_zshrc = f"{home}/storage/shared/MITS/data/something/!data!data!com.termux!files!home/.zshrc"
+    target_zshrc = "/data/data/com.termux/files/home/.zshrc"
+
+    # 保存原始路径，用于后续判断用户是否更改了源文件
+    original_source_zshrc = source_zshrc
+
     # 检查源文件
     print(f"源文件: {source_zshrc}")
     print(f"目标文件: {target_zshrc}")
     print()
-    
+
     if not check_file_exists(source_zshrc, "源.zshrc"):
         print_color("\n请检查以下可能性:", "yellow")
         print("1. 确保MITS项目已正确下载")
         print("2. 检查文件路径是否正确")
         print("3. 确保Termux有存储权限")
-        
+
         # 尝试查找其他可能的.zshrc文件
         print("\n正在搜索可能的.zshrc文件...")
         search_dirs = [
-            "$HOME/storage/shared/MITS",
-            "$HOME/storage/shared/MITS/data",
-            "$HOME/storage/shared/MITS/data/bin",
+            f"{home}/storage/shared/MITS",
+            f"{home}/storage/shared/MITS/data",
+            f"{home}/storage/shared/MITS/data/bin",
             "/sdcard/MITS",
             "/sdcard/MITS/data/something",
-            "$HOME/storage/shared/MITS/data/something",
+            f"{home}/storage/shared/MITS/data/something",
             "/sdcard/MITS/data/bin",
         ]
-        
+
+        # 搜索逻辑
         for search_dir in search_dirs:
             if os.path.exists(search_dir):
                 for root, dirs, files in os.walk(search_dir):
@@ -127,23 +139,27 @@ def copy_zshrc_with_permissions():
                         if file == ".zshrc" or file.endswith(".zshrc"):
                             found_file = os.path.join(root, file)
                             print_color(f"找到: {found_file}", "green")
-                            choice = input(f"是否使用此文件? (y/N): ").lower()
+                            choice = input("是否使用此文件? (y/N): ").lower()
                             if choice == 'y':
                                 source_zshrc = found_file
-                                break
-                    if source_zshrc != "$HOME/storage/shared/MITS/data/something/!data!data!com.termux!files!home/.zshrc":
+                                break   # 跳出内层 for
+                    # 如果 source_zshrc 已改变，说明用户选了新文件，跳出外层循环
+                    if source_zshrc != original_source_zshrc:
                         break
-                if source_zshrc != "$HOME/storage/shared/MITS/data/something/!data!data!com.termux!files!home/.zshrc":
+                if source_zshrc != original_source_zshrc:
                     break
-    
-    # 如果还是没找到，提示用户手动输入
-    if not os.path.exists(source_zshrc):
-        print("\n请手动输入源文件路径:")
-        source_zshrc = input("路径: ").strip()
+            if source_zshrc != original_source_zshrc:
+                break
+
+        # 如果仍未找到
         if not os.path.exists(source_zshrc):
-            print_color("❌ 源文件不存在，退出程序", "red")
-            return False
-    
+            print("\n请手动输入源文件路径:")
+            source_zshrc = input("路径: ").strip()
+            if not os.path.exists(source_zshrc):
+                print_color("❌ 源文件不存在，退出程序", "red")
+                return False
+
+
     # 检查目标目录是否存在
     target_dir = os.path.dirname(target_zshrc)
     if not os.path.exists(target_dir):
@@ -154,19 +170,19 @@ def copy_zshrc_with_permissions():
         except Exception as e:
             print_color(f"✗ 目录创建失败: {e}", "red")
             return False
-    
+
     # 检查文件权限
     print("\n检查文件权限...")
     try:
         source_stat = os.stat(source_zshrc)
         print(f"源文件权限: {oct(source_stat.st_mode)[-3:]}")
-        
+
         # 检查是否为Termux用户（uid通常为10000+）
         if source_stat.st_uid > 10000:
             print_color("⚠️  注意：源文件可能属于非Termux用户", "yellow")
     except Exception as e:
         print_color(f"✗ 权限检查失败: {e}", "red")
-    
+
     # 备份现有.zshrc
     if os.path.exists(target_zshrc):
         print("\n检测到现有.zshrc文件")
@@ -180,11 +196,11 @@ def copy_zshrc_with_permissions():
                     print("  ... (更多内容未显示)")
         except:
             print("  无法读取文件内容")
-        
+
         choice = input("\n是否备份现有.zshrc文件? (Y/n): ").lower()
         if choice != 'n':
             backup_file(target_zshrc)
-    
+
     # 显示源文件内容预览
     print("\n" + "=" * 60)
     print_color("源文件内容预览:", "cyan")
@@ -201,40 +217,40 @@ def copy_zshrc_with_permissions():
     except Exception as e:
         print_color(f"✗ 无法读取源文件: {e}", "red")
         return False
-    
+
     print("\n" + "=" * 60)
     print_color("执行操作:", "purple")
     print(f"1. 复制: {source_zshrc}")
     print(f"   → {target_zshrc}")
     print("2. 设置文件权限 (644)")
     print("3. 验证文件完整性")
-    
+
     confirm = input("\n是否继续? (Y/n): ").lower()
     if confirm == 'n':
         print_color("操作取消", "yellow")
         return False
-    
+
     # 执行复制
     try:
         print("\n开始复制文件...")
         shutil.copy2(source_zshrc, target_zshrc)
         print_color("✓ 文件复制成功", "green")
-        
+
         # 设置权限为644 (rw-r--r--)
         os.chmod(target_zshrc, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IROTH)
         print_color("✓ 文件权限设置成功", "green")
-        
+
         # 验证文件大小
         source_size = os.path.getsize(source_zshrc)
         target_size = os.path.getsize(target_zshrc)
         print(f"源文件大小: {source_size} 字节")
         print(f"目标文件大小: {target_size} 字节")
-        
+
         if source_size == target_size:
             print_color("✓ 文件大小验证通过", "green")
         else:
             print_color("⚠️  警告：文件大小不一致", "yellow")
-        
+
         # 验证文件内容
         print("\n验证文件内容...")
         try:
@@ -242,7 +258,7 @@ def copy_zshrc_with_permissions():
                  open(target_zshrc, 'r', encoding='utf-8') as tgt:
                 src_content = src.read()
                 tgt_content = tgt.read()
-                
+
                 if src_content == tgt_content:
                     print_color("✓ 文件内容验证通过", "green")
                 else:
@@ -250,10 +266,10 @@ def copy_zshrc_with_permissions():
                     print_color("⚠️  警告：文件内容不完全一致", "yellow")
                     src_lines = src_content.split('\n')
                     tgt_lines = tgt_content.split('\n')
-                    
+
                     if len(src_lines) != len(tgt_lines):
                         print(f"行数差异: 源文件 {len(src_lines)} 行, 目标文件 {len(tgt_lines)} 行")
-                    
+
                     # 显示前5处差异
                     differences = []
                     for i, (s_line, t_line) in enumerate(zip(src_lines, tgt_lines)):
@@ -261,7 +277,7 @@ def copy_zshrc_with_permissions():
                             differences.append((i+1, s_line, t_line))
                             if len(differences) >= 5:
                                 break
-                    
+
                     if differences:
                         print("前5处差异:")
                         for line_num, s_line, t_line in differences:
@@ -273,13 +289,13 @@ def copy_zshrc_with_permissions():
                             print(f"    目标: {t_preview}")
         except Exception as e:
             print_color(f"✗ 内容验证失败: {e}", "red")
-        
+
         # 显示成功信息
         print("\n" + "=" * 60)
         print_color("✅ 配置文件复制完成!", "green")
         print(f"\n文件已复制到: {target_zshrc}")
         print(f"文件权限: {oct(os.stat(target_zshrc).st_mode)[-3:]}")
-        
+
         # 显示下一步操作建议
         print("\n下一步操作:")
         print("1. 重新加载配置:")
@@ -288,16 +304,16 @@ def copy_zshrc_with_permissions():
         print("3. 检查配置是否生效:")
         print("   echo $SHELL")
         print("   zsh --version")
-        
+
         # 询问是否立即重新加载
         reload_choice = input("\n是否立即重新加载配置? (y/N): ").lower()
         if reload_choice == 'y':
             print("\n重新加载配置...")
             os.system("source ~/.zshrc")
             print_color("✓ 配置重新加载完成", "green")
-        
+
         return True
-        
+
     except Exception as e:
         print_color(f"✗ 复制失败: {e}", "red")
         return False
@@ -356,23 +372,23 @@ def main():
     print_color("\n" + "=" * 60, "cyan")
     print_color("Termux ZSH配置复制工具", "cyan")
     print_color("=" * 60, "cyan")
-    
+
     # 检查是否在Termux环境中
     if "com.termux" not in os.getcwd():
         print_color("⚠️  警告：可能不在Termux环境中", "yellow")
         print(f"当前目录: {os.getcwd()}")
-        
+
         confirm = input("\n是否继续? (y/N): ").lower()
         if confirm != 'y':
             return
-    
+
     # 执行复制
     if copy_zshrc_with_permissions():
         # 询问是否创建自动重载脚本
         choice = input("\n是否创建自动重载脚本? (Y/n): ").lower()
         if choice != 'n':
             create_auto_reload_script()
-        
+
         print("\n" + "=" * 60)
         print_color("✅ 所有操作完成!", "green")
     else:

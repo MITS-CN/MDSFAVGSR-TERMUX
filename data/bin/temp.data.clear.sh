@@ -36,9 +36,9 @@ fi
 echo "正在清理 ${target_dir} 下以 temp.data 与 temp.user 开头的文件..."
 rm -fv "${target_dir}temp.data"*
 rm -fv "${target_dir}temp.user"*
-rm -fv "${target_dir}#temp.user"*
-rm -fv "${target_dir}#temp.data"*
-rm -fv "${target_dir}#temp.test"*
-rm -fv "${target_dir}#temp.Releases"*
+rm -fv "${target_dir}temp.user"*
+rm -fv "${target_dir}temp.data"*
+rm -fv "${target_dir}temp.test"*
+rm -fv "${target_dir}temp.Releases"*
 # 清理完成提示
 echo -e "\n清理完成！"
