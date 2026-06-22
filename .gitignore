@@ -1,2 +1,7 @@
 .vs/
-*.ipch
+bin/
+obj/
+*.sqlite
+.vs/
+*/
+*.user
