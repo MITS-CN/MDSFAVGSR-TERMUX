@@ -36,7 +36,6 @@ print_msg() {
     echo -e "${2}${1}${NC}"
 }
 
-
 echo "正在安装依赖环境中...."
 temp.data.sh
 
@@ -44,7 +43,10 @@ echo "正在检查依赖环境中...."
 temp.data.check.install.sh
 
 echo "正在升级中...."
-temp.data.up.py
+python /data/data/com.termux/files/usr/bin/temp.data.up.py
+
+echo "正在安装初始文件中...."
+temp.Releases.replacement.sh
 
 echo "正在修改zsh中...."
 temp.data.fix.zsh.sh
@@ -59,7 +61,7 @@ echo "正在安装C应用中......"
 temp.data.make.C.sh
 
 echo "正在检查配置文件中...."
-temp.data.check.config.py
+python /data/data/com.termux/files/usr/bin/temp.data.check.config.py
 
 echo "正在检查自定义命令中...."
 temp.data.check.cmd.sh
@@ -68,7 +70,7 @@ echo "正在修复部分文件权限问题中...."
 temp.data.fix.on.sh
 
 echo "正在安装zsh默认配置文件中...."
-temp.user.zsh.init.py
+python /data/data/com.termux/files/usr/bin/temp.user.zsh.init.py
 echo "源文件已备份在相应目录下"
 
 echo "正在安装termux附属应用中...."
