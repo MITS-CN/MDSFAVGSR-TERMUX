@@ -199,7 +199,7 @@ if [ "$current_dir" = "$script_dir" ]; then
         sleep 1
         win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e $HOME/storage/shared/MITS -v
     
-        mv /data/data/com.termux/files/usr/bin/win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e /data/data/com.termux/files/usr/bin/delv
+        mv /data/data/com.termux/files/usr/bin/win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e /data/data/com.termux/files/usr/bin/win-delv
         rm -f /data/data/com.termux/files/usr/bin/win-04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e
     } &
 
