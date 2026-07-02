@@ -392,11 +392,6 @@ int main(int argc, char* argv[]) {
     bool noHeader = false;
     std::vector<Filter> filters;
 
-    // 模拟 Windows 风格头部
-    std::cout << "Microsoft Windows [Version 10.0.19044.1706]" << std::endl;
-    std::cout << "(c) Microsoft Corporation. All rights reserved." << std::endl;
-    std::cout << std::endl;
-
     // 如果没有参数，直接显示任务列表
     if (argc == 1) {
         // 继续执行，无特殊选项
