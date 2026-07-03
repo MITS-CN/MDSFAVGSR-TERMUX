@@ -25,3 +25,4 @@ win-symlink
 win-driverquery
 win-erase
 win-find
+win-findstr
