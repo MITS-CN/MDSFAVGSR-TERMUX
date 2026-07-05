@@ -1,9 +1,8 @@
 use std::env;
 use std::fs;
-use std::io::{self, BufRead, Write};
-use std::os::unix::fs::MetadataExt; // for uid
+use std::io::{self, Write};
+use std::os::unix::fs::MetadataExt;
 use std::path::{Path, PathBuf};
-use std::time::UNIX_EPOCH;
 
 use chrono::{DateTime, Local, NaiveDateTime};
 
@@ -29,10 +28,9 @@ enum SortKey {
     Size,
     Extension,
     DateTime,
-    DirFirst, // 目录优先，可与其他键组合
+    DirFirst,
 }
 
-// 排序选项
 #[derive(Debug)]
 struct SortOption {
     key: SortKey,
@@ -54,25 +52,23 @@ enum TimeField {
 // ------------------------------------------------
 struct Options {
     attrs: AttrFilter,
-    bare: bool,          // /B
-    thousand_sep: bool,  // /C
-    wide: bool,          // /W
-    wide_vertical: bool, // /D (垂直排序)
-    lowercase: bool,     // /L
-    new_format: bool,    // /N (默认)
+    bare: bool,
+    thousand_sep: bool,
+    wide: bool,
+    wide_vertical: bool,
+    lowercase: bool,
+    new_format: bool,
     sort: Option<SortOption>,
-    pause: bool,         // /P
-    show_owner: bool,    // /Q
-    recursive: bool,     // /S
-    time_field: TimeField, // /T
-    // /X /R 忽略
+    pause: bool,
+    show_owner: bool,
+    recursive: bool,
+    time_field: TimeField,
 }
 
 impl Default for Options {
     fn default() -> Self {
         Options {
             attrs: AttrFilter {
-                // 默认不显示隐藏文件 (点开头)
                 hidden: Some(false),
                 ..Default::default()
             },
@@ -135,8 +131,7 @@ fn print_help() {
 fn parse_attrs(s: &str) -> AttrFilter {
     let mut filter = AttrFilter::default();
     if s.is_empty() {
-        // 没有属性字符串，表示显示所有 (包括隐藏/系统)
-        return filter; // 全为 None
+        return filter;
     }
     let mut negate = false;
     for ch in s.chars() {
@@ -150,11 +145,8 @@ fn parse_attrs(s: &str) -> AttrFilter {
             'L' | 'l' => filter.symlink = Some(!negate),
             _ => {}
         }
-        if !negate { /* already false */ } else {
-            // 只要不是 '-'，属性设置完后应重置
-            if ch != '-' {
-                negate = false;
-            }
+        if ch != '-' {
+            negate = false;
         }
     }
     filter
@@ -165,10 +157,9 @@ fn parse_attrs(s: &str) -> AttrFilter {
 // ------------------------------------------------
 fn parse_sort_order(s: &str) -> SortOption {
     let mut reverse = false;
-    let mut key = SortKey::DirFirst; // 默认为目录优先? Windows 默认 /ON
+    let mut key = SortKey::DirFirst;
     let mut iter = s.chars().peekable();
 
-    // 查找反转前缀
     if let Some(&first) = iter.peek() {
         if first == '-' {
             reverse = true;
@@ -276,7 +267,7 @@ fn system_time_to_naive(st: std::time::SystemTime) -> Option<NaiveDateTime> {
 }
 
 // ------------------------------------------------
-// 过滤器：检查文件是否匹配属性筛选
+// 过滤器
 // ------------------------------------------------
 fn attrs_match(entry: &FileEntry, filter: &AttrFilter) -> bool {
     if let Some(v) = filter.directory {
@@ -299,12 +290,11 @@ fn attrs_match(entry: &FileEntry, filter: &AttrFilter) -> bool {
             return false;
         }
     }
-    // system / archive 忽略
     true
 }
 
 // ------------------------------------------------
-// 通配符匹配 (支持 * 和 ?)
+// 通配符匹配
 // ------------------------------------------------
 fn wildcard_match(pattern: &str, text: &str) -> bool {
     let p = pattern.as_bytes();
@@ -337,28 +327,24 @@ fn wildcard_match(pattern: &str, text: &str) -> bool {
 }
 
 // ------------------------------------------------
-// 收集文件 (支持路径、通配符、递归)
+// 收集文件
 // ------------------------------------------------
-fn collect_files(
-    paths: &[String],
-    opts: &Options,
-) -> Vec<FileEntry> {
+fn collect_files(paths: &[String], opts: &Options) -> Vec<FileEntry> {
     let mut entries = Vec::new();
-    let patterns: Vec<&String> = if paths.is_empty() {
-        vec![&".".to_string()] // 处理默认当前目录
+
+    // 构建模式列表，保证所有字符串都是拥有的，避免临时变量引用问题
+    let patterns: Vec<String> = if paths.is_empty() {
+        vec![".".to_string()]
     } else {
-        paths.iter().collect()
+        paths.to_vec()
     };
 
-    for raw in patterns {
-        let p = Path::new(raw);
-        // 情况1: 是存在的目录 → 列出内容 (递归可选)
+    for raw in &patterns {
+        let p = Path::new(raw.as_str());
         if p.is_dir() {
             let dir_entries = read_dir_recursive(p, true, opts.recursive, &opts.attrs);
             entries.extend(dir_entries);
-        }
-        // 情况2: 文件存在 → 直接加入
-        else if p.exists() {
+        } else if p.exists() {
             if let Ok(meta) = fs::metadata(p) {
                 let entry = FileEntry {
                     path: p.to_path_buf(),
@@ -368,9 +354,7 @@ fn collect_files(
                     entries.push(entry);
                 }
             }
-        }
-        // 情况3: 包含通配符 → 在对应的基础目录展开
-        else if raw.contains('*') || raw.contains('?') {
+        } else if raw.contains('*') || raw.contains('?') {
             let base = p.parent().unwrap_or(Path::new("."));
             let pattern = p.file_name().unwrap().to_str().unwrap();
             let mut collected = if opts.recursive {
@@ -379,25 +363,20 @@ fn collect_files(
                 expand_wildcard(base, pattern, &opts.attrs)
             };
             entries.append(&mut collected);
-        }
-        // 情况4: 文件不存在且无通配符 → 报错
-        else {
+        } else {
             eprintln!("File Not Found: {}", raw);
         }
     }
 
-    // 排序
     sort_entries(&mut entries, &opts.sort);
     entries
 }
 
-// 读取目录 (非递归，应用属性过滤)
 fn read_dir(dir: &Path, include_dot_dirs: bool, attrs: &AttrFilter) -> Vec<FileEntry> {
     let mut entries = Vec::new();
     if let Ok(dir_entries) = fs::read_dir(dir) {
         for entry in dir_entries.flatten() {
             let path = entry.path();
-            // 跳过 . 和 .. (除非需要)
             let fname = path.file_name().unwrap_or_default().to_string_lossy();
             if fname == "." || fname == ".." {
                 if include_dot_dirs {
@@ -427,23 +406,21 @@ fn read_dir_recursive(
     recursive: bool,
     attrs: &AttrFilter,
 ) -> Vec<FileEntry> {
-    let mut all = Vec::new();
-    if recursive {
-    }
-    // 非递归或递归：我们先读取当前目录的文件和子目录列表
     let mut entries = read_dir(dir, include_dot_dirs, attrs);
-    // 递归时，对于每个子目录，递归收集并合并
     if recursive {
-        let subdirs: Vec<PathBuf> = entries.iter().filter(|e| e.is_dir()).map(|e| e.path.clone()).collect();
+        let subdirs: Vec<PathBuf> = entries
+            .iter()
+            .filter(|e| e.is_dir())
+            .map(|e| e.path.clone())
+            .collect();
         for sub in subdirs {
-            let child_entries = read_dir_recursive(&sub, false, true, attrs); // 子目录不显示 . ..
+            let child_entries = read_dir_recursive(&sub, false, true, attrs);
             entries.extend(child_entries);
         }
     }
     entries
 }
 
-// 在目录下展开通配符（非递归）
 fn expand_wildcard(dir: &Path, pattern: &str, attrs: &AttrFilter) -> Vec<FileEntry> {
     let mut results = Vec::new();
     if let Ok(entries) = fs::read_dir(dir) {
@@ -523,18 +500,17 @@ fn sort_entries(entries: &mut Vec<FileEntry>, sort_opt: &Option<SortOption>) {
 }
 
 // ------------------------------------------------
-// 格式化输出
+// 输出
 // ------------------------------------------------
 fn display_entries(
     entries: &[FileEntry],
     opts: &Options,
-    start_path: &Path,
+    _start_path: &Path,
 ) -> io::Result<()> {
     if entries.is_empty() {
         return Ok(());
     }
 
-    // 如果 /B 模式，简单输出文件名
     if opts.bare {
         for e in entries {
             let name = if opts.lowercase {
@@ -547,9 +523,8 @@ fn display_entries(
         return Ok(());
     }
 
-    // 宽列表或垂直宽列表
     if opts.wide || opts.wide_vertical {
-        let mut names: Vec<String> = entries.iter().map(|e| {
+        let names: Vec<String> = entries.iter().map(|e| {
             let n = if opts.lowercase { e.name().to_lowercase() } else { e.name() };
             if e.is_dir() { format!("[{}]", n) } else { n }
         }).collect();
@@ -561,8 +536,6 @@ fn display_entries(
         return Ok(());
     }
 
-    // 详细列表格式 (带标题和摘要)
-    // 按目录分组输出 (便于 /S 时显示子目录标题)
     let mut groups: Vec<(PathBuf, Vec<&FileEntry>)> = Vec::new();
     for e in entries {
         let parent = e.path.parent().unwrap_or(Path::new(".")).to_path_buf();
@@ -583,8 +556,8 @@ fn display_entries(
     let mut lines_since_pause = 0u32;
     let term_height = term_size::height().unwrap_or(24) as u32;
 
-    // 定义暂停函数
-    let mut maybe_pause = |handle: &mut io::StdoutLock, lines: &mut u32| -> io::Result<()> {
+    // 注意：pause 需按回车继续，这里直接用 stdin read_line
+    let maybe_pause = |handle: &mut io::StdoutLock, lines: &mut u32| -> io::Result<()> {
         if opts.pause && *lines >= term_height - 2 {
             write!(handle, "Press Enter to continue...")?;
             handle.flush()?;
@@ -595,17 +568,14 @@ fn display_entries(
         Ok(())
     };
 
-    // 对每个目录输出标题和文件列表
     for (dir_path, group) in &groups {
-        // 打印目录标题
         writeln!(handle)?;
         writeln!(handle, " Directory of {}", dir_path.display())?;
         writeln!(handle)?;
         lines_since_pause += 2;
 
-        // 打印表头
         let header = if opts.show_owner {
-            format!("{:>10} {:>8} {:>12} {:>19} ", "Date", "Time", "Size", "Owner")
+            format!("{:>10} {:>8} {:>12} {:>8} ", "Date", "Time", "Size", "Owner")
         } else {
             format!("{:>10} {:>8} {:>12} ", "Date", "Time", "Size")
         };
@@ -617,7 +587,10 @@ fn display_entries(
             maybe_pause(&mut handle, &mut lines_since_pause)?;
 
             let dt = entry.time_field(opts.time_field).unwrap_or_else(|| {
-                NaiveDateTime::from_timestamp_opt(0, 0).unwrap()
+                // 使用 DateTime::from_timestamp 替代弃用方法
+                DateTime::from_timestamp(0, 0)
+                    .map(|dt| dt.naive_local())
+                    .unwrap_or_else(|| NaiveDateTime::UNIX_EPOCH)
             });
             let date_str = dt.format("%Y-%m-%d").to_string();
             let time_str = dt.format("%H:%M").to_string();
@@ -660,7 +633,6 @@ fn display_entries(
         }
     }
 
-    // 输出统计信息
     maybe_pause(&mut handle, &mut lines_since_pause)?;
     writeln!(handle)?;
     let bytes_str = if opts.thousand_sep {
@@ -670,8 +642,6 @@ fn display_entries(
     };
     writeln!(handle, "               {} File(s)     {} bytes", total_files, bytes_str)?;
     writeln!(handle, "               {} Dir(s)", total_dirs)?;
-    // 空闲空间不显示
-    lines_since_pause += 2;
     Ok(())
 }
 
@@ -687,7 +657,6 @@ fn format_num(n: u64) -> String {
     result.chars().rev().collect()
 }
 
-// 简单水平多列输出 (类似 ls -x)
 fn print_wide_horizontal(names: &[String]) {
     if names.is_empty() {
         return;
@@ -708,7 +677,6 @@ fn print_wide_horizontal(names: &[String]) {
     }
 }
 
-// 垂直多列输出 (类似 ls -C)
 fn print_wide_vertical(names: &[String]) {
     if names.is_empty() {
         return;
@@ -729,13 +697,9 @@ fn print_wide_vertical(names: &[String]) {
     }
 }
 
-// 终端尺寸模块 (简易，避免额外依赖)
 mod term_size {
     pub fn width() -> Option<usize> {
-        std::env::var("COLUMNS").ok().and_then(|s| s.parse().ok()).or_else(|| {
-            // 尝试通过 ioctl 获取，但不引入 libc，返回 None
-            None
-        })
+        std::env::var("COLUMNS").ok().and_then(|s| s.parse().ok())
     }
     pub fn height() -> Option<usize> {
         std::env::var("LINES").ok().and_then(|s| s.parse().ok())
@@ -743,12 +707,11 @@ mod term_size {
 }
 
 // ------------------------------------------------
-// 解析命令行参数
+// 解析参数
 // ------------------------------------------------
 fn parse_args() -> (Options, Vec<String>) {
     let args: Vec<String> = env::args().skip(1).collect();
     if args.is_empty() {
-        // 无参数时显示当前目录，使用默认选项
         return (Options::default(), vec![".".to_string()]);
     }
 
@@ -830,11 +793,6 @@ fn parse_args() -> (Options, Vec<String>) {
         paths.push(".".to_string());
     }
 
-    // 如果使用了宽格式，则关闭 /N (不再详细)
-    if opts.wide {
-        opts.bare = false;
-    }
-
     (opts, paths)
 }
 
@@ -844,13 +802,6 @@ fn parse_args() -> (Options, Vec<String>) {
 fn main() {
     let (opts, paths) = parse_args();
     let entries = collect_files(&paths, &opts);
-
-    // 对于详细输出且非递归，开头显示卷信息 (可省略)
-    if !opts.bare && !opts.wide {
-        // 模拟卷标 (无实际意义)
-        // 不显示卷序列号
-    }
-
     if let Err(e) = display_entries(&entries, &opts, Path::new(".")) {
         eprintln!("Error: {}", e);
     }
