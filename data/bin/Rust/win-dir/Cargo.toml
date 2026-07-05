@@ -1,0 +1,9 @@
+[package]
+name = "win-dir"
+version = "0.0.1-alpha"
+authors = ["MITS-CN"]
+license = "MIT"
+edition = "2021"
+
+[dependencies]
+chrono = "0.4"
