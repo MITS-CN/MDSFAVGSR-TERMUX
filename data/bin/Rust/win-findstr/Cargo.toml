@@ -1,6 +1,8 @@
 [package]
 name = "win-findstr"
-version = "0.1.0"
+version = "0.0.1-alpha"
+authors = ["MITS-CN"]
+license = "MIT"
 edition = "2021"
 
 [dependencies]

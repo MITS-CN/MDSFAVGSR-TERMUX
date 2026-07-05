@@ -1,9 +1,10 @@
 [package]
 name = "win-erase"
-version = "0.1.0"
+version = "0.0.1-alpha"
+authors = ["MITS-CN"]
+license = "MIT"
 edition = "2021"
 
-# 只生成二进制文件
 [[bin]]
 name = "win-erase"
 path = "src/main.rs"

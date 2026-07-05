@@ -1,8 +1,9 @@
 [package]
 name = "win-xcopy"
-version = "0.1.0"
+version = "0.0.1-alpha"
+authors = ["MITS-CN"]
+license = "MIT"
 edition = "2021"
-icense = "MIT"
 
 [dependencies]
 glob = "0.3"
