@@ -41,7 +41,7 @@ echo -e "${YELLOW}[1/9] 更新软件包列表...${NC}"
 pkg update -y && pkg upgrade -y
 
 echo -e "${YELLOW}[2/9] 安装必要软件包 (python, git, cloudflared, rust)...${NC}"
-pkg install rush -y
+pkg install rust -y
 pkg install cloudflared -y
 pkg install -y python git cloudflared rust  # rust 用于编译 bcrypt（如果需要）
 
