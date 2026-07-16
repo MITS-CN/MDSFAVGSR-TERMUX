@@ -131,7 +131,15 @@ fn print_help() {
 fn parse_attrs(s: &str) -> AttrFilter {
     let mut filter = AttrFilter::default();
     if s.is_empty() {
-        return filter;
+        // 空属性字符串 -> 不过滤任何属性（显示所有文件，含隐藏、系统等）
+        return AttrFilter {
+            directory: None,
+            readonly: None,
+            hidden: None,      // 关键：不按 hidden 过滤
+            system: None,
+            archive: None,
+            symlink: None,
+        };
     }
     let mut negate = false;
     for ch in s.chars() {
