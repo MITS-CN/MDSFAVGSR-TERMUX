@@ -332,7 +332,6 @@ fn wildcard_match(pattern: &str, text: &str) -> bool {
 fn collect_files(paths: &[String], opts: &Options) -> Vec<FileEntry> {
     let mut entries = Vec::new();
 
-    // 构建模式列表，保证所有字符串都是拥有的，避免临时变量引用问题
     let patterns: Vec<String> = if paths.is_empty() {
         vec![".".to_string()]
     } else {
@@ -511,17 +510,25 @@ fn display_entries(
         return Ok(());
     }
 
+    // ---- 修改点：/S /B 时输出完整路径 ----
     if opts.bare {
         for e in entries {
-            let name = if opts.lowercase {
-                e.name().to_lowercase()
+            // 如果开启了递归，使用完整路径；否则只使用文件名
+            let display = if opts.recursive {
+                e.path.display().to_string()
             } else {
                 e.name()
+            };
+            let name = if opts.lowercase {
+                display.to_lowercase()
+            } else {
+                display
             };
             println!("{}", name);
         }
         return Ok(());
     }
+    // ---- 修改结束 ----
 
     if opts.wide || opts.wide_vertical {
         let names: Vec<String> = entries.iter().map(|e| {
@@ -556,7 +563,6 @@ fn display_entries(
     let mut lines_since_pause = 0u32;
     let term_height = term_size::height().unwrap_or(24) as u32;
 
-    // 注意：pause 需按回车继续，这里直接用 stdin read_line
     let maybe_pause = |handle: &mut io::StdoutLock, lines: &mut u32| -> io::Result<()> {
         if opts.pause && *lines >= term_height - 2 {
             write!(handle, "Press Enter to continue...")?;
@@ -587,7 +593,6 @@ fn display_entries(
             maybe_pause(&mut handle, &mut lines_since_pause)?;
 
             let dt = entry.time_field(opts.time_field).unwrap_or_else(|| {
-                // 使用 DateTime::from_timestamp 替代弃用方法
                 DateTime::from_timestamp(0, 0)
                     .map(|dt| dt.naive_local())
                     .unwrap_or_else(|| NaiveDateTime::UNIX_EPOCH)
