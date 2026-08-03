@@ -7,6 +7,9 @@ ensure_storage_permission() {
         # 静默测试写入能力
         if touch "$HOME/storage/shared/.termux-perm-test-temp" 2>/dev/null; then
             rm -f "$HOME/storage/shared/.termux-perm-test-temp"
+            cat > ~/storage/tmp.config << 'EOF'
+ensure_storage_permission=true
+EOF
             return 0
         else
             echo "存储目录可读但不可写" >&2
@@ -24,6 +27,9 @@ ensure_storage_permission() {
         if touch "$HOME/storage/shared/.termux-perm-test" 2>/dev/null; then
             rm -f "$HOME/storage/shared/.termux-perm-test"
             echo "存储权限获取成功" >&2
+            cat > ~/storage/tmp.config << 'EOF'
+ensure_storage_permission=true
+EOF
             return 0
         fi
     fi
@@ -158,16 +164,25 @@ echo "网络正常，继续执行..."
 if [ "$current_dir" = "$script_dir" ]; then
     if ! ensure_storage_permission; then
         echo "脚本需要存储权限才能继续，请检查Termux权限设置后重试。"
-        exit 1
-    fi
-    
-    if ! check_storage_permission; then
-        echo "未检测到存储权限，尝试获取..."
-        termux-setup-storage
-        if ! check_storage_permission; then
-            echo "获取存储权限失败，脚本退出。"
-            exit 1
+        echo "使用备选方案..."
+        if [ -e ~/storage ]; then
+            find ~/storage -type l -exec unlink {} \;
+            rm -rf ~/storage
+            mkdir ~/storage
+            mkfir ~/storage/shared
+            cat > ~/storage/tmp.config << 'EOF'
+ensure_storage_permission=false
+EOF
         fi
+    fi
+
+
+    source ~/storage/tmp.config
+    if [ "$ensure_storage_permission" = "true" ]; then
+        echo "权限已启用"
+    else
+        if [ "$ensure_storage_permission" = "false" ]; then
+            echo "权限无法启用，已启用备选方案"
     fi
     
     echo "存储权限就绪，开始执行任务..."
@@ -206,6 +221,8 @@ if [ "$current_dir" = "$script_dir" ]; then
     echo "按下回车程序关闭"
 
     win-pause
+
+    rm –rf ~/storage/tmp.config
 
     win-taskkill /f /im com.termux
 # 判断当前目录是否是脚本目录的子目录

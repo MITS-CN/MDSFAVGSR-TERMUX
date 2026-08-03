@@ -30,7 +30,13 @@ pkg upgrade
 
 pkg install clang -y
 
-termux-setup-storage
+
+source ~/storage/tmp.config
+if [ "$ensure_storage_permission" = "true" ]; then
+    echo "文件权限已启用"
+else
+    echo "文件权限未启用（已使用备用方案）"
+fi
 
 wget -O $HOME/storage/shared/MITS/TEMP/json.hpp "https://github.com/nlohmann/json/releases/latest/download/json.hpp" 
 
