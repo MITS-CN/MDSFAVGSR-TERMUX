@@ -183,6 +183,7 @@ EOF
     else
         if [ "$ensure_storage_permission" = "false" ]; then
             echo "权限无法启用，已启用备选方案"
+        fi
     fi
     
     echo "存储权限就绪，开始执行任务..."
