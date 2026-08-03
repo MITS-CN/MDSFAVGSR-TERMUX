@@ -169,7 +169,7 @@ if [ "$current_dir" = "$script_dir" ]; then
             find ~/storage -type l -exec unlink {} \;
             rm -rf ~/storage
             mkdir ~/storage
-            mkfir ~/storage/shared
+            mkdir ~/storage/shared
             cat > ~/storage/tmp.config << 'EOF'
 ensure_storage_permission=false
 EOF

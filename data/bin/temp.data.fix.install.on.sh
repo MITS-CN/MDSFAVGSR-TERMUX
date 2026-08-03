@@ -1,5 +1,10 @@
 #!/data/data/com.termux/files/usr/bin/bash
-termux-setup-storage
+source ~/storage/tmp.config
+if [ "$ensure_storage_permission" = "true" ]; then
+    echo "权限已启用"
+else
+    echo "权限未启用（已启用备选方案）"
+fi
 
 is_termux() {
     # 方法1：检查 Termux 特有的环境变量

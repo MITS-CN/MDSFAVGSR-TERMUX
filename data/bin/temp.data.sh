@@ -102,7 +102,12 @@ git clone --depth=1 https://bgithub.xyz/romkatv/powerlevel10k.git ~/powerlevel10
 
 # --- 存储与文件准备 ---
 echo ">>> 设置存储权限"
-termux-setup-storage
+source ~/storage/tmp.config
+if [ "$ensure_storage_permission" = "true" ]; then
+    echo "权限已启用"
+else
+    echo "权限未启用"
+fi
 
 echo ">>> 创建目录 $HOME/storage/shared/MITS/TEMP/"
 mkdir -p "$HOME/storage/shared/MITS/TEMP/"
