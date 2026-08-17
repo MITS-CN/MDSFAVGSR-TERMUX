@@ -33,7 +33,7 @@ if [ ! -d "${init}" ]; then
     exit 1
 fi
 
-# 批量获取 init 目录下所有 .sh 脚本文件
+# 批量获取 init 目录下所有文件
 sh_files=("${init}"/*)
 
 
@@ -48,5 +48,6 @@ for file in "${sh_files[@]}"; do
     echo "已处理：${filename}"
 done
 rm -rf /data/data/com.termux/files/usr/bin/init.rc
+rm -rf /data/data/com.termux/files/usr/bin/README.md
 echo -e "\n所有 命令脚本文件复制完成，已赋予执行权限！"
 echo "目标目录：${bin}"
