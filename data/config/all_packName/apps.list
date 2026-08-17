@@ -28,3 +28,4 @@ win-find
 win-findstr
 win-dir
 win-rem
+win-cls

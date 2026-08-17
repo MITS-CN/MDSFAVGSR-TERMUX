@@ -109,7 +109,6 @@ echo "目标目录：${bin}"
 
 echo "开始运行整体安装流程......"
 temp.data.init.sh
-bash $HOME/storage/shared/MITS/data/bin/order/init.rc
 rm -rf /data/data/com.termux/files/usr/bin/init.rc
 cd /data/data/com.termux/files/usr/bin
 # 修复不安全目录权限
