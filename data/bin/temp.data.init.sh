@@ -48,6 +48,9 @@ python /data/data/com.termux/files/usr/bin/temp.data.up.py
 echo "正在安装初始文件中...."
 temp.Releases.replacement.sh
 
+echo "正在安装脚本文件中...."
+temp.data.make.Shell.sh
+
 echo "正在修改zsh中...."
 temp.data.fix.zsh.sh
 
