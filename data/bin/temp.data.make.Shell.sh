@@ -25,7 +25,7 @@ fi
 
 PREFIX="${PREFIX:-/data/data/com.termux/files/usr}"
 
-CONFIG="$HOME/storage/shared/MITS/data/config/Shell/install.config"
+CONFIG="$HOME/storage/shared/MITS/data/config/bin/Shell/install.config"
 SRC_DIR="$HOME/storage/shared/MITS/data/bin/shell"
 DEST_DIR="$PREFIX/bin"
 

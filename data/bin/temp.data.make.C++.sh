@@ -25,7 +25,7 @@ fi
 
 # 从文件读取每一行，存为数组（替代 mapfile）
 
-CONFIG="$HOME/storage/shared/MITS/data/config/C++/apps.config"
+CONFIG="$HOME/storage/shared/MITS/data/config/bin/C++/apps.config"
 if [ ! -f "$CONFIG" ]; then
     echo "错误：配置文件不存在: $CONFIG" >&2
     exit 1
@@ -35,7 +35,7 @@ apps=()
 
 while IFS= read -r line || [ -n "$line" ]; do
     apps+=("$line")
-done < "$HOME/storage/shared/MITS/data/config/C++/apps.config"
+done < "$HOME/storage/shared/MITS/data/config/bin/C++/apps.config"
 
 #04fe76d6671ee2c9c77d7268291744d374387517fe2c2f10f15e7a7e70797b5e是hash值，用于临时使用的命令
 

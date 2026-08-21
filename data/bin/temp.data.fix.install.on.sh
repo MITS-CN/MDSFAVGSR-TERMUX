@@ -73,7 +73,7 @@ run_action "升级已安装的软件包" "pkg upgrade -y"
 
 # 定义需要安装的软件包（从配置文件读取命令名 -> 包名映射）
 declare -A PACKAGES
-CONFIG_FILE="$HOME/storage/shared/MITS/data/config/install/pkg/apps.list"
+CONFIG_FILE="$HOME/storage/shared/MITS/data/config/install_config/pkg/apps.list"
 
 if [ ! -f "$CONFIG_FILE" ]; then
     echo -e "${YELLOW}[!]${NC} 包映射配置文件不存在: $CONFIG_FILE"

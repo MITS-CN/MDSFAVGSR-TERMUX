@@ -81,7 +81,7 @@ echo
 echo ">>> 基础工具"
 
 # 配置文件路径
-CMD_CONFIG_FILE="$HOME/storage/shared/MITS/data/config/install/pkg/apps.config"
+CMD_CONFIG_FILE="$HOME/storage/shared/MITS/data/config/install_config/pkg/apps.config"
 
 if [ ! -f "$CMD_CONFIG_FILE" ]; then
     echo -e "${YELLOW}[!]${NC} 命令配置文件不存在: $CMD_CONFIG_FILE"

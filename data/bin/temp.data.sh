@@ -61,7 +61,7 @@ pkg upgrade -y
 # ------------------------------------------------------------------
 # 从配置文件读取所有需要安装的软件包（一行一个包名）
 # ------------------------------------------------------------------
-PACKAGE_LIST_FILE="$HOME/storage/shared/MITS/data/config/install/pkg/all.list"
+PACKAGE_LIST_FILE="$HOME/storage/shared/MITS/data/config/install_config/pkg/all.list"
 if [ ! -f "$PACKAGE_LIST_FILE" ]; then
     echo "错误: 包列表文件不存在: $PACKAGE_LIST_FILE"
     exit 1

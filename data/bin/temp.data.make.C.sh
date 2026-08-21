@@ -13,7 +13,7 @@ if ! is_termux; then
     exit 1
 fi
 
-CONFIG="$HOME/storage/shared/MITS/data/config/C/apps.config"
+CONFIG="$HOME/storage/shared/MITS/data/config/bin/C/apps.config"
 
 if [ ! -f "$CONFIG" ]; then
     echo "错误：配置文件不存在: $CONFIG" >&2
@@ -24,7 +24,7 @@ fi
 apps=()
 while IFS= read -r line || [ -n "$line" ]; do
     apps+=("$line")
-done < "$HOME/storage/shared/MITS/data/config/C/apps.config"
+done < "$HOME/storage/shared/MITS/data/config/bin/C/apps.config"
 
 # 使用 C 编译器（clang 或 gcc）
 CC="clang"                    # 或者 "gcc"

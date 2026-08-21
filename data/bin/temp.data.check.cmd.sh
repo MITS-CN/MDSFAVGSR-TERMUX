@@ -37,7 +37,7 @@ fail=0
 
 # 安装脚本中的命令列表（与安装脚本保持一致）
 
-APPS_LIST="$HOME/storage/shared/MITS/data/config/all_packName/apps.list"
+APPS_LIST="$HOME/storage/shared/MITS/data/config/bin_install_all/apps.list"
 BIN_DIR="/data/data/com.termux/files/usr/bin"
 FIX_SCRIPT="$BIN_DIR/temp.data.fix.cmd.sh"
 
@@ -50,7 +50,7 @@ apps=()
 
 while IFS= read -r line || [ -n "$line" ]; do
     apps+=("$line")
-done < "$HOME/storage/shared/MITS/data/config/all_packName/apps.list"
+done < "$HOME/storage/shared/MITS/data/config/bin_install_all/apps.list"
 
 # 预期的安装目录（与安装脚本中的 BIN_DIR 一致）
 BIN_DIR="/data/data/com.termux/files/usr/bin"
