@@ -100,11 +100,6 @@ def copy_zshrc_with_permissions():
     target_zshrc = "/data/data/com.termux/files/home/.zshrc"
     original_source_zshrc = source_zshrc
 
-        # 定义路径
-    home = str(Path.home())
-    source_zshrc = f"{home}/storage/shared/MITS/data/something/!data!data!com.termux!files!home/.zshrc"
-    target_zshrc = "/data/data/com.termux/files/home/.zshrc"
-
     # 保存原始路径，用于后续判断用户是否更改了源文件
     original_source_zshrc = source_zshrc
 
@@ -143,7 +138,6 @@ def copy_zshrc_with_permissions():
                             if choice == 'y':
                                 source_zshrc = found_file
                                 break   # 跳出内层 for
-                    # 如果 source_zshrc 已改变，说明用户选了新文件，跳出外层循环
                     if source_zshrc != original_source_zshrc:
                         break
                 if source_zshrc != original_source_zshrc:
@@ -156,7 +150,7 @@ def copy_zshrc_with_permissions():
             print("\n请手动输入源文件路径:")
             source_zshrc = input("路径: ").strip()
             if not os.path.exists(source_zshrc):
-                print_color("❌ 源文件不存在，退出程序", "red")
+                print_color("源文件不存在，退出程序", "red")
                 return False
 
 
@@ -308,9 +302,9 @@ def copy_zshrc_with_permissions():
         # 询问是否立即重新加载
         reload_choice = input("\n是否立即重新加载配置? (y/N): ").lower()
         if reload_choice == 'y':
-            print("\n重新加载配置...")
-            os.system("source ~/.zshrc")
-            print_color("✓ 配置重新加载完成", "green")
+            print("\n请手动执行以下命令重载配置：")
+            print("    source ~/.zshrc")
+            print_color("✓ 已提示用户重新加载配置", "green")
 
         return True
 

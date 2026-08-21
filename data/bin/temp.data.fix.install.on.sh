@@ -138,7 +138,7 @@ fi
 if ! grep -q "zinit" "$ZSHRC"; then
     # 备份原文件
     cp "$ZSHRC" "${ZSHRC}.bak"
-    cp -r $HOME/storage/shared/MITS/data/bin/.zshrc /data/data/com.termux/files/home/.zshrc
+    cp -r "$HOME/storage/shared/MITS/data/bin/.zshrc" "/data/data/com.termux/files/home/.zshrc"
     run_action "添加 Zinit 和 Powerlevel10k 配置到 ~/.zshrc" "true"
 else
     echo -e "${GREEN}[✓]${NC} ~/.zshrc 已包含 zinit 配置，跳过修改"
