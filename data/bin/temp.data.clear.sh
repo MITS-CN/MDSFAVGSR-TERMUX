@@ -32,13 +32,21 @@ if [ ! -d "${target_dir}" ]; then
     exit 1
 fi
 
-# 批量删除以 temp.data temp.user开头的文件
-echo "正在清理 ${target_dir} 下以 temp.data 与 temp.user 开头的文件..."
-rm -fv "${target_dir}temp.data"*
-rm -fv "${target_dir}temp.user"*
-rm -fv "${target_dir}temp.user"*
-rm -fv "${target_dir}temp.data"*
-rm -fv "${target_dir}temp.test"*
-rm -fv "${target_dir}temp.Releases"*
-# 清理完成提示
-echo -e "\n清理完成！"
+prefixes=("temp.data" "temp.user" "temp.test" "temp.Releases")
+
+total_deleted=0
+echo "正在清理 ${target_dir} 下的临时文件..."
+
+for prefix in "${prefixes[@]}"; do
+    # 先检查是否有匹配文件
+    matches=("${target_dir}${prefix}"*)
+    if [ -e "${matches[0]}" ]; then
+        for file in "${matches[@]}"; do
+            rm -fv "$file"
+            total_deleted=$((total_deleted + 1))
+        done
+    fi
+done
+
+echo ""
+echo "清理完成！共删除 ${total_deleted} 个文件"

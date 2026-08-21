@@ -23,16 +23,21 @@ else
     exit 1
 fi
 
+ZSH_VERSION_DIRS=()
+for d in /data/data/com.termux/files/usr/share/zsh/*/; do
+    [ -d "$d" ] && ZSH_VERSION_DIRS+=("$d")
+done
+
 chmod 750 /data/data/com.termux/files/home/.zinit/completions
 chmod 750 /data/data/com.termux/files/usr/share/zsh
-chmod 750 /data/data/com.termux/files/usr/share/zsh/5.7.1
+chmod 750 "${ZSH_VERSION_DIRS[@]}"
 chmod 750 /data/data/com.termux/files/usr/share/zsh/site-functions
 chmod 750 /data/data/com.termux/files/usr/share/zsh/5.7.1/functions
 
 directories=(
     "/data/data/com.termux/files/home/.zinit/completions"
     "/data/data/com.termux/files/usr/share/zsh"
-    "/data/data/com.termux/files/usr/share/zsh/5.7.1"
+    "${ZSH_VERSION_DIRS[@]}"
     "/data/data/com.termux/files/usr/share/zsh/site-functions"
     "/data/data/com.termux/files/usr/share/zsh/5.7.1/functions"
 )

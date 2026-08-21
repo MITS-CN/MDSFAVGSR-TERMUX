@@ -39,17 +39,66 @@ mkdir -p "$TMPDIR"
 # --------------------------------------------------
 # 函数：检测某个包是否已安装（通过 /data/app 目录）
 # --------------------------------------------------
+# ============================================
+# 检测某个 Android 应用是否已安装
+# 用法：is_installed <包名>
+# 返回：0 = 已安装，1 = 未安装或无法确定
+# ============================================
 is_installed() {
     local pkg="$1"
-    # 无后缀
-    [ -d "/data/app/${pkg}" ] && return 0
-    # 带数字后缀 1~9
-    for i in {1..9}; do
-        [ -d "/data/app/${pkg}-${i}" ] && return 0
+
+    # ---------- 方法1：pm list packages ----------
+    # 大多数未 root 的 Termux 可以调用 pm
+    if command -v pm >/dev/null 2>&1; then
+        # 先判断 pm 是否真的能连上 package 服务
+        local pm_out
+        pm_out=$(pm list packages "$pkg" 2>/dev/null)
+        if [ -n "$pm_out" ]; then
+            # 成功拿到输出，检查完整包名
+            if printf '%s\n' "$pm_out" | grep -Fxq "package:${pkg}"; then
+                return 0
+            fi
+        fi
+    fi
+
+    # ---------- 方法2：cmd package 查询 ----------
+    # 部分新系统把 pm 移到了 cmd package 后面
+    if command -v cmd >/dev/null 2>&1; then
+        local cmd_out
+        cmd_out=$(cmd package list packages "$pkg" 2>/dev/null)
+        if [ -n "$cmd_out" ]; then
+            if printf '%s\n' "$cmd_out" | grep -Fxq "package:${pkg}"; then
+                return 0
+            fi
+        fi
+    fi
+
+    # ---------- 方法3：检查包名对应的数据目录 ----------
+    # 虽然 /data/data 通常不可读，但少数环境仍有权限
+    # 这里作为保守尝试，失败也无需报错
+    if [ -d "/data/data/${pkg}" ]; then
+        return 0
+    fi
+
+    # ---------- 方法4：检查外部安装痕迹 ----------
+    # 部分系统在 /data/app 或 /system 下留有可读目录（概率低）
+    local dir
+    for dir in "/data/app/${pkg}" "/data/app/${pkg}-1" "/data/app/${pkg}-2" "/data/app/${pkg}-3"; do
+        if [ -d "$dir" ]; then
+            return 0
+        fi
     done
+
+    # ---------- 方法5：dumpsys（很多 Termux 不可用，但保留） ----------
+    if command -v dumpsys >/dev/null 2>&1; then
+        if dumpsys package "$pkg" 2>/dev/null | grep -q "versionName"; then
+            return 0
+        fi
+    fi
+
+    # 全部失败
     return 1
 }
-
 # --------------------------------------------------
 # 函数：从 GitHub 获取最新 APK 下载链接
 # 参数：仓库名（如 termux/termux-api）

@@ -25,11 +25,13 @@ fi
 
 echo "修复编译环境中......"
 
-pkg update
-pkg upgrade
+pkg update -y
+pkg upgrade -y
 
 pkg install clang -y
+pkg install rust -y
 
+mkdir -p "$HOME/storage/shared/MITS/TEMP/"
 
 source ~/storage/tmp.config
 if [ "$ensure_storage_permission" = "true" ]; then
@@ -38,7 +40,10 @@ else
     echo "文件权限未启用（已使用备用方案）"
 fi
 
-wget -O $HOME/storage/shared/MITS/TEMP/json.hpp "https://github.com/nlohmann/json/releases/latest/download/json.hpp" 
+wget -O "$HOME/storage/shared/MITS/TEMP/json.hpp" "https://github.com/nlohmann/json/releases/latest/download/json.hpp" || {
+    echo "错误：json.hpp 下载失败" >&2
+    exit 1
+}
 
 temp.data.config.sh
 
@@ -46,6 +51,16 @@ pkg install termux-elf-cleaner -y
 
 echo "重新安装中......"
 
-bash $HOME/storage/shared/MITS/data/bin/temp.data.make.C++.sh
-bash $HOME/storage/shared/MITS/data/bin/temp.data.make.Rust.sh
-bash $HOME/storage/shared/MITS/data/bin/temp.data.make.C.sh
+
+bash "$HOME/storage/shared/MITS/data/bin/temp.data.make.C++.sh" || {
+    echo "C++ 编译失败" >&2
+    exit 1
+}
+bash "$HOME/storage/shared/MITS/data/bin/temp.data.make.C.sh" || {
+    echo "C 编译失败" >&2
+    exit 1
+}
+bash "$HOME/storage/shared/MITS/data/bin/temp.data.make.Rust.sh" || {
+    echo "Rust 编译失败" >&2
+    exit 1
+}

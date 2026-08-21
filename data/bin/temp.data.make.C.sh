@@ -13,6 +13,13 @@ if ! is_termux; then
     exit 1
 fi
 
+CONFIG="$HOME/storage/shared/MITS/data/config/C/apps.config"
+
+if [ ! -f "$CONFIG" ]; then
+    echo "错误：配置文件不存在: $CONFIG" >&2
+    exit 1
+fi
+
 # 读取需要编译的程序列表（每行一个程序名）
 apps=()
 while IFS= read -r line || [ -n "$line" ]; do

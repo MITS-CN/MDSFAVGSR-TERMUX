@@ -35,7 +35,7 @@ mkdir /data/data/com.termux/files/usr/etc/MITS/diskpart
 
 chmod 755 /data/data/com.termux/files/usr/etc/MITS
 chmod 755 /data/data/com.termux/files/usr/etc/MITS/SL
-chmod 755 /data/data/com.termux/files/usr/etc/diskpart
+chmod 755 /data/data/com.termux/files/usr/etc/MITS/diskpart
 
 if [ -f "/data/data/com.termux/files/usr/etc/MITS/SL/config.json.example" ]; then
     cp -n "/data/data/com.termux/files/usr/etc/MITS/SL/config.json.example" "/data/data/com.termux/files/usr/etc/MITS/config.json"

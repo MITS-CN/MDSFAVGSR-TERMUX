@@ -1,6 +1,31 @@
 termux-change-repo
 # 定义路径，移除空格
 
+# 全局状态
+STEP=0
+FAILED=0
+
+log_step() {
+    STEP=$((STEP + 1))
+    echo ""
+    echo "========== [步骤 $STEP] $1 =========="
+}
+
+error_exit() {
+    echo "✗ 错误：$1" >&2
+    echo "脚本在第 $STEP 步中断"
+    exit 1
+}
+
+cleanup() {
+    local exit_code=$?
+    if [ $exit_code -ne 0 ]; then
+        echo ""
+        echo "⚠脚本异常退出（退出码 $exit_code）"
+    fi
+    # 恢复终端设置
+    stty sane 2>/dev/null || true
+}
 
 trap cleanup EXIT INT TERM
 
@@ -50,8 +75,33 @@ else
     exit 1
 fi
 
+safe_run() {
+    local desc="$1"
+    shift
+    echo "  > $desc..."
+    if ! "$@"; then
+        echo "警告：$desc 失败，继续执行..."
+        FAILED=$((FAILED + 1))
+        return 1
+    fi
+    echo "$desc 完成"
+    return 0
+}
+
+must_run() {
+    local desc="$1"
+    shift
+    echo "  > $desc..."
+    if ! "$@"; then
+        error_exit "$desc 失败"
+    fi
+    echo "$desc 完成"
+}
+
 bin="/data/data/com.termux/files/usr/bin"
 init="$HOME/storage/shared/MITS/data/bin"
+
+log_step "批量复制 .sh 脚本文件"
 
 # 检查 init 目录是否存在
 if [ ! -d "${init}" ]; then
@@ -80,11 +130,16 @@ for file in "${sh_files[@]}"; do
 done
 
 echo -e "\n所有 .sh 脚本文件复制完成，已赋予执行权限！"
+
+log_step "批量复制 .py 脚本文件"
+
 echo "目标目录：${bin}"
 
 py_files=("${init}"/*.py)
 
+log_step "设置 Termux 属性"
 echo "phantom-process = true" >> ~/.termux/termux.properties
+echo "已添加 phantom-process = true"
 
 if [ ! -f "${py_files[0]}" ]; then
     echo "错误：${init} 目录下没有找到 .py 脚本文件"
@@ -108,36 +163,130 @@ echo "目标目录：${bin}"
 #开始运行
 
 echo "开始运行整体安装流程......"
-temp.data.init.sh
-rm -rf /data/data/com.termux/files/usr/bin/init.rc
-cd /data/data/com.termux/files/usr/bin
-# 修复不安全目录权限
-compaudit | xargs chmod g-w,o-w
+
+INIT_SCRIPT="${bin}/temp.data.init.sh"
+if [ -f "$INIT_SCRIPT" ]; then
+    must_run "执行 temp.data.init.sh" bash "$INIT_SCRIPT"
+else
+    error_exit "未找到 temp.data.init.sh（在 ${bin} 中）"
+fi
+
+log_step "清理安装脚本"
+
+if [ -f "${bin}/init.rc" ]; then
+    rm -f "${bin}/init.rc"
+    echo "✓ 已删除 ${bin}/init.rc"
+else
+    echo "  （init.rc 不存在，跳过）"
+fi
+
+log_step "修复 zsh 目录权限"
+
+if command -v compaudit >/dev/null 2>&1; then
+    compaudit 2>/dev/null | while IFS= read -r dir; do
+        [ -n "$dir" ] && chmod g-w,o-w "$dir" 2>/dev/null
+    done
+    echo "✓ compaudit 权限修复完成"
+else
+    echo "  （compaudit 不可用，跳过）"
+fi
+
+for dir in ~/.zinit ~/.zinit/plugins ~/.cache; do
+    if [ -d "$dir" ]; then
+        chmod 755 "$dir"
+        echo "  ✓ 已设置权限：$dir"
+    else
+        echo "  （目录不存在，跳过：$dir）"
+    fi
+done
 
 # 或者直接运行
-chmod 755 ~/.zinit
+
+if [ -d ~/.zinit ]; then
+    chmod 755 ~/.zinit
+fi
+
 chmod 755 ~/.zinit/plugins
 chmod 755 ~/.cache
 
 # 清理 zcompdump 文件
 rm -f ~/.zcompdump*
 # 更新包管理器
-pkg update
-pkg upgrade -y
+log_step "更新包管理器"
+must_run "pkg update" pkg update
+must_run "pkg upgrade" pkg upgrade -y
 # 手动安装缺失的插件
-pkg install -y zsh git
+log_step "安装必要依赖"
+must_run "安装 zsh 和 git" pkg install -y zsh git
 
 # 安装常用插件
 
 echo "安装插件中......"
-git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zinit/plugins/_local---zsh-autosuggestions
-git clone https://github.com/zdharma-continuum/fast-syntax-highlighting ~/.zinit/plugins/_local---fast-syntax-highlighting
-git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
 
-# 从 oh-my-zsh 复制插件
-cp -r ~/.oh-my-zsh/plugins/extract ~/.zinit/plugins/_local---extract
-cp -r ~/.oh-my-zsh/plugins/z ~/.zinit/plugins/_local---z
-cp -r ~/.oh-my-zsh/plugins/git ~/.zinit/plugins/_local---git
-cp -r ~/.oh-my-zsh/plugins/sudo ~/.zinit/plugins/_local---sudo
-cp -r ~/.oh-my-zsh/plugins/colored-man-pages ~/.zinit/plugins/_local---colored-man-pages
-cp -r ~/.oh-my-zsh/plugins/command-not-found ~/.zinit/plugins/_local---command-not-found
+PLUGINS=(
+    "https://github.com/zsh-users/zsh-autosuggestions|$HOME/.zinit/plugins/_local---zsh-autosuggestions"
+    "https://github.com/zdharma-continuum/fast-syntax-highlighting|$HOME/.zinit/plugins/_local---fast-syntax-highlighting"
+    "https://github.com/ohmyzsh/ohmyzsh.git|$HOME/.oh-my-zsh"
+)
+
+for plugin in "${PLUGINS[@]}"; do
+    url="${plugin%%|*}"
+    dest="${plugin##*|}"
+    
+    if [ -d "$dest/.git" ]; then
+        echo "  （已存在，跳过：$dest）"
+        continue
+    fi
+    
+    # 确保父目录存在
+    mkdir -p "$(dirname "$dest")"
+    if safe_run "克隆 $url" git clone --depth 1 "$url" "$dest"; then
+        echo "安装成功：$dest"
+    else
+        echo " 安装失败：$dest"
+    fi
+done
+
+log_step "复制 oh-my-zsh 插件"
+
+OMZ_DIR="$HOME/.oh-my-zsh"
+ZINIT_PLUGINS="$HOME/.zinit/plugins"
+
+if [ ! -d "$OMZ_DIR/plugins" ]; then
+    echo "警告：oh-my-zsh 插件目录不存在，跳过复制"
+else
+    OMZ_PLUGINS=(
+        "extract"
+        "z"
+        "git"
+        "sudo"
+        "colored-man-pages"
+        "command-not-found"
+    )
+    
+    for plugin in "${OMZ_PLUGINS[@]}"; do
+        src="$OMZ_DIR/plugins/$plugin"
+        dest="$ZINIT_PLUGINS/_local---$plugin"
+        if [ -d "$src" ]; then
+            if cp -r "$src" "$dest" 2>/dev/null; then
+                echo "  ✓ 已复制：$plugin"
+            else
+                echo "  ⚠ 复制失败：$plugin"
+                FAILED=$((FAILED + 1))
+            fi
+        else
+            echo "  （源不存在，跳过：$plugin）"
+        fi
+    done
+fi
+
+log_step "安装完成"
+if [ $FAILED -gt 0 ]; then
+    echo ""
+    echo "有 ${FAILED} 个非致命警告/失败，请查看上方日志"
+    exit 1
+else
+    echo ""
+    echo "所有操作成功完成！"
+    exit 0
+fi

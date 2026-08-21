@@ -10,7 +10,7 @@ import sys
 import subprocess
 import argparse
 
-TARGET_FILE = "$HOME/storage/shared/MITS/TEMP/json.hpp"
+TARGET_FILE = os.path.expandvars("$HOME/storage/shared/MITS/TEMP/json.hpp")
 
 def is_file_empty(path: str) -> bool:
     """检查文件是否存在且大小为 0"""

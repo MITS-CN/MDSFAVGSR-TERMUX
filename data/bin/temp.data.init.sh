@@ -37,47 +37,47 @@ print_msg() {
 }
 
 echo "正在安装依赖环境中...."
-temp.data.sh
+temp.data.sh || { print_msg "安装失败！" "$RED"; exit 1; }
 
 echo "正在检查依赖环境中...."
-temp.data.check.install.sh
+temp.data.check.install.sh || { print_msg "安装失败！" "$RED"; exit 1; }
 
 echo "正在升级中...."
-python /data/data/com.termux/files/usr/bin/temp.data.up.py
+python /data/data/com.termux/files/usr/bin/temp.data.up.py --dry-run || { print_msg "升级失败！" "$RED"; exit 1; }
 
 echo "正在安装初始文件中...."
-temp.Releases.replacement.sh
+temp.Releases.replacement.sh || { print_msg "安装失败！" "$RED"; exit 1; }
 
 echo "正在安装脚本文件中...."
-temp.data.make.Shell.sh
+temp.data.make.Shell.sh || { print_msg "安装失败！" "$RED"; exit 1; }
 
 echo "正在修改zsh中...."
-temp.data.fix.zsh.sh
+temp.data.fix.zsh.sh || { print_msg "安装失败！" "$RED"; exit 1; }
 
 echo "正在安装c++应用中...."
-temp.data.make.C++.sh
+temp.data.make.C++.sh || { print_msg "安装失败！" "$RED"; exit 1; }
 
 echo "正在安装rust应用中...."
-temp.data.make.Rust.sh
+temp.data.make.Rust.sh || { print_msg "安装失败！" "$RED"; exit 1; }
 
 echo "正在安装C应用中......"
-temp.data.make.C.sh
+temp.data.make.C.sh || { print_msg "安装失败！" "$RED"; exit 1; }
 
 echo "正在检查配置文件中...."
-python /data/data/com.termux/files/usr/bin/temp.data.check.config.py
+python /data/data/com.termux/files/usr/bin/temp.data.check.config.py|| { print_msg "配置检查失败！" "$RED"; exit 1; }
 
 echo "正在检查自定义命令中...."
-temp.data.check.cmd.sh
+temp.data.check.cmd.sh || { print_msg "安装失败！" "$RED"; exit 1; }
 
 echo "正在修复部分文件权限问题中...."
-temp.data.fix.on.sh
+temp.data.fix.on.sh || { print_msg "安装失败！" "$RED"; exit 1; }
 
 echo "正在安装zsh默认配置文件中...."
-python /data/data/com.termux/files/usr/bin/temp.user.zsh.init.py
+python /data/data/com.termux/files/usr/bin/temp.user.zsh.init.py || { print_msg "zsh 配置失败！" "$RED"; exit 1; }
 echo "源文件已备份在相应目录下"
 
 echo "正在安装termux附属应用中...."
-temp.data.install.app.sh
+temp.data.install.app.sh || { print_msg "安装失败！" "$RED"; exit 1; }
 
 echo "正在清理临时文件中...."
-temp.data.clear.sh
+temp.data.clear.sh || { print_msg "清理失败！" "$RED"; exit 1; }

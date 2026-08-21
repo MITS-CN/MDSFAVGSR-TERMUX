@@ -4,8 +4,9 @@ import os
 import stat
 import sys
 import subprocess
+import json
 
-import os
+CONFIG_DIR = os.path.join(os.environ.get("PREFIX", "/data/data/com.termux/files/usr"), "etc/MITS")
 
 def is_termux():
     #"""综合多种特征判断当前环境是否为 Termux"""
@@ -130,6 +131,14 @@ def check_file(path, name):
         else:
             print(f"{RED}[✗]{NC} {name} 为空")
             fail += 1
+        
+        try:
+            with open(path) as f:
+                data = json.load(f)
+            print("JSON 格式正确")
+        except json.JSONDecodeError:
+            print("JSON 格式错误")
+            fail += 1
 
         # 可选：检查关键字段
         try:
@@ -164,7 +173,7 @@ def main():
 
     if fail > 0:
         print("部分检查失败，请检查配置安装过程。")
-        result = subprocess.run(['python', '/data/data/com.termux/files/usr/bin/temp.data.fix.config.py'], capture_output=True, text=True)
+        result = subprocess.run([sys.executable, '/data/data/com.termux/files/usr/bin/temp.data.fix.config.py'], capture_output=True, text=True)
         
         print(result.stdout)
         print(result.returncode)
@@ -181,4 +190,3 @@ if __name__ == "__main__":
         main()
     else:
         print("Not a Termux environment")
-        

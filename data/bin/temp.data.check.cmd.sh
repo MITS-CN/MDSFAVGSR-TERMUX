@@ -37,6 +37,15 @@ fail=0
 
 # 安装脚本中的命令列表（与安装脚本保持一致）
 
+APPS_LIST="$HOME/storage/shared/MITS/data/config/all_packName/apps.list"
+BIN_DIR="/data/data/com.termux/files/usr/bin"
+FIX_SCRIPT="$BIN_DIR/temp.data.fix.cmd.sh"
+
+if [ ! -f "$APPS_LIST" ]; then
+    echo "错误：包列表不存在: $APPS_LIST" >&2
+    exit 1
+fi
+
 apps=()
 
 while IFS= read -r line || [ -n "$line" ]; do
@@ -53,11 +62,11 @@ echo
 # 1. 检查每个命令是否可执行
 for app in "${apps[@]}"; do
     total=$((total+1))
-    if command -v "$app" >/dev/null 2>&1; then
-        echo -e "${GREEN}[✓]${NC} $app 已安装并可执行"
+    if [ -x "$BIN_DIR/$app" ]; then
+        echo -e "${GREEN}[✓]${NC} $app"
         success=$((success+1))
     else
-        echo -e "${RED}[✗]${NC} $app 未找到或不可执行"
+        echo -e "${RED}[✗]${NC} $app"
         fail=$((fail+1))
     fi
 done
@@ -65,13 +74,11 @@ done
 echo
 
 # 2. 检查 termux-elf-cleaner 是否可用（安装脚本中用来清理 ELF 标志）
-total=$((total+1))
+echo
 if command -v termux-elf-cleaner >/dev/null 2>&1; then
     echo -e "${GREEN}[✓]${NC} termux-elf-cleaner 已安装"
-    success=$((success+1))
 else
-    echo -e "${YELLOW}[!]${NC} termux-elf-cleaner 未安装，建议执行 'pkg install termux-elf-cleaner'"
-    fail=$((fail+1))
+    echo -e "${YELLOW}[!]${NC} termux-elf-cleaner 未安装（建议安装）"
 fi
 
 echo
@@ -81,9 +88,10 @@ echo "===== 检查完成 ====="
 echo -e "总计: $total   ${GREEN}成功: $success${NC}   ${RED}失败: $fail${NC}"
 
 if [ $fail -gt 0 ]; then
-    echo "部分命令缺失，请检查编译安装脚本是否成功执行。"
-    echo "正在调用修复脚本......"
-    temp.data.fix.cmd.sh
-else
-    echo "所有命令均已正确安装。"
+    if [ -f "$FIX_SCRIPT" ]; then
+        bash "$FIX_SCRIPT"
+    else
+        echo "错误：修复脚本不存在" >&2
+        exit 1
+    fi
 fi

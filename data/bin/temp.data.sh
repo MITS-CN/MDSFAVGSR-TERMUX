@@ -28,23 +28,20 @@ else
 fi
 
 # 错误处理函数
+ERROR_COUNT=0
 error_handler() {
-    echo "安装脚本执行出错，调用修复脚本中......"
+    ERROR_COUNT=$((ERROR_COUNT+1))
+    if [ $ERROR_COUNT -gt 3 ]; then
+        echo "修复脚本多次失败，停止"
+        exit 1
+    fi
     temp.data.check.install.sh
 }
 
 # 修复部分设备无法正常安装导致误触发修复
 
-chmod 777 /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst
-cp -r /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst.bak
-
-cat > /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst << 'EOF'
-#!/bin/sh
-exit 0
-EOF
-
-chmod 755 /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst
-dpkg --configure proot-distro
+dpkg --configure -a
+pkg install proot-distro --no-postinst
 
 # 启用遇到错误绑定错误陷阱
 trap 'error_handler' ERR
@@ -98,7 +95,7 @@ echo ">>> 运行 zsh 配置脚本"
 bash -c "$(curl -L gitee.com/mo2/zsh/raw/2/2)"
 
 echo ">>> 克隆 powerlevel10k"
-git clone --depth=1 https://bgithub.xyz/romkatv/powerlevel10k.git ~/powerlevel10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
 
 # --- 存储与文件准备 ---
 echo ">>> 设置存储权限"
@@ -128,10 +125,3 @@ echo "==================== 所有操作成功完成 ===================="
 # 取消错误陷阱
 trap - ERR
 set +e
-
-# 恢复 proot-distro 原始 postinst 脚本
-
-cp -r /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst.bak /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst
-chmod 755 /data/data/com.termux/files/usr/var/lib/dpkg/info/proot-distro.postinst
-
-dpkg --configure proot-distro

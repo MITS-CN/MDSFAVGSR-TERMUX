@@ -45,6 +45,12 @@ RUSTFLAGS="-C opt-level=2"
 
 # 默认需要编译的项目列表（可被命令行参数覆盖）
 
+CONFIG="$HOME/storage/shared/MITS/data/config/Rust/apps.config"
+if [ ! -f "$CONFIG" ]; then
+    echo "错误：配置文件不存在: $CONFIG" >&2
+    exit 1
+fi
+
 DEFAULT_APPS=()
 
 while IFS= read -r line || [ -n "$line" ]; do

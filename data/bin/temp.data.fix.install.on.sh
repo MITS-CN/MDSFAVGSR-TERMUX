@@ -29,6 +29,8 @@ else
     exit 1
 fi
 
+PREFIX="${PREFIX:-/data/data/com.termux/files/usr}"
+
 # 颜色定义
 GREEN='\033[0;32m'
 RED='\033[0;31m'
@@ -166,22 +168,24 @@ fi
 # 8. 下载 json.hpp（若缺失）
 JSON_FILE="$CUSTOM_DIR/json.hpp"
 if [ ! -f "$JSON_FILE" ]; then
-    # 默认 URL（nlohmann/json 的 develop 分支单头文件）
     DEFAULT_URL="https://raw.githubusercontent.com/nlohmann/json/develop/single_include/nlohmann/json.hpp"
     echo -e "${YELLOW}[?]${NC} 文件 $JSON_FILE 不存在"
     read -p "是否尝试从 $DEFAULT_URL 下载？[y/N] " -n 1 -r
     echo
     if [[ $REPLY =~ ^[Yy]$ ]]; then
-        run_action "下载 json.hpp" "wget -O '$JSON_FILE' '$DEFAULT_URL'"
+        if run_action "下载 json.hpp" wget -O "$JSON_FILE" "$DEFAULT_URL"; then
+            # 修复：验证下载的文件
+            if ! grep -q "nlohmann" "$JSON_FILE" 2>/dev/null; then
+                echo -e "${YELLOW}[!]${NC} 下载的文件可能不是有效的 json.hpp"
+                record_fail "验证 json.hpp 文件"
+            fi
+        fi
     else
         echo -e "${YELLOW}[!]${NC} 请手动将 json.hpp 放置到 $JSON_FILE"
-        fail_actions=$((fail_actions + 1))
-        total_actions=$((total_actions + 1))
+        record_fail "下载 json.hpp"
     fi
 else
-    echo -e "${GREEN}[✓]${NC} 文件 $JSON_FILE 已存在，跳过下载"
-    success_actions=$((success_actions + 1))
-    total_actions=$((total_actions + 1))
+    record_skip "文件 $JSON_FILE 已存在，跳过下载"
 fi
 
 # 9. 可选：将 zsh 设为默认 shell（需要用户确认）
