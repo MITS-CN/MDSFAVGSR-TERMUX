@@ -37,6 +37,13 @@ chmod 755 /data/data/com.termux/files/usr/etc/MITS
 chmod 755 /data/data/com.termux/files/usr/etc/MITS/SL
 chmod 755 /data/data/com.termux/files/usr/etc/MITS/diskpart
 
+VERSION_FILE="$HOME/storage/shared/MITS/data/config/version"
+if [ -f "$VERSION_FILE" ]; then
+    source "$VERSION_FILE"
+else
+    MITS_VERSION="Build.IS0066(main:NULL)"  # fallback
+fi
+
 if [ -f "/data/data/com.termux/files/usr/etc/MITS/SL/config.json.example" ]; then
     cp -n "/data/data/com.termux/files/usr/etc/MITS/SL/config.json.example" "/data/data/com.termux/files/usr/etc/MITS/config.json"
     echo "已安装示例配置文件到 /data/data/com.termux/files/usr/etc/MITS/config.json"
@@ -45,7 +52,7 @@ elif [ ! -f "/data/data/com.termux/files/usr/etc/MITS/config.json" ]; then
     # 其实应该分开来的这里
     cat > "/data/data/com.termux/files/usr/etc/MITS/config.json" <<EOF
 {
-    "MITS_version": "Build.IS0066(main:NULL)",
+    "MITS_version": "$MITS_VERSION",
     "MITS_build_by": "Administrator"
 }
 EOF

@@ -8,6 +8,7 @@ import os
 import stat
 import sys
 import shutil
+import json
 
 def is_termux():
     """综合多种特征判断当前环境是否为 Termux"""
@@ -64,19 +65,26 @@ EXAMPLE_CONFIG_FILE = os.path.join(SL_DIR, "config.json.example")
 DIR_PERMS = 0o755
 FILE_PERMS = 0o755
 
-# 默认配置文件内容
-DEFAULT_MAIN_CONFIG = '''{
-    "MITS_version": "Build.IS0066(main:NULL)",
-    "MITS_build_by": "Administrator"
-}
-'''
+VERSION_FILE = os.path.expanduser("~/storage/shared/MITS/data/config/version")
 
-DEFAULT_DISKPART_CONFIG = '''{
-    "MITS_Diskpart_copyright": "(c) Microsoft Corporation",
-    "MITS_Diskpart_version": "Microsoft DiskPart 版本 10.0.17763.1",
-    "MITS_Diskpart_host": "在计算机上: ANDROID"
-}
-'''
+def get_version():
+    try:
+        with open(VERSION_FILE) as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith("MITS_VERSION="):
+                    return line.split("=", 1)[1].strip('"\'')
+    except OSError:
+        pass
+    return "Build.IS0066(main:NULL)"  # fallback
+
+# 调用函数获取版本号
+MITS_VERSION = get_version()
+
+DEFAULT_MAIN_CONFIG = f'''{{
+    "MITS_version": "{MITS_VERSION}",
+    "MITS_build_by": "Administrator"
+}}'''
 
 def set_perms(path, perms):
     """设置文件/目录权限，忽略错误"""
