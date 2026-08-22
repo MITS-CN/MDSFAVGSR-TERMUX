@@ -86,6 +86,12 @@ DEFAULT_MAIN_CONFIG = f'''{{
     "MITS_build_by": "Administrator"
 }}'''
 
+DEFAULT_DISKPART_CONFIG = '''{
+    "MITS_Diskpart_copyright": "(c) Microsoft Corporation",
+    "MITS_Diskpart_version": "Microsoft DiskPart 版本 10.0.17763.1",
+    "MITS_Diskpart_host": "在计算机上: ANDROID"
+}'''
+
 def set_perms(path, perms):
     """设置文件/目录权限，忽略错误"""
     try:
