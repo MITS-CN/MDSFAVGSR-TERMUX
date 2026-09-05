@@ -25,7 +25,7 @@ fi
 
 
 # 颜色定义
-source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/Color"
+source "$HOME/storage/shared/MITS/data/General_architecture_shell/Color"
 
 # 函数：打印带颜色的消息
 print_msg() {

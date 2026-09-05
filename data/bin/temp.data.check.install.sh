@@ -25,7 +25,7 @@ else
 fi
 
 # 颜色定义
-source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/Color"
+source "$HOME/storage/shared/MITS/data/General_architecture_shell/Color"
 
 
 # 统计
@@ -34,9 +34,9 @@ success=0
 fail=0
 
 # 检查命令是否存在
-source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/check_dir"
-source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/check_cmd"
-source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/check_file"
+source "$HOME/storage/shared/MITS/data/General_architecture_shell/check_dir"
+source "$HOME/storage/shared/MITS/data/General_architecture_shell/check_cmd"
+source "$HOME/storage/shared/MITS/data/General_architecture_shell/check_file"
 
 echo "===== 开始检查 Termux 安装环境 ====="
 echo

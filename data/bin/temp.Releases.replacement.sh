@@ -17,8 +17,8 @@ A=0   # 0:正常, 1:用户取消, 2:备份失败, 3:复制失败
 # 检测网络连接（基于 ICMP）
 # 参数: 可指定测试目标（默认 8.8.8.8）
 # 返回: 0 表示网络可达，1 表示不可达
-source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/network_connected"
-source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/Color"
+source "$HOME/storage/shared/MITS/data/General_architecture_shell/network_connected"
+source "$HOME/storage/shared/MITS/data/General_architecture_shell/Color"
 
 if is_termux; then
     echo "当前环境是 Termux。"

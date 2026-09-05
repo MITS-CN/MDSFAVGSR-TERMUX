@@ -17,7 +17,7 @@ echo "Windows Termux 一键修复脚本"
 echo "========================================="
 
 # 颜色定义
-source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/Color"
+source "$HOME/storage/shared/MITS/data/General_architecture_shell/Color"
 
 # 统计变量
 TOTAL_STEPS=0
