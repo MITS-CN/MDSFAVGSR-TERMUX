@@ -25,11 +25,7 @@ fi
 
 
 # 颜色定义
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m' #NULL
+source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/Color"
 
 # 函数：打印带颜色的消息
 print_msg() {

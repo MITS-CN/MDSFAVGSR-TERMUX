@@ -17,17 +17,8 @@ A=0   # 0:正常, 1:用户取消, 2:备份失败, 3:复制失败
 # 检测网络连接（基于 ICMP）
 # 参数: 可指定测试目标（默认 8.8.8.8）
 # 返回: 0 表示网络可达，1 表示不可达
-check_network_ping() {
-    target="${1:-8.8.8.8}"          # 默认 Google DNS
-    timeout="${2:-3}"               # 超时秒数
-
-    # -c 1 只发一个包，-W 设置超时
-    if ping -c 1 -W "$timeout" "$target" >/dev/null 2>&1; then
-        return 0
-    else
-        return 1
-    fi
-}
+source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/network_connected"
+source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/Color"
 
 if is_termux; then
     echo "当前环境是 Termux。"
@@ -36,21 +27,12 @@ else
     exit 1
 fi
 
-if check_network_ping; then
-    echo "网络已连接"
-else
-    echo "网络未连接" >&2
+if ! network_connected; then
+    echo "错误：网络未连接，请检查网络后重试。" >&2
     exit 1
 fi
 
 set -euo pipefail
-
-# ---------- 颜色与提示函数 ----------
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-CYAN='\033[0;36m'
-NC='\033[0m' # No Color
 
 info()  { echo -e "${GREEN}[✓]${NC} $*"; }
 warn()  { echo -e "${YELLOW}[!]${NC} $*"; }

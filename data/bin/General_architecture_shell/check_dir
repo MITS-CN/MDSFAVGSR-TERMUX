@@ -1,0 +1,11 @@
+check_dir() {
+    local dir=$1
+    total=$((total+1))
+    if [ -d "$dir" ]; then
+        echo -e "${GREEN}[✓]${NC} 目录 $dir"
+        success=$((success+1))
+    else
+        echo -e "${RED}[✗]${NC} 目录 $dir (不存在)"
+        fail=$((fail+1))
+    fi
+}

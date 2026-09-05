@@ -1,0 +1,5 @@
+log_step() {
+    STEP=$((STEP + 1))
+    echo ""
+    echo "========== [步骤 $STEP] $1 =========="
+}

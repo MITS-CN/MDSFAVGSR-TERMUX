@@ -1,0 +1,11 @@
+check_file() {
+    local file=$1
+    total=$((total+1))
+    if [ -f "$file" ]; then
+        echo -e "${GREEN}[✓]${NC} 文件 $file"
+        success=$((success+1))
+    else
+        echo -e "${RED}[✗]${NC} 文件 $file (不存在)"
+        fail=$((fail+1))
+    fi
+}

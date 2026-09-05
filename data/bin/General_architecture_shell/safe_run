@@ -1,0 +1,12 @@
+safe_run() {
+    local desc="$1"
+    shift
+    echo "  > $desc..."
+    if ! "$@"; then
+        echo "警告：$desc 失败，继续执行..."
+        FAILED=$((FAILED + 1))
+        return 1
+    fi
+    echo "$desc 完成"
+    return 0
+}

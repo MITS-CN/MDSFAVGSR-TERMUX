@@ -32,11 +32,7 @@ fi
 PREFIX="${PREFIX:-/data/data/com.termux/files/usr}"
 
 # 颜色定义
-GREEN='\033[0;32m'
-RED='\033[0;31m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/Color"
 
 # 统计
 total_actions=0

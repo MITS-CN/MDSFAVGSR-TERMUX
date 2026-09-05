@@ -1,0 +1,27 @@
+network_connected() {
+    # 优先使用 curl（HTTP 检测最可靠）
+    if command -v curl >/dev/null 2>&1; then
+        if curl -s --max-time 3 -o /dev/null "http://connectivitycheck.gstatic.com/generate_204"; then
+            return 0
+        fi
+    fi
+
+    # 其次使用 ping
+    if command -v ping >/dev/null 2>&1; then
+        if ping -c 1 -W 2 8.8.8.8 >/dev/null 2>&1; then
+            return 0
+        fi
+        if ping -c 1 -W 2 114.114.114.114 >/dev/null 2>&1; then
+            return 0
+        fi
+    fi
+
+    # 最后尝试 Termux Wi‑Fi API（仅检查 Wi‑Fi 状态，不保证互联网连通）
+    if command -v termux-wifi-connectioninfo >/dev/null 2>&1; then
+        if termux-wifi-connectioninfo 2>/dev/null | grep -q '"supplicant_state": "COMPLETED"'; then
+            return 0
+        fi
+    fi
+
+    return 1
+}

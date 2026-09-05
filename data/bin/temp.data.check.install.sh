@@ -25,10 +25,8 @@ else
 fi
 
 # 颜色定义
-GREEN='\033[0;32m'
-RED='\033[0;31m'
-YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
+source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/Color"
+
 
 # 统计
 total=0
@@ -36,43 +34,9 @@ success=0
 fail=0
 
 # 检查命令是否存在
-check_cmd() {
-    local cmd=$1
-    total=$((total+1))
-    if command -v "$cmd" >/dev/null 2>&1; then
-        echo -e "${GREEN}[✓]${NC} $cmd"
-        success=$((success+1))
-    else
-        echo -e "${RED}[✗]${NC} $cmd (未找到)"
-        fail=$((fail+1))
-    fi
-}
-
-# 检查目录是否存在
-check_dir() {
-    local dir=$1
-    total=$((total+1))
-    if [ -d "$dir" ]; then
-        echo -e "${GREEN}[✓]${NC} 目录 $dir"
-        success=$((success+1))
-    else
-        echo -e "${RED}[✗]${NC} 目录 $dir (不存在)"
-        fail=$((fail+1))
-    fi
-}
-
-# 检查文件是否存在
-check_file() {
-    local file=$1
-    total=$((total+1))
-    if [ -f "$file" ]; then
-        echo -e "${GREEN}[✓]${NC} 文件 $file"
-        success=$((success+1))
-    else
-        echo -e "${RED}[✗]${NC} 文件 $file (不存在)"
-        fail=$((fail+1))
-    fi
-}
+source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/check_dir"
+source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/check_cmd"
+source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/check_file"
 
 echo "===== 开始检查 Termux 安装环境 ====="
 echo

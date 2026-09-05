@@ -1,0 +1,5 @@
+error_exit() {
+    echo "✗ 错误：$1" >&2
+    echo "脚本在第 $STEP 步中断"
+    exit 1
+}

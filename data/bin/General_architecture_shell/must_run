@@ -1,0 +1,9 @@
+must_run() {
+    local desc="$1"
+    shift
+    echo "  > $desc..."
+    if ! "$@"; then
+        error_exit "$desc 失败"
+    fi
+    echo "$desc 完成"
+}

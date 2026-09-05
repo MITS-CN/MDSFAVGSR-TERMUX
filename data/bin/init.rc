@@ -5,17 +5,11 @@ termux-change-repo
 STEP=0
 FAILED=0
 
-log_step() {
-    STEP=$((STEP + 1))
-    echo ""
-    echo "========== [步骤 $STEP] $1 =========="
-}
-
-error_exit() {
-    echo "✗ 错误：$1" >&2
-    echo "脚本在第 $STEP 步中断"
-    exit 1
-}
+source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/must_run"
+source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/safe_run"
+source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/log_step"
+source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/error_exit"
+source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/title"
 
 cleanup() {
     local exit_code=$?
@@ -74,29 +68,6 @@ else
     echo "网络未连接" >&2
     exit 1
 fi
-
-safe_run() {
-    local desc="$1"
-    shift
-    echo "  > $desc..."
-    if ! "$@"; then
-        echo "警告：$desc 失败，继续执行..."
-        FAILED=$((FAILED + 1))
-        return 1
-    fi
-    echo "$desc 完成"
-    return 0
-}
-
-must_run() {
-    local desc="$1"
-    shift
-    echo "  > $desc..."
-    if ! "$@"; then
-        error_exit "$desc 失败"
-    fi
-    echo "$desc 完成"
-}
 
 bin="/data/data/com.termux/files/usr/bin"
 init="$HOME/storage/shared/MITS/data/bin"
