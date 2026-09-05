@@ -9,7 +9,6 @@ source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/must_run"
 source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/safe_run"
 source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/log_step"
 source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/error_exit"
-source "$HOME/storage/shared/MITS/data/bin/General_architecture_shell/title"
 
 cleanup() {
     local exit_code=$?
