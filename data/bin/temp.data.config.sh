@@ -39,7 +39,7 @@ chmod 755 /data/data/com.termux/files/usr/etc/MITS/diskpart
 
 VERSION_FILE="$HOME/storage/shared/MITS/data/config/version"
 if [ -f "$VERSION_FILE" ]; then
-    source "$VERSION_FILE"
+    MITS_VERSION=$(cat "$VERSION_FILE")   
 else
     MITS_VERSION="Build.IS0066(main:NULL)"  # fallback
 fi
