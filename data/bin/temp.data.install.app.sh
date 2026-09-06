@@ -1,3 +1,5 @@
+#!/data/data/com.termux/files/usr/bin/bash
+
 is_termux() {
     # 方法1：检查 Termux 特有的环境变量
     [ -n "$TERMUX_VERSION" ] && return 0
@@ -20,13 +22,44 @@ else
     echo "当前环境不是 Termux。"
     exit 1
 fi
-
 #!/data/data/com.termux/files/usr/bin/bash
 
 # ============================================
 # Termux 辅助脚本：确保已安装 Termux:Styling 和 Termux:API
 # 功能：检测 → 自动下载最新 APK → 安装 → 重检与修复 → 人工提醒
 # ============================================
+
+# ---------- 环境检测 ----------
+is_termux() {
+    [ -n "$TERMUX_VERSION" ] && return 0
+    [ -d /data/data/com.termux/files/usr ] && return 0
+    [ "$PREFIX" = "/data/data/com.termux/files/usr" ] && return 0
+    command -v termux-info >/dev/null 2>&1 && return 0
+    return 1
+}
+
+if ! is_termux; then
+    echo "当前环境不是 Termux。"
+    exit 1
+fi
+
+# ---------- 依赖检查与安装 ----------
+ensure_deps() {
+    local missing=()
+    for cmd in curl jq; do
+        if ! command -v "$cmd" >/dev/null 2>&1; then
+            missing+=("$cmd")
+        fi
+    done
+    if [ ${#missing[@]} -gt 0 ]; then
+        echo "缺少依赖：${missing[*]}，正在尝试安装..."
+        pkg install -y "${missing[@]}" || {
+            echo "无法自动安装依赖，请手动运行: pkg install ${missing[*]}" >&2
+            exit 1
+        }
+    fi
+}
+ensure_deps
 
 set -e
 
