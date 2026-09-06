@@ -1,0 +1,51 @@
+# 更新版本文件
+update_mits_version() {
+    # 1. 检查 Git 仓库
+    if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        echo -e "${RED}错误：当前目录不是 Git 仓库${NC}" >&2
+        return 1
+    fi
+
+    # 2. 获取分支名
+    branch=$(git branch --show-current)
+    if [ -z "$branch" ]; then
+        branch="HEAD"
+    fi
+
+    # 3. 获取提交总次数（ISXXXX）
+    commit_count=$(git rev-list --count HEAD 2>/dev/null)
+    if [ -z "$commit_count" ]; then
+        echo -e "${RED}错误：无法获取提交次数${NC}" >&2
+        return 1
+    fi
+
+    # 4. 获取当前短哈希（代替 NULL）
+    short_hash=$(git rev-parse --short HEAD 2>/dev/null)
+    if [ -z "$short_hash" ]; then
+        echo -e "${RED}错误：无法获取短哈希${NC}" >&2
+        return 1
+    fi
+
+    # 5. 组装版本字符串
+    version_str="Build.IS${commit_count}(${branch}:${short_hash})"
+
+    # 6. 目标文件路径
+    target_file="$HOME/storage/shared/MITS/data/config/version"
+    target_dir=$(dirname "$target_file")
+
+    # 7. 创建目录（如果不存在）
+    if [ ! -d "$target_dir" ]; then
+        mkdir -p "$target_dir" || {
+            echo -e "${RED}错误：无法创建目录 ${BLUE}$target_dir${NC}" >&2
+            return 1
+        }
+    fi
+
+    # 8. 写入文件
+    echo "$version_str" > "$target_file"
+
+    # 9. 彩色输出结果
+    echo -e "${GREEN}版本文件更新成功！${NC}"
+    echo -e "文件路径：${BLUE}$target_file${NC}"
+    echo -e "版本内容：${YELLOW}$version_str${NC}"
+}

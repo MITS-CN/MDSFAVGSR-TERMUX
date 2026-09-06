@@ -5,11 +5,6 @@ termux-change-repo
 STEP=0
 FAILED=0
 
-source "$HOME/storage/shared/MITS/data/General_architecture_shell/must_run"
-source "$HOME/storage/shared/MITS/data/General_architecture_shell/safe_run"
-source "$HOME/storage/shared/MITS/data/General_architecture_shell/log_step"
-source "$HOME/storage/shared/MITS/data/General_architecture_shell/error_exit"
-
 cleanup() {
     local exit_code=$?
     if [ $exit_code -ne 0 ]; then
@@ -68,6 +63,22 @@ else
     exit 1
 fi
 
+source "$HOME/storage/shared/MITS/data/General_architecture_shell/must_run"
+source "$HOME/storage/shared/MITS/data/General_architecture_shell/safe_run"
+source "$HOME/storage/shared/MITS/data/General_architecture_shell/log_step"
+source "$HOME/storage/shared/MITS/data/General_architecture_shell/error_exit"
+source "$HOME/storage/shared/MITS/data/General_architecture_shell/Color"
+source "$HOME/storage/shared/MITS/data/General_architecture_shell/git_version"
+
+cd "$HOME/storage/shared/MITS"
+
+if ! update_mits_version; then
+    echo "无法更新配置文件"
+    echo "已使用0.16版本之前的版本号方式"
+else
+    echo "更新配置文件已完成"
+fi
+
 bin="/data/data/com.termux/files/usr/bin"
 init="$HOME/storage/shared/MITS/data/bin"
 
@@ -82,7 +93,7 @@ fi
 # 批量获取 init 目录下所有 .sh 脚本文件
 sh_files=("${init}"/*.sh)
 
-# 检查是否有 .sh 文件
+# 检查是否有 .sh 文件 */
 if [ ! -f "${sh_files[0]}" ]; then
     echo "错误：${init} 目录下没有找到 .sh 脚本文件"
     exit 1
@@ -106,6 +117,8 @@ log_step "批量复制 .py 脚本文件"
 echo "目标目录：${bin}"
 
 py_files=("${init}"/*.py)
+
+# */
 
 log_step "设置 Termux 属性"
 echo "phantom-process = true" >> ~/.termux/termux.properties
