@@ -69,18 +69,22 @@ VERSION_FILE = os.path.expanduser("~/storage/shared/MITS/data/config/version")
 
 def get_version():
     try:
-        with open(VERSION_FILE) as f:
-            for line in f:
-                line = line.strip()
-                if line.startswith("MITS_VERSION="):
-                    return line.split("=", 1)[1].strip('"\'')
-    except OSError:
+        with open(VERSION_FILE, 'r') as f:
+            content = f.read().strip()
+            if content:          # 确保非空
+                return content
+    except (OSError, IOError):
         pass
-    return "Build.IS0066(main:NULL)"  # fallback
+    return "Build.IS0066(main:NULL)"   # fallback
 
-# 调用函数获取版本号
+# 调用
 MITS_VERSION = get_version()
 
+DEFAULT_DISKPART_CONFIG = '''{
+    "MITS_Diskpart_copyright": "(c) Microsoft Corporation",
+    "MITS_Diskpart_version": "Microsoft DiskPart 版本 10.0.17763.1",
+    "MITS_Diskpart_host": "在计算机上: ANDROID"
+}'''
 DEFAULT_MAIN_CONFIG = f'''{{
     "MITS_version": "{MITS_VERSION}",
     "MITS_build_by": "Administrator"
