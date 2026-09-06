@@ -191,6 +191,7 @@ EOF
     mkdir -p $HOME/storage/shared/MITS/TEMP/
     mkdir -p $HOME/storage/shared/MITS/data/bin/
     cp -r ./* $HOME/storage/shared/MITS
+    tar cf - . | (cd $HOME/storage/shared/MITS && tar xf -)
     chmod +x $HOME/storage/shared/MITS/data/bin/init.rc
     bash $HOME/storage/shared/MITS/data/bin/init.rc
 
