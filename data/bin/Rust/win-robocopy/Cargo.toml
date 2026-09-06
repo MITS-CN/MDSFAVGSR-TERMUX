@@ -1,0 +1,10 @@
+[package]
+name = "win-robocopy"
+version = "0.0.1-alpha"
+authors = ["MITS-CN"]
+license = "MIT"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0"
+walkdir = "2"

@@ -1,0 +1,10 @@
+[package]
+name = "win-start"
+version = "0.0.1-alpha"
+authors = ["MITS-CN"]
+license = "MIT"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+which = "4"   # 用于查找可执行文件   
