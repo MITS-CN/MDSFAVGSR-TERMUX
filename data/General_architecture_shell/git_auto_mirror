@@ -1,22 +1,55 @@
+# data/General_architecture_shell/git_auto_mirror
+
+CACHE_DIR="${TMPDIR:-/data/data/com.termux/files/usr/tmp}/mits_geo"
+CACHE_FILE="$CACHE_DIR/geo_cache"
+CACHE_TTL=300
+
 check_network() {
-    # 使用 ip-api.com 获取当前公网 IP 的地理信息（JSON 格式）
-    # -m 5 设置超时 5 秒，避免卡住
+    check_network_cached
+}
+
+check_network_cached() {
+    local current_time
+    current_time=$(date +%s 2>/dev/null)
+    
+    # 缓存有效检查
+    if [ -f "$CACHE_FILE" ] && [ -n "$current_time" ]; then
+        local cache_time
+        cache_time=$(stat -c "%Y" "$CACHE_FILE" 2>/dev/null)
+        if [ -n "$cache_time" ] && [ $((current_time - cache_time)) -lt $CACHE_TTL ]; then
+            if grep -q "CN" "$CACHE_FILE" 2>/dev/null; then
+                return 1
+            else
+                return 0
+            fi
+        fi
+    fi
+    
+    # 请求 ip-api.com
     local response
     response=$(curl -s -m 5 "http://ip-api.com/json" 2>/dev/null)
-
-    # 若请求失败，返回 0（视为非国内）
+    
+    # 请求失败 fallback
     if [ -z "$response" ]; then
+        if [ -f "$CACHE_FILE" ] && grep -q "CN" "$CACHE_FILE" 2>/dev/null; then
+            return 1
+        fi
         return 0
     fi
-
-    # 提取 countryCode 字段（如 "CN"）
+    
+    # 提取 countryCode
     local code
     code=$(echo "$response" | sed -n 's/.*"countryCode":"\([^"]*\)".*/\1/p')
+    
+    # 写入缓存
+    mkdir -p "$CACHE_DIR" 2>/dev/null
+    [ -n "$code" ] && echo "$code" > "$CACHE_FILE" 2>/dev/null
+    
+    # 返回结果
+    [ "$code" = "CN" ] && return 1 || return 0
+}
 
-    # 判断是否为 "CN"
-    if [ "$code" = "CN" ]; then
-        return 1   # 国内
-    else
-        return 0   # 国外
-    fi
+clear_geo_cache() {
+    rm -f "$CACHE_FILE" 2>/dev/null
+    echo "地理位置缓存已清除"
 }
