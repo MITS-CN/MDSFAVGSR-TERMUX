@@ -1,0 +1,3 @@
+https://github.com/zdharma-continuum/zinit.git .zinit
+https://github.com/romkatv/powerlevel10k.git powerlevel10k
+https://github.com/ohmyzsh/ohmyzsh.git .oh-my-zsh

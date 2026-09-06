@@ -1,5 +1,7 @@
 #!/data/data/com.termux/files/usr/bin/bash
+
 source ~/storage/tmp.config
+
 if [ "$ensure_storage_permission" = "true" ]; then
     echo "权限已启用"
 else
@@ -31,8 +33,17 @@ fi
 
 PREFIX="${PREFIX:-/data/data/com.termux/files/usr}"
 
-# 颜色定义
+# 定义
 source "$HOME/storage/shared/MITS/data/General_architecture_shell/Color"
+source "$HOME/storage/shared/MITS/data/General_architecture_shell/git_auto_mirror"
+
+if check_network_cached; then
+    GIT_REPO_FILE="$HOME/storage/shared/MITS/data/config/git_repos_cn.list"
+    DEFAULT_URL="https://gh-proxy.org/https://raw.githubusercontent.com/nlohmann/json/develop/single_include/nlohmann/json.hpp"
+else
+    GIT_REPO_FILE="$HOME/storage/shared/MITS/data/config/git_repos.list"
+    DEFAULT_URL="https://raw.githubusercontent.com/nlohmann/json/develop/single_include/nlohmann/json.hpp"
+fi
 
 # 统计
 total_actions=0
@@ -59,6 +70,37 @@ run_action() {
 # 直接运行命令，不统计（用于内部子步骤）
 run_silent() {
     eval "$1" >/dev/null 2>&1 || true
+}
+
+clone_git_repos() {
+    if [ ! -f "$GIT_REPO_FILE" ]; then
+        echo -e "${YELLOW}[!]${NC} Git 仓库配置文件不存在: $GIT_REPO_FILE"
+        return 1
+    fi
+
+    local line url target_dir
+    while IFS= read -r line || [ -n "$line" ]; do
+        # 去除首尾空白
+        line="${line#"${line%%[![:space:]]*}"}"
+        line="${line%"${line##*[![:space:]]}"}"
+        [[ -z "$line" || "$line" =~ ^# ]] && continue
+
+        read -r url target_dir <<< "$line"
+        if [ -z "$url" ] || [ -z "$target_dir" ]; then
+            echo -e "${YELLOW}[!]${NC} 配置行格式错误，跳过: $line"
+            continue
+        fi
+
+        # 目标目录为 $HOME/目标名
+        local full_target="$HOME/$target_dir"
+        if [ -d "$full_target" ]; then
+            echo -e "${GREEN}[✓]${NC} 目录 $full_target 已存在，跳过克隆"
+            success_actions=$((success_actions + 1))
+            total_actions=$((total_actions + 1))
+        else
+            run_action "克隆 $url 到 $full_target" "git clone --depth=1 $url $full_target"
+        fi
+    done < "$GIT_REPO_FILE"
 }
 
 echo -e "${GREEN}===== Termux 环境修复开始 =====${NC}\n"
@@ -106,23 +148,8 @@ if command -v gcc-11 >/dev/null 2>&1 && ! command -v gcc >/dev/null 2>&1; then
     run_action "创建 gcc 符号链接指向 gcc-11" "ln -sf $(which gcc-11) $PREFIX/bin/gcc"
 fi
 
-# 3. 安装 Zinit（zsh 插件管理器）
-if [ ! -d "$HOME/.zinit" ]; then
-    run_action "克隆 Zinit 到 ~/.zinit" "git clone https://github.com/zdharma-continuum/zinit.git $HOME/.zinit"
-else
-    echo -e "${GREEN}[✓]${NC} Zinit 已存在，跳过克隆"
-    success_actions=$((success_actions + 1))
-    total_actions=$((total_actions + 1))
-fi
-
-# 4. 安装 Powerlevel10k 主题
-if [ ! -d "$HOME/powerlevel10k" ]; then
-    run_action "克隆 Powerlevel10k 到 ~/powerlevel10k" "git clone --depth=1 https://github.com/romkatv/powerlevel10k.git $HOME/powerlevel10k"
-else
-    echo -e "${GREEN}[✓]${NC} Powerlevel10k 已存在，跳过克隆"
-    success_actions=$((success_actions + 1))
-    total_actions=$((total_actions + 1))
-fi
+echo -e "${GREEN}===== 克隆 Git 仓库 =====${NC}"
+clone_git_repos
 
 # 5. 配置 ~/.zshrc
 ZSHRC="$HOME/.zshrc"
@@ -164,7 +191,6 @@ fi
 # 8. 下载 json.hpp（若缺失）
 JSON_FILE="$CUSTOM_DIR/json.hpp"
 if [ ! -f "$JSON_FILE" ]; then
-    DEFAULT_URL="https://raw.githubusercontent.com/nlohmann/json/develop/single_include/nlohmann/json.hpp"
     echo -e "${YELLOW}[?]${NC} 文件 $JSON_FILE 不存在"
     read -p "是否尝试从 $DEFAULT_URL 下载？[y/N] " -n 1 -r
     echo

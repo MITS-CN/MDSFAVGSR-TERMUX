@@ -1,0 +1,22 @@
+check_network() {
+    # 使用 ip-api.com 获取当前公网 IP 的地理信息（JSON 格式）
+    # -m 5 设置超时 5 秒，避免卡住
+    local response
+    response=$(curl -s -m 5 "http://ip-api.com/json" 2>/dev/null)
+
+    # 若请求失败，返回 0（视为非国内）
+    if [ -z "$response" ]; then
+        return 0
+    fi
+
+    # 提取 countryCode 字段（如 "CN"）
+    local code
+    code=$(echo "$response" | sed -n 's/.*"countryCode":"\([^"]*\)".*/\1/p')
+
+    # 判断是否为 "CN"
+    if [ "$code" = "CN" ]; then
+        return 1   # 国内
+    else
+        return 0   # 国外
+    fi
+}

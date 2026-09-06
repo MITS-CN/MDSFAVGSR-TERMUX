@@ -36,6 +36,8 @@ DISPLAY_NAMES=("Termux:Styling" "Termux:API")
 TMPDIR="$HOME/.termux_apk_installer"
 mkdir -p "$TMPDIR"
 
+source "$HOME/storage/shared/MITS/data/General_architecture_shell/git_auto_mirror"
+
 # --------------------------------------------------
 # 函数：检测某个包是否已安装（通过 /data/app 目录）
 # --------------------------------------------------
@@ -127,6 +129,11 @@ get_latest_apk_url() {
 download_apk() {
     local url="$1"
     local dest="$2"
+    if check_network_cached; then  # 假设您已定义该函数
+        url=$(echo "$url" | sed 's#https://github.com/#https://gh-proxy.org/https://github.com/#')
+    fi
+    
+    echo "  下载: $url"
     echo "  下载: $url"
     if command -v curl >/dev/null 2>&1; then
         curl -L -o "$dest" "$url" || return 1

@@ -69,6 +69,7 @@ source "$HOME/storage/shared/MITS/data/General_architecture_shell/log_step"
 source "$HOME/storage/shared/MITS/data/General_architecture_shell/error_exit"
 source "$HOME/storage/shared/MITS/data/General_architecture_shell/Color"
 source "$HOME/storage/shared/MITS/data/General_architecture_shell/git_version"
+source "$HOME/storage/shared/MITS/data/General_architecture_shell/git_auto_mirror"
 
 cd "$HOME/storage/shared/MITS"
 
@@ -206,11 +207,23 @@ must_run "安装 zsh 和 git" pkg install -y zsh git
 
 echo "安装插件中......"
 
-PLUGINS=(
-    "https://github.com/zsh-users/zsh-autosuggestions|$HOME/.zinit/plugins/_local---zsh-autosuggestions"
-    "https://github.com/zdharma-continuum/fast-syntax-highlighting|$HOME/.zinit/plugins/_local---fast-syntax-highlighting"
-    "https://github.com/ohmyzsh/ohmyzsh.git|$HOME/.oh-my-zsh"
-)
+check_network
+
+if [ $? -eq 1 ]; then
+    echo "当前网络位于中国大陆"
+    PLUGINS=(
+        "https://gh-proxy.org/https://github.com/zsh-users/zsh-autosuggestions|$HOME/.zinit/plugins/_local---zsh-autosuggestions"
+        "https://gh-proxy.org/https://github.com/zdharma-continuum/fast-syntax-highlighting|$HOME/.zinit/plugins/_local---fast-syntax-highlighting"
+        "https://gh-proxy.org/https://github.com/ohmyzsh/ohmyzsh.git|$HOME/.oh-my-zsh"
+    )
+else
+    echo "当前网络不在中国大陆（或获取信息失败）"
+    PLUGINS=(
+        "https://github.com/zsh-users/zsh-autosuggestions|$HOME/.zinit/plugins/_local---zsh-autosuggestions"
+        "https://github.com/zdharma-continuum/fast-syntax-highlighting|$HOME/.zinit/plugins/_local---fast-syntax-highlighting"
+        "https://github.com/ohmyzsh/ohmyzsh.git|$HOME/.oh-my-zsh"
+    )
+fi
 
 for plugin in "${PLUGINS[@]}"; do
     url="${plugin%%|*}"
