@@ -28,7 +28,7 @@ update_mits_version() {
 
     # 5. 组装版本字符串
     commit_padded=$(printf "%04d" "$commit_count")
-    version_str="Build.IS${commit_padded}(${branch}:${short_hash})"
+    version_str="Build.ISN${commit_padded}(${branch}:${short_hash})"
 
     # 6. 目标文件路径
     target_file="$HOME/storage/shared/MITS/data/config/version"
