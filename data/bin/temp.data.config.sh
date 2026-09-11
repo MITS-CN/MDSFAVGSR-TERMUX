@@ -41,7 +41,7 @@ VERSION_FILE="$HOME/storage/shared/MITS/data/config/version"
 if [ -f "$VERSION_FILE" ]; then
     MITS_VERSION=$(cat "$VERSION_FILE")   
 else
-    MITS_VERSION="Build.IS0066(main:NULL)"  # fallback
+    MITS_VERSION="Build.IS0067(main:NULL)"  # fallback
 fi
 
 if [ -f "/data/data/com.termux/files/usr/etc/MITS/SL/config.json.example" ]; then

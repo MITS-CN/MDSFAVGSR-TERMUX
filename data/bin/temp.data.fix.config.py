@@ -75,7 +75,7 @@ def get_version():
                 return content
     except (OSError, IOError):
         pass
-    return "Build.IS0066(main:NULL)"   # fallback
+    return "Build.IS0067(main:NULL)"   # fallback
 
 # 调用
 MITS_VERSION = get_version()

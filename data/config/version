@@ -1,2 +1,2 @@
-# data/config/version
-MITS_VERSION="Build.IS0066(main:NULL)"
+# data/config/version （会自动生成版本号，可以在/data/data/com.termux/files/usr/etc/MITS/config.json修改）
+MITS_VERSION="Build.IS0067(main:NULL)"
