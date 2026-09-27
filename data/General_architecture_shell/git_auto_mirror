@@ -1,5 +1,7 @@
 # data/General_architecture_shell/git_auto_mirror
 
+# 0 = 国内，1 = 非国内
+
 CACHE_DIR="${TMPDIR:-/data/data/com.termux/files/usr/tmp}/mits_geo"
 CACHE_FILE="$CACHE_DIR/geo_cache"
 CACHE_TTL=300

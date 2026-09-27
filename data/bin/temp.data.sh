@@ -115,9 +115,33 @@ echo ">>> 运行 zsh 配置脚本"
 bash -c "$(curl -fsSL https://gitee.com/mo2/zsh/raw/2/2)"
 
 # 7. 克隆 powerlevel10k（使用代理转换）
-echo ">>> 克隆 powerlevel10k"
+echo ">>> 安装/更新 powerlevel10k"
 p10k_url=$(proxy_url "https://github.com/romkatv/powerlevel10k.git")
-git clone --depth=1 "$p10k_url" ~/powerlevel10k
+P10K_DIR="$HOME/powerlevel10k"
+
+if [ -d "$P10K_DIR/.git" ]; then
+    echo "[✓] powerlevel10k 已存在"
+    read -p "    是否更新到最新版？[y/N] " -n 1 -r REPLY || REPLY=""
+    echo
+    if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+        git -C "$P10K_DIR" pull --ff-only || \
+            echo "[!] 更新失败（浅克隆或无网络），保留现有版本"
+    else
+        echo "[✓] 跳过更新"
+    fi
+elif [ -d "$P10K_DIR" ]; then
+    echo "[!] $P10K_DIR 存在但不是 git 仓库"
+    read -p "    是否删除并重新克隆？[y/N] " -n 1 -r REPLY || REPLY=""
+    echo
+    if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+        rm -rf "$P10K_DIR"
+        git clone --depth=1 "$p10k_url" "$P10K_DIR"
+    else
+        echo "[✓] 跳过"
+    fi
+else
+    git clone --depth=1 "$p10k_url" "$P10K_DIR"
+fi
 
 # 8. 存储与临时目录
 echo ">>> 设置存储权限"
