@@ -37,7 +37,8 @@ PREFIX="${PREFIX:-/data/data/com.termux/files/usr}"
 source "$HOME/storage/shared/MITS/data/General_architecture_shell/Color"
 source "$HOME/storage/shared/MITS/data/General_architecture_shell/git_auto_mirror"
 
-if check_network_cached; then
+#傻了忘记返回值了
+if ! check_network_cached; then
     GIT_REPO_FILE="$HOME/storage/shared/MITS/data/config/git_repos_cn.list"
     DEFAULT_URL="https://gh-proxy.org/https://raw.githubusercontent.com/nlohmann/json/develop/single_include/nlohmann/json.hpp"
 else
