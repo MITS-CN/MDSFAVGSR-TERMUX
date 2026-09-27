@@ -162,11 +162,12 @@ get_latest_apk_url() {
 download_apk() {
     local url="$1"
     local dest="$2"
-    if check_network_cached; then  # 假设您已定义该函数
-        url=$(echo "$url" | sed 's#https://github.com/#https://gh-proxy.org/https://github.com/#')
+
+    check_network_cached
+    if [ $? -eq 1 ]; then        # 1 = 国内 → 用代理
+        url=$(echo "$url" | sed 's#https://github.com#https://gh-proxy.org/https://github.com#g')
     fi
-    
-    echo "  下载: $url"
+
     echo "  下载: $url"
     if command -v curl >/dev/null 2>&1; then
         curl -L -o "$dest" "$url" || return 1
